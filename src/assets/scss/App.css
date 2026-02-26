@@ -1,0 +1,89 @@
+html,
+body {
+  height: 100%;
+  text-align: center;
+  background-color: #f9f7f3;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)),
+    url(https://plus.unsplash.com/premium_photo-1725296622669-17f20603794c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* 背景固定不滾動 */
+  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.preview-image-main {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.primary-image {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.images {
+  height: 200px;
+  width: 200px;
+  margin-right: 16px; /* 加點邊距 */
+  object-fit: cover;
+}
+
+.product-images {
+  border-left: 6px solid #445e3f; /* 左側粗線，顏色可改 */
+  background-color: #fff;          /* 框內背景 */
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.img-fluid.product-main {
+  width: 500px;
+  height: 350px;
+  object-fit: cover;
+}
+
+.img-thumbnail.product-small {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid #ddd; /*預設邊框*/
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border 0.2s, opacity 0.2s;
+
+  &.active {
+    border: 2px solid #F0AD25; /* 選中邊框*/
+    opacity: 1;
+  }
+
+  &:not(.active) {
+    opacity: 0.6; /*未選中縮圖透明度*/
+  }
+}
