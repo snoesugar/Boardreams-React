@@ -23,17 +23,17 @@ const FrontLayout = () => {
 
   return (
     <>
-      <div className="sticky-top bg-primary-100">
+      <div className="sticky-top bg-primary-100 navbar-dream">
         <div className="container-lg">
           <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container-fluid px-0">
 
               <Link
-                className="navbar-brand text-primary fs-3 p-0"
+                className="navbar-brand text-primary navbar-brand-dream fs-3 p-0"
                 to="/"
                 onClick={closeNavbar}
               >
-                美食首頁
+                『桌』思夢想
                 <i className="bi bi-house-fill ms-1"></i>
               </Link>
 

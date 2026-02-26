@@ -1,16 +1,46 @@
-html,
-body {
-  height: 100%;
-  text-align: center;
-  background-color: #f9f7f3;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)),
-    url(https://plus.unsplash.com/premium_photo-1725296622669-17f20603794c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* 背景固定不滾動 */
-  font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+/*Navbar*/
+/* 導覽列玻璃質感 */
+.navbar-dream {
+  background: rgba(10, 14, 23, 0.8) !important; /* 深色背景透明 */
+  backdrop-filter: blur(12px); /* 模糊背景 */
+  border-bottom: 1px solid rgba(197, 163, 103, 0.3); /* 金色細邊框 */
+  padding: 0.8rem 1rem;
+}
+
+/* Logo 樣式 */
+.navbar-brand-dream {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(180deg, #F2E3B5 0%, #C5A367 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+/* 導覽連結顏色與 Hover 效果 */
+.navbar-dream .nav-link {
+  color: #D1D5DB !important;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.navbar-dream .nav-link:hover {
+  color: #F2E3B5 !important;
+  text-shadow: 0 0 8px rgba(242, 227, 181, 0.5);
+}
+
+/* 購物車圖示亮點 */
+.cart-icon {
+  color: #C5A367;
+  position: relative;
+}
+
+.cart-badge {
+  background-color: #8A6D3B;
+  color: #F2E3B5;
+  font-size: 0.7rem;
 }
 
 .login {
