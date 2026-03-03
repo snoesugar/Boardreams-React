@@ -1,3 +1,6 @@
+html, body {
+  background-color: #0A0E17;
+}
 /*Navbar*/
 /* 導覽列玻璃質感 */
 .navbar-dream {
@@ -21,7 +24,6 @@
 /* 導覽連結顏色與 Hover 效果 */
 .navbar-dream .nav-link {
   color: #D1D5DB !important;
-  margin: 0 10px;
   transition: all 0.3s ease;
   font-size: 1.1rem;
 }
@@ -41,6 +43,36 @@
   background-color: #8A6D3B;
   color: #F2E3B5;
   font-size: 0.7rem;
+}
+
+/* 標題使用金色漸層 */
+.text-gold-gradient {
+  background: linear-gradient(180deg, #F2E3B5 0%, #C5A367 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+/* 夢想風格的按鈕 */
+.btn-dream {
+  background: transparent;  
+  border: 1px solid #C5A367;
+  color: #F2E3B5;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(197, 163, 103, 0.2);
+  left: 40%;
+  bottom: 5%;
+  &:hover {     
+    background: rgba(22, 27, 38, 0.7);  
+    box-shadow: 0 0 30px rgba(197, 163, 103, 0.8);
+  }
+}
+
+/* 玻璃質感面板 */
+.glass-panel {
+  backdrop-filter: blur(10px);
+  border: 3px solid rgba(197, 163, 103, 0.2);
 }
 
 .login {
@@ -116,4 +148,12 @@ img {
   &:not(.active) {
     opacity: 0.6; /*未選中縮圖透明度*/
   }
+}
+
+.pt-83 {
+  padding-top: 83px;
+}
+
+.mt-n83 {
+  margin-top: -83px;
 }

@@ -23,7 +23,7 @@ const FrontLayout = () => {
 
   return (
     <>
-      <div className="sticky-top bg-primary-100 navbar-dream">
+      <div className="sticky-top navbar-dream">
         <div className="container-lg">
           <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container-fluid px-0">
@@ -34,7 +34,6 @@ const FrontLayout = () => {
                 onClick={closeNavbar}
               >
                 『桌』思夢想
-                <i className="bi bi-house-fill ms-1"></i>
               </Link>
 
               <button
@@ -99,6 +98,64 @@ const FrontLayout = () => {
       </div>
 
       <Outlet />
+
+      <footer class="bg-panel navbar-dream py-5">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <h3 class="text-gold-gradient mb-3">「桌」思夢想</h3>
+              <p class="text-primary mb-0 pe-lg-5">
+                每一場開箱，都是一場未知的遠征。
+              </p>
+              <p class="text-primary pe-lg-5">
+                我們相信最好的故事不在螢幕裡，而是在你與夥伴交手的桌面上。
+              </p>
+            </div>
+
+            <div class="col-6 col-lg-2">
+              <h6 class="text-gold-light mb-3">
+                探索夢境
+                <i class="bi bi-stars ms-1"></i>
+              </h6>
+              <ul class="list-unstyled text-primary">
+                <li><a href="#" class="nav-link p-0 mb-2">新品上市</a></li>
+                <li><a href="#" class="nav-link p-0 mb-2">熱門排行</a></li>
+                <li><a href="#" class="nav-link p-0 mb-2">獨家預購</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-lg-2">
+              <h6 class="text-gold-light mb-3">
+                冒險支援
+                <i class="bi bi-flag-fill ms-1"></i>
+              </h6>
+              <ul class="list-unstyled text-primary">
+                <li><a href="#" class="nav-link p-0 mb-2">寄送政策</a></li>
+                <li><a href="#" class="nav-link p-0 mb-2">退換貨須知</a></li>
+                <li><a href="#" class="nav-link p-0 mb-2">實體據點</a></li>
+              </ul>
+            </div>
+
+            <div class="col-lg-3">
+              <h6 class="text-gold-light mb-3">
+                追蹤傳說
+                <i class="bi bi-hand-index-thumb-fill ms-1"></i>
+              </h6>
+              <div class="d-flex gap-3">
+                <a href="#" class="btn btn-outline-warning btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="btn btn-outline-warning btn-sm rounded-circle"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="btn btn-outline-warning btn-sm rounded-circle"><i class="bi bi-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4 border-gold-dark" />
+
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+            <p class="small text-primary mb-0">© 2026 「桌」思夢想 | 創造回憶的建築師。</p>
+          </div>
+        </div>
+      </footer>
     </>
   )
 }
