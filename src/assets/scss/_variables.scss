@@ -654,7 +654,9 @@ $font-sizes: (
   3: $h3-font-size,
   4: $h4-font-size,
   5: $h5-font-size,
-  6: $h6-font-size
+  6: $h6-font-size,
+  7: $font-size-base * 0.875, //14px custom
+  8: $font-size-base * 0.75,  //12px custom
 ) !default;
 // scss-docs-end font-sizes
 
@@ -744,8 +746,8 @@ $table-cell-padding-x-sm:     .25rem !default;
 
 $table-cell-vertical-align:   top !default;
 
-$table-color:                 var(--#{$prefix}emphasis-color) !default;
-$table-bg:                    var(--#{$prefix}body-bg) !default;
+$table-color:                 var(--bs-gold-light);//var(--#{$prefix}emphasis-color) !default; custom
+$table-bg:                    rgba(255, 255, 255, 0.000001);//var(--#{$prefix}body-bg) !default; custom
 $table-accent-bg:             transparent !default;
 
 $table-th-font-weight:        null !default;
@@ -760,11 +762,11 @@ $table-active-bg:             rgba(var(--#{$prefix}emphasis-color-rgb), $table-a
 
 $table-hover-color:           $table-color !default;
 $table-hover-bg-factor:       .075 !default;
-$table-hover-bg:              rgba(var(--#{$prefix}emphasis-color-rgb), $table-hover-bg-factor) !default;
+$table-hover-bg:              rgba(197, 163, 103, 0.1);//rgba(var(--#{$prefix}emphasis-color-rgb), $table-hover-bg-factor) !default; custom
 
 $table-border-factor:         .2 !default;
 $table-border-width:          var(--#{$prefix}border-width) !default;
-$table-border-color:          var(--#{$prefix}border-color) !default;
+$table-border-color:          rgba(197, 163, 103, 0.3);//var(--#{$prefix}border-color) !default; custom
 
 $table-striped-order:         odd !default;
 $table-striped-columns-order: even !default;

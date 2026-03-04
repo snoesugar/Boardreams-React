@@ -66,15 +66,18 @@ const Login = () => {
     }
   }
   return (
-    <div className="container login">
+    <div className="container login-dream-bg login">
       <div className="row justify-content-center">
-        <h1 className="h3 mb-3 font-weight-normal text-primary">請先登入</h1>
+        <div className="text-center mb-5">
+          <div className="text-gold-gradient fs-2 font-serif tracking-widest mb-1">Boardreams</div>
+          <p className="text-gold-mid small">－ 冒險者公會登入入口 －</p>
+        </div>
         <div className="col-8">
-          <form id="form" className="mt-5 bg-white p-5 shadow-lg rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
+          <form id="form" className="mt-5 bg-panel border border-primary p-5 shadow-lg rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
             <div className="form-floating mb-3">
               <input
                 type="email"
-                className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+                className={`form-control glass-panel ${errors.username ? 'is-invalid' : ''}`}
                 id="username"
                 placeholder="name@example.com"
                 {...register('username', {
@@ -89,7 +92,7 @@ const Login = () => {
                 })}
                 autoFocus
               />
-              <label htmlFor="username">帳號</label>
+              <label className="text-primary" htmlFor="username">帳號</label>
               {errors.username && (
                 <div className="text-start invalid-feedback">
                   {errors.username.message}
@@ -99,12 +102,12 @@ const Login = () => {
             <div className="form-floating">
               <input
                 type="password"
-                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                className={`form-control glass-panel ${errors.password ? 'is-invalid' : ''}`}
                 id="password"
                 placeholder="Password"
                 {...register('password', { required: '請填寫密碼' })}
               />
-              <label htmlFor="password">密碼</label>
+              <label className="text-primary" htmlFor="password">密碼</label>
               {errors.password && (
                 <div className="text-start invalid-feedback">
                   {errors.password.message}

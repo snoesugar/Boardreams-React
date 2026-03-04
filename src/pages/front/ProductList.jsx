@@ -148,17 +148,17 @@ const ProductList = () => {
                                   </span>
                                 </div>
                                 <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                                  <Link type="button" to={`/product/${product.id}`} className="btn btn-outline-secondary btn-sm px-3 rounded-pill">查看更多</Link>
+                                  <Link type="button" to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm fs-7 px-3 rounded-pill">查看更多</Link>
                                   <button type="button" className="btn-dream-add btn-sm px-3 rounded-pill" disabled={addingId === product.id} onClick={() => addToCart(product)}>
                                     {addingId === product.id
                                       ? (
-                                        <span>
+                                        <span className="fs-7">
                                           <i className="bi bi-magic me-2 pulse"></i>
                                           召喚中...
                                         </span>
                                       )
                                       : (
-                                        <span>加入購物車</span>
+                                        <span className="fs-7">加入購物車</span>
                                       )}
                                   </button>
                                 </div>

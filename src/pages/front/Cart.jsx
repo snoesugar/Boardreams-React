@@ -129,7 +129,7 @@ const Cart = () => {
           )
           : (
             <>
-              <div className="row mt-5 bg-white p-5 shadow-lg rounded-4">
+              <div className="row mt-5 glass-panel p-5 rounded-4 mb-5">
                 <div className="text-end mb-3">
                   <button type="button" className="btn btn-outline-danger me-3" onClick={delAllProducts} disabled={cartList.length === 0}>清空購物車</button>
                 </div>
@@ -137,10 +137,10 @@ const Cart = () => {
                   <table className="table table-hover">
                     <thead>
                       <tr>
-                        <th>項次</th>
-                        <th className="w-25">商品</th>
-                        <th className="w-25">數量</th>
-                        <th>小計</th>
+                        <th className="text-gold-light">項次</th>
+                        <th className="text-gold-light w-25">商品</th>
+                        <th className="text-gold-light w-25">數量</th>
+                        <th className="text-gold-light">小計</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -149,23 +149,26 @@ const Cart = () => {
                         ? (
                           cartList.map((item, index) => (
                             <tr key={item.id} className="align-middle">
-                              <td>{index + 1}</td>
+                              <td className="text-gold-mid">{index + 1}</td>
                               <td className="text-start">
-                                <div className="d-flex flex-lg-row flex-column">
+                                <div className="d-flex flex-lg-row flex-column align-items-center">
                                   <img
                                     src={item.product.imageUrl}
                                     alt={item.id}
                                     className="cart-img rounded-2 border border-1 me-3"
                                   />
                                   <div className="d-flex flex-column justify-content-center">
-                                    <p className="fw-bold mb-2">{item.product.title}</p>
-                                    <p className="mb-2">
-                                      <del className="text-secondary">{item.product.origin_price}</del>
-                                      元 /
+                                    <p className="fw-bold text-primary mb-2">{item.product.title}</p>
+                                    <p className="text-gold-light mb-2">
+                                      <del className="text-gold-dark">
+                                        {item.product.origin_price}
+                                        元
+                                      </del>
+                                      /
                                       {item.product.price}
                                       元
                                     </p>
-                                    <p className="text-primary-300 mb-0">
+                                    <p className="text-gold-dark mb-0">
                                       省下
                                       {item.product.origin_price * item.qty - item.product.price * item.qty}
                                       元
@@ -176,7 +179,7 @@ const Cart = () => {
                               <td>
                                 <div className="btn-group">
                                   <button
-                                    className="btn btn-outline-secondary"
+                                    className="btn btn-outline-primary"
                                     disabled={loadingItem === item.id}
                                     onClick={() => updateCartQty(item.id, item.product.id, item.qty - 1)}
                                   >
@@ -184,7 +187,7 @@ const Cart = () => {
                                   </button>
                                   <span className="px-3 d-flex align-items-center">{item.qty}</span>
                                   <button
-                                    className="btn btn-outline-secondary"
+                                    className="btn btn-outline-primary"
                                     disabled={loadingItem === item.id}
                                     onClick={() => updateCartQty(item.id, item.product.id, item.qty + 1)}
                                   >
@@ -194,7 +197,7 @@ const Cart = () => {
                               </td>
                               <td>{item.final_total}</td>
                               <td>
-                                <button type="button" className="btn btn-link text-danger" onClick={() => delProduct(item.id)}>
+                                <button type="button" className="btn link-danger text-danger" onClick={() => delProduct(item.id)}>
                                   <i className="bi bi-trash"></i>
                                 </button>
                               </td>
@@ -213,13 +216,13 @@ const Cart = () => {
                       <tr>
                         <td colSpan="5" className="p-4">
                           <div className="d-flex flex-md-row flex-column justify-content-md-end align-items-center">
-                            <span className="text-secondary me-4">
+                            <span className="text-secondary me-md-4">
                               共
                               {totalQty}
                               件商品
                             </span>
                             {totalSaved > 0 && (
-                              <span className="text-secondary me-4">
+                              <span className="text-secondary me-md-4">
                                 一共省下
                                 <span className="text-danger fw-bold mx-1">
                                   {totalSaved.toLocaleString()}
@@ -227,7 +230,7 @@ const Cart = () => {
                                 元
                               </span>
                             )}
-                            <span className="fs-1 me-5">
+                            <span className="fs-1 me-md-5">
                               NT$
                               {totalAmount.toLocaleString()}
                             </span>

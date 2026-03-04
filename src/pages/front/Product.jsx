@@ -73,7 +73,7 @@ const Product = () => {
     )
   }
 
-  if (!product) return <p className="text-center mt-5">找不到產品</p>
+  if (!product) return <p className="text-center text-primary mt-5">找不到產品</p>
 
   return (
     <div className="container mt-5">
@@ -88,7 +88,7 @@ const Product = () => {
           返回
         </button>
       </div>
-      <div className="row bg-white p-4 rounded shadow-sm">
+      <div className="row glass-panel p-4 rounded mb-5">
         {/* 左側圖片區 */}
         <div className="col-md-6 mb-md-0 mb-4">
           <div className="mb-3">
@@ -118,12 +118,12 @@ const Product = () => {
           <span className="badge rounded-pill bg-primary mb-2">
             {product.category}
           </span>
-          <h2 className="mb-4 fw-bold">{product.title}</h2>
-          <p className="card-text">
+          <h2 className="mb-4 text-gold-light fw-bold">{product.title}</h2>
+          <p className="card-text text-primary">
             商品描述：
             {product.content}
           </p>
-          <p className="card-text">
+          <p className="card-text text-primary">
             商品內容：
             {product.description}
           </p>
@@ -133,17 +133,26 @@ const Product = () => {
               {product.price}
               元
             </p>
-            <small className="text-muted me-2">
+            <small className="text-gold-dark me-2">
               <del>{product.origin_price}</del>
               元
             </small>
-            <p className="mb-0">
+            <p className="text-gold-dark mb-0">
               /
               {product.unit}
             </p>
           </div>
-          <button className="btn btn-outline-primary btn-lg w-100 mt-3" disabled={addingId === product.id} onClick={() => addToCart()}>
-            {addingId === product.id ? '加入中...' : '加入購物車'}
+          <button className="btn-dream-add btn-lg w-100 mt-3 py-3 rounded-pill" disabled={addingId === product.id} onClick={() => addToCart()}>
+            {addingId === product.id
+              ? (
+                <span className="fs-5">
+                  <i className="bi bi-magic me-2 pulse"></i>
+                  召喚中...
+                </span>
+              )
+              : (
+                <span className="fs-5">加入購物車</span>
+              )}
           </button>
         </div>
       </div>
