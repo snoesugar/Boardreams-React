@@ -1,7 +1,7 @@
 const Pagination = ({ pagination, changePage }) => {
   return (
     <nav>
-      <ul className="pagination">
+      <ul className="pagination pagination-dream mb-0 pb-3">
 
         {/* 上一頁 */}
         <li className={`page-item ${!pagination.has_pre && 'disabled'}`}>

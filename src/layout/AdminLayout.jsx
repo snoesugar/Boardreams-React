@@ -73,7 +73,7 @@ const AdminLayout = () => {
 
   return (
     <>
-      <div className="sticky-top bg-primary-100">
+      <div className="sticky-top navbar-dream">
         <div className="container-lg">
           <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container-fluid px-0">

@@ -6,7 +6,7 @@ const Spinner = () => {
       height="80"
       width="80"
       radius="9"
-      color="#244a38"
+      color="var(--bs-primary)"
       ariaLabel="three-dots-loading"
       wrapperClass="custom-loader"
       visible={true}

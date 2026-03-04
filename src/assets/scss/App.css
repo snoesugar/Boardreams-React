@@ -1,9 +1,11 @@
 html, body {
-  background-color: #0A0E17;
+  background-color: var(--bs-dark) !important;
 }
+
 /*Navbar*/
 /* 導覽列玻璃質感 */
 .navbar-dream {
+  z-index: 1050 !important; /* 比 Bootstrap 預設的 1030 更高 */
   background: rgba(10, 14, 23, 0.8) !important; /* 深色背景透明 */
   backdrop-filter: blur(12px); /* 模糊背景 */
   border-bottom: 1px solid rgba(197, 163, 103, 0.3); /* 金色細邊框 */
@@ -23,26 +25,11 @@ html, body {
 
 /* 導覽連結顏色與 Hover 效果 */
 .navbar-dream .nav-link {
-  color: #D1D5DB !important;
   transition: all 0.3s ease;
-  font-size: 1.1rem;
-}
-
-.navbar-dream .nav-link:hover {
-  color: #F2E3B5 !important;
-  text-shadow: 0 0 8px rgba(242, 227, 181, 0.5);
-}
-
-/* 購物車圖示亮點 */
-.cart-icon {
-  color: #C5A367;
-  position: relative;
-}
-
-.cart-badge {
-  background-color: #8A6D3B;
-  color: #F2E3B5;
-  font-size: 0.7rem;
+  &:hover {
+    color: #F2E3B5 !important;
+    text-shadow: 0 0 8px rgba(242, 227, 181, 0.5);
+  }
 }
 
 /* 標題使用金色漸層 */
@@ -71,9 +58,131 @@ html, body {
 
 /* 玻璃質感面板 */
 .glass-panel {
-  backdrop-filter: blur(10px);
-  border: 3px solid rgba(197, 163, 103, 0.2);
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(197, 163, 103, 0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
+
+/*productList*/
+/* 清單樣式與 Hover 效果 */
+.transition-ease02 {
+  transition: all 0.2s ease;
+}
+
+.list-group-item-dream:hover {
+  background: rgba(197, 163, 103, 0.1) !important;
+  transform: translateX(5px);
+}
+
+.list-group-item-dream.active {
+  background: linear-gradient(90deg, rgba(197,163,103,0.3) 0%, transparent 100%) !important;
+  border-left: 3px solid #C5A367 !important;
+  color: #F2E3B5 !important;
+}
+
+/* 夢想風格分頁 */
+.pagination-dream .page-link {
+  background: transparent !important;
+  border: 1px solid rgba(197, 163, 103, 0.3) !important;
+  color: var(--bs-gold-light) !important;
+  border-radius: 50% !important;
+  margin: 0 5px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pagination-dream .page-item.active .page-link {
+  background: var(--bs-gold-light) !important;
+  color: #000 !important;
+  border-color: var(--bs-gold-light) !important;
+  box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
+}
+
+.pagination-dream .page-link:hover:not(.active) {
+  background: rgba(197, 163, 103, 0.1) !important;
+  color: var(--bs-gold-light) !important;
+  transform: scale(1.1);
+}
+
+/* 產品卡片質感 */
+.product-card-dream {
+  position: relative; /* 這是關鍵：讓 ::after 以這張卡片為邊界 */
+  overflow: hidden;    /* 這是關鍵：防止閃光跑出卡片圓角之外 */
+  background: var(--ds-panel) !important; /* 深色背景 */
+  border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
+  border-radius: 15px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 柔和陰影 */
+}
+
+/* 閃光動畫主體 */
+.product-card-dream::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%, /* 稍微調亮一點點，效果更明顯 */
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  pointer-events: none; /* 確保閃光層不會干擾滑鼠點擊 */
+}
+
+.product-card-dream:hover::after {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Hover 時卡片翹起並發光 */
+.product-card-dream:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(197, 163, 103, 0.4);
+}
+
+/* 產品圖質感與Hover效果 */
+.product-img-dream {
+  border-radius: 12px 12px 0 0;
+  transition: transform 0.5s ease;
+}
+
+.product-card-dream:hover .product-img-dream {
+  transform: scale(1.03); /* 輕微放大圖示 */
+}
+
+/* 價格漸層 */
+.price-gradient {
+  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+/* 按鈕樣式 */
+.btn-dream-add {
+  background: transparent;
+  border: 1px solid var(--bs-gold-light);
+  color: var(--bs-gold-light);
+  transition: all 0.3s ease;
+}
+
+.btn-dream-add:hover {
+  background: var(--bs-gold-light);
+  color: #000;
+}
+
 
 .login {
   display: flex;
@@ -88,11 +197,6 @@ img {
   max-width: 100%;
 }
 
-.preview-image-main {
-  height: 300px;
-  width: 100%;
-  object-fit: cover;
-}
 
 .primary-image {
   height: 500px;

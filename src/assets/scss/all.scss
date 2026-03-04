@@ -1,12 +1,20 @@
-// 先引入函數
+// 1. 核心函數
 @import "bootstrap/scss/functions";
 
-// 先自訂變數（覆蓋 Bootstrap 變數）
+// 2. 你的自訂變數 (例如 $primary, $prefix 等)
 @import "./variables";
 
-// 再引入 Bootstrap 核心
+// 3. Bootstrap 基礎變數與工具定義
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark"; 
+@import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+@import './utilities'; 
+
+// 5. 最後才引入整包 Bootstrap 或個別元件
 @import "bootstrap/scss/bootstrap";
 
+// 6. 覆蓋用的 CSS
 @import "./App.css";

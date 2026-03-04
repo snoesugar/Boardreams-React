@@ -411,72 +411,74 @@ function AdminProducts() {
             </div>
           )
           : (
-            <div className="container">
-              <div className="row mt-5 bg-white p-md-5 py-5 shadow-lg rounded-4">
-                <div className="col">
-                  <h2>產品列表</h2>
-                  <div className="d-flex justify-content-md-end justify-content-center mb-3">
-                    <button type="button" className="btn btn-outline-danger me-3" onClick={deleteAllProduct}>刪除所有品項</button>
-                    <button type="button" className="btn btn-outline-primary me-md-3" onClick={openAddModal}>建立新的產品</button>
+            <div className="bg-dark pt-83 mt-n83">
+              <div className="container py-5">
+                <div className="row bg-white p-md-5 py-5 shadow-lg rounded-4">
+                  <div className="col">
+                    <h2 className="text-primary">產品列表</h2>
+                    <div className="d-flex justify-content-md-end justify-content-center mb-3">
+                      <button type="button" className="btn btn-outline-danger me-3" onClick={deleteAllProduct}>刪除所有品項</button>
+                      <button type="button" className="btn btn-outline-primary me-md-3" onClick={openAddModal}>建立新的產品</button>
+                    </div>
+                    <div className="table-responsive">
+                      <table className="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>產品名稱</th>
+                            <th>原價</th>
+                            <th>售價</th>
+                            <th>是否啟用</th>
+                            <th>查看細節</th>
+                            <th>編輯</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ProductList
+                            products={products}
+                            openModal={openModal}
+                            deleteProduct={deleteProduct}
+                            setNewProduct={setNewProduct}
+                            openEditModal={openEditModal}
+                          />
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <div className="table-responsive">
-                    <table className="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>產品名稱</th>
-                          <th>原價</th>
-                          <th>售價</th>
-                          <th>是否啟用</th>
-                          <th>查看細節</th>
-                          <th>編輯</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ProductList
-                          products={products}
-                          openModal={openModal}
-                          deleteProduct={deleteProduct}
-                          setNewProduct={setNewProduct}
-                          openEditModal={openEditModal}
-                        />
-                      </tbody>
-                    </table>
-                  </div>
+                  <Pagination
+                    pagination={pagination}
+                    changePage={getProducts}
+                  />
                 </div>
-                <Pagination
-                  pagination={pagination}
-                  changePage={getProducts}
+                <TempProduct
+                  tempProduct={tempProduct}
+                  modalRef={productModalRef}
+                  closeModal={closeModal}
+                />
+                <ProductModal
+                  modalRef={addModalRef}
+                  title="建立新的產品"
+                  closeModal={closeAddModal}
+                  submitText="儲存"
+                  submitAction={addNewProduct}
+                  newProduct={newProduct}
+                  handleNewProductChange={handleNewProductChange}
+                  setNewProduct={setNewProduct}
+                  errors={error}
+                  handleFileChange={handleFileChange}
+                />
+                <ProductModal
+                  modalRef={editProductRef}
+                  title="編輯產品"
+                  closeModal={closeEditModal}
+                  submitText="儲存"
+                  submitAction={updateProduct}
+                  newProduct={newProduct}
+                  handleNewProductChange={handleNewProductChange}
+                  setNewProduct={setNewProduct}
+                  errors={error}
+                  handleFileChange={handleFileChange}
                 />
               </div>
-              <TempProduct
-                tempProduct={tempProduct}
-                modalRef={productModalRef}
-                closeModal={closeModal}
-              />
-              <ProductModal
-                modalRef={addModalRef}
-                title="建立新的產品"
-                closeModal={closeAddModal}
-                submitText="儲存"
-                submitAction={addNewProduct}
-                newProduct={newProduct}
-                handleNewProductChange={handleNewProductChange}
-                setNewProduct={setNewProduct}
-                errors={error}
-                handleFileChange={handleFileChange}
-              />
-              <ProductModal
-                modalRef={editProductRef}
-                title="編輯產品"
-                closeModal={closeEditModal}
-                submitText="儲存"
-                submitAction={updateProduct}
-                newProduct={newProduct}
-                handleNewProductChange={handleNewProductChange}
-                setNewProduct={setNewProduct}
-                errors={error}
-                handleFileChange={handleFileChange}
-              />
             </div>
           )
       }
