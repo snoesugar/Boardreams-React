@@ -37,7 +37,7 @@ const FrontLayout = () => {
               </Link>
 
               <button
-                className="navbar-toggler"
+                className="navbar-toggler border-gold-dark"
                 type="button"
                 onClick={toggleNavbar}
               >

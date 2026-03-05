@@ -236,7 +236,7 @@ const Cart = () => {
                             </span>
                             <button
                               type="button"
-                              className="btn btn-primary bg-gradient fs-3 py-2 px-5 rounded-pill"
+                              className="btn-dream-add fs-3 py-2 px-5 rounded-pill"
                               disabled={cartList.length === 0}
                               onClick={handleCheckout}
                             >

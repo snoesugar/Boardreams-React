@@ -412,43 +412,125 @@ function AdminProducts() {
           )
           : (
             <div className="bg-dark pt-83 mt-n83">
-              <div className="container py-5">
-                <div className="row bg-white p-md-5 py-5 shadow-lg rounded-4">
-                  <div className="col">
-                    <h2 className="text-primary">產品列表</h2>
-                    <div className="d-flex justify-content-md-end justify-content-center mb-3">
-                      <button type="button" className="btn btn-outline-danger me-3" onClick={deleteAllProduct}>刪除所有品項</button>
-                      <button type="button" className="btn btn-outline-primary me-md-3" onClick={openAddModal}>建立新的產品</button>
+              <div className="admin-products-page py-5">
+                <div className="container">
+                  <div className="glass-panel p-4 p-lg-5 shadow-dream rounded-4 border-gold-subtle">
+
+                    {/* 頂部功能列 */}
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+                      <div>
+                        <h2 className="text-gold-gradient font-serif mb-1">產品藏寶庫</h2>
+                        <p className="text-muted small mb-0">管理您的桌遊藏品與庫存狀態</p>
+                      </div>
+
+                      <div className="d-flex gap-2">
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger"
+                          onClick={deleteAllProduct}
+                        >
+                          <i className="bi bi-trash3 me-2"></i>
+                          毀滅所有品項
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-dream-submit"
+                          onClick={openAddModal}
+                        >
+                          <i className="bi bi-plus-lg me-2"></i>
+                          鑑定新產品
+                        </button>
+                      </div>
                     </div>
+
+                    {/* 產品表格區 */}
                     <div className="table-responsive">
-                      <table className="table table-hover">
+                      <table className="table admin-table align-middle">
                         <thead>
                           <tr>
-                            <th>產品名稱</th>
-                            <th>原價</th>
-                            <th>售價</th>
-                            <th>是否啟用</th>
-                            <th>查看細節</th>
-                            <th>編輯</th>
+                            <th className="ps-4">分類</th>
+                            <th>產品資訊</th>
+                            <th>金幣 (原價/售價)</th>
+                            <th className="text-center">上架狀態</th>
+                            <th className="text-center pe-4">操作</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <ProductList
-                            products={products}
-                            openModal={openModal}
-                            deleteProduct={deleteProduct}
-                            setNewProduct={setNewProduct}
-                            openEditModal={openEditModal}
-                          />
+                          {/* 這裡假設你的 ProductList 內部會渲染以下結構 */}
+                          {products.map(item => (
+                            <tr key={item.id}>
+                              <td className="ps-4">
+                                <span className="badge bg-panel text-gold-light border border-gold-dark">{item.category}</span>
+                              </td>
+                              <td>
+                                <div className="d-flex align-items-center">
+                                  {/* 產品小圖 */}
+                                  <div className="product-thumb me-3">
+                                    <img src={item.imageUrl} alt={item.title} />
+                                  </div>
+                                  <div className="d-flex flex-column">
+                                    <span className="text-white fw-bold mb-1">{item.title}</span>
+                                    <span className="text-primary fs-7">
+                                      ID:
+                                      {item.id.slice(-8)}
+                                    </span>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="d-flex flex-column">
+                                  <del className="text-gold-dark fs-7">
+                                    NT
+                                    {item.origin_price}
+                                  </del>
+                                  <span className="text-gold-light fw-bold">
+                                    NT
+                                    {item.price}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="text-center">
+                                {item.is_enabled
+                                  ? (
+                                    <span className="status-dot active" title="已上架"></span>
+                                  )
+                                  : (
+                                    <span className="status-dot inactive" title="未上架"></span>
+                                  )}
+                              </td>
+                              <td className="text-center pe-4">
+                                <div className="btn-group btn-group-sm">
+                                  <button className="btn-action-view" onClick={() => openModal(item)}>
+                                    <i className="bi bi-eye"></i>
+                                  </button>
+                                  <button
+                                    className="btn-action-edit"
+                                    onClick={() => {
+                                      setNewProduct(item)
+                                      openEditModal()
+                                    }}
+                                  >
+                                    <i className="bi bi-pencil-square"></i>
+                                  </button>
+                                  <button className="btn-action-delete" onClick={() => deleteProduct(item.id)}>
+                                    <i className="bi bi-trash"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
+
+                    {/* 分頁 */}
+                    <div className="mt-4">
+                      <Pagination pagination={pagination} changePage={getProducts} />
+                    </div>
                   </div>
-                  <Pagination
-                    pagination={pagination}
-                    changePage={getProducts}
-                  />
                 </div>
+
+                {/* 各種 Modal 元件 */}
                 <TempProduct
                   tempProduct={tempProduct}
                   modalRef={productModalRef}
@@ -479,7 +561,9 @@ function AdminProducts() {
                   handleFileChange={handleFileChange}
                 />
               </div>
+
             </div>
+
           )
       }
     </>

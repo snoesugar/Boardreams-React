@@ -191,6 +191,14 @@ html, body {
   background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
 }
 
+.btn-outline-danger:hover {
+  background: linear-gradient(180deg, #dc3545 0%, #360409 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+}
+
 /* Login.css */
 
 /* 1. 全螢幕奇幻背景 */
@@ -318,6 +326,111 @@ input:-webkit-autofill:active {
     border: 1px solid rgba(197, 163, 103, 0.5) !important;
 }
 
+/* CheckOut */
+
+/* 輸入框：深色透明感 + 金色微光 */
+.glass-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--bs-glow) !important;
+  color: var(--bs-gold-light) !important;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--bs-gold-mid) !important;
+  box-shadow: 0 0 15px var(--bs-glow) !important;
+}
+
+/* 針對 Placeholder 顏色 */
+.glass-input::placeholder {
+  color: rgba(197, 163, 103, 0.4) !important;
+}
+
+/* 錯誤狀態樣式微調 */
+.glass-input.is-invalid {
+  border-color: #ff6b6b !important;
+  background-image: none; /* 移除預設驚嘆號，我們自己做 Icon */
+}
+
+/* 送出按鈕：奢華發光感 */
+.btn-dream-submit {
+  background: linear-gradient(135deg, var(--bs-gold-mid) 0%, var(--bs-gold-dark) 100%);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-dream-submit:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px var(--bs-glow);
+  background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
+}
+
+/* 返回按鈕：金色邊框 */
+.btn-outline-gold {
+  color: var(--bs-gold-mid);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-gold:hover {
+  background: var(--bs-glow);
+  color: var(--bs-gold-light);
+  border-color: var(--bs-gold-light);
+}
+
+/* 分隔線 */
+.border-gold-dark {
+  border-color: var(--bs-glow) !important;
+}
+
+/* 404 專用樣式 */
+
+.not-found-bg {
+  background: radial-gradient(circle at center, #1a233a 0%, #05070a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 緩慢旋轉的羅盤動畫 */
+.spin-slow {
+  animation: compass-spin 8s linear infinite;
+  display: inline-block;
+  filter: drop-shadow(0 0 15px rgba(197, 163, 103, 0.4));
+}
+
+@keyframes compass-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 數字發光效果 */
+.display-1.text-gold-gradient {
+  text-shadow: 0 0 30px rgba(197, 163, 103, 0.3);
+  letter-spacing: 10px;
+}
+
+/* 閃爍的倒數數字 */
+.text-gold {
+  color: #F2E3B5;
+  animation: pulse-gold 1s infinite;
+}
+
+@keyframes pulse-gold {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* 讓背景多一點煙霧感 (選擇性) */
+.not-found-bg::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 img {
   object-fit: contain;
   max-width: 100%;
@@ -386,4 +499,148 @@ img {
 
 .mt-n83 {
   margin-top: -83px;
+}
+
+/* Admin Navbar 專屬樣式 */
+
+.admin-navbar {
+  background: rgba(10, 14, 23, 0.95) !important;
+  border-bottom: 1px solid rgba(197, 163, 103, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0;
+}
+
+/* 中間藥丸型導航欄 */
+.glass-nav-pills {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(197, 163, 103, 0.1);
+}
+
+.admin-nav-link {
+  color: rgba(197, 163, 103, 0.6) !important;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  padding: 0.5rem 1.25rem !important;
+}
+
+.admin-nav-link:hover, .admin-nav-link.active {
+  color: var(--bs-gold-light) !important;
+  background: rgba(197, 163, 103, 0.15);
+  border-radius: 50px;
+}
+
+/* 登出按鈕：稍微紅色的警示感但維持金色風格 */
+.btn-logout-dream {
+  background: transparent;
+  border: 1px solid #8A6D3B;
+  color: #8A6D3B;
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-logout-dream:hover {
+  background: rgba(255, 107, 107, 0.1); /* 微微的紅 */
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* 小工具按鈕 */
+.btn-outline-gold-sm {
+  border: 1px solid var(--bs-glow);
+  color: var(--bs-gold-mid);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    color: var(--bs-gold-light);
+    background: rgba(197, 163, 103, 0.15);
+    transition: all 0.3s ease;
+  }
+}
+
+/* Admin Orders Table 精緻化樣式 */
+
+/* 狀態標籤樣式 */
+.badge-status-paid {
+  background: rgba(40, 167, 69, 0.1);
+  color: #52c41a;
+  border: 1px solid rgba(82, 196, 26, 0.3);
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+}
+
+.badge-status-unpaid {
+  background: rgba(220, 53, 69, 0.1);
+  color: #ff4d4f;
+  border: 1px solid rgba(255, 77, 79, 0.3);
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+}
+
+/* 商品清單小 Badge */
+.bg-glass-gold {
+  background: rgba(197, 163, 103, 0.2);
+  color: #F2E3B5;
+  border: 1px solid rgba(197, 163, 103, 0.4);
+}
+
+/* 產品列表專屬樣式 */
+
+/* 產品縮圖 */
+.product-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(197, 163, 103, 0.3);
+  background: #1a1a1a;
+}
+.product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 狀態圓點 */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-dot.active {
+  background: #52c41a;
+  box-shadow: 0 0 10px rgba(82, 196, 26, 0.5);
+}
+.status-dot.inactive {
+  background: #ff4d4f;
+}
+
+/* 操作按鈕細節 */
+.btn-action-view { 
+  color: #F2E3B5; 
+  background-color: rgba(197, 163, 103, 0.2);
+  border: 1px solid rgba(197, 163, 103, 0.2); 
+}
+.btn-action-edit { 
+  color: #C5A367; 
+  background-color: rgba(197, 163, 103, 0.2);
+  border: 1px solid rgba(197, 163, 103, 0.2); 
+}
+.btn-action-delete { 
+  color: #ff6b6b; 
+  background-color: rgba(197, 163, 103, 0.2);
+  border: 1px solid rgba(197, 163, 103, 0.2); 
+}
+
+.btn-action-view:hover, .btn-action-edit:hover, .btn-action-delete:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
 }

@@ -267,131 +267,142 @@ function AdminOrders() {
 
   return (
     <>
-      <div className="container">
-        <div className="row mt-5 bg-white p-md-5 py-5 shadow-lg rounded-4">
-          <div className="col">
-            <h2>訂單列表</h2>
-            <div className="text-end mb-3">
-              <button type="button" className="btn btn-outline-danger me-3" onClick={deleteAllOrder}>刪除所有訂單</button>
-            </div>
-            <div className="table-responsive">
-              <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th>訂單編號</th>
-                    <th>會員資訊</th>
-                    <th>購買商品清單</th>
-                    <th>金額</th>
-                    <th>付款狀態</th>
-                    <th>編輯</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map(order => (
-                    <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>
-                        <table className="table-sm">
-                          <tbody className="text-start">
-                            <tr>
-                              <th>姓名:</th>
-                              <td>{order.user?.name}</td>
-                            </tr>
-                            <tr>
-                              <th>email:</th>
-                              <td>{order.user?.email}</td>
-                            </tr>
-                            <tr>
-                              <th>電話:</th>
-                              <td>{order.user?.tel}</td>
-                            </tr>
-                            <tr>
-                              <th>地址:</th>
-                              <td>{order.user?.address}</td>
-                            </tr>
-                            <tr>
-                              <th>留言:</th>
-                              <td>{order.message ? order.message : '未留言'}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td>
-                        <table className="table-sm">
-                          <tbody className="text-start">
-                            <tr>
-                              <td>
-                                {Object.values(order.products || {}).map(item => (
-                                  <div key={item.id}>
-                                    <div className="d-flex flex-column mb-2">
-                                      <span>
-                                        <strong>
-                                          {item.product.title}
-                                        </strong>
-                                        {' '}
-                                        {item.qty}
-                                        {item.product.unit}
-                                      </span>
-                                      <span>
-                                        單價:
-                                        {item.total}
-                                      </span>
-                                    </div>
-                                  </div>
-                                ))}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td>{order.total}</td>
-                      <td className={order.is_paid ? 'text-success' : 'text-danger'}>
-                        {order.is_paid ? '已付款' : '未付款'}
-                      </td>
-                      <td>
-                        <div className="btn-group">
-                          <button
-                            type="button"
-                            className="btn btn-outline-primary btn-sm"
-                            onClick={() => {
-                              setNewOrder(order) // 填入要編輯的資料
-                              setIsEditOpen(true) // 開啟編輯 modal
-                            }}
-                          >
-                            編輯
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-outline-danger btn-sm"
-                            onClick={() => deleteOrder(order.id)}
-                          >
-                            刪除
-                          </button>
-                        </div>
-                      </td>
+      <div className="container py-5">
+        <div className="row">
+          <div className="col-12">
+            <div className="glass-panel p-4 p-md-5 shadow-dream rounded-4 border-gold-subtle">
+
+              {/* 標題與功能按鈕 */}
+              <div className="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                  <h2 className="text-gold-gradient font-serif mb-0">訂單管理秘書</h2>
+                  <p className="text-muted small mt-2">監控所有來自冒險者的交易紀錄</p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm rounded-pill px-4"
+                  onClick={deleteAllOrder}
+                >
+                  <i className="bi bi-trash3 me-2"></i>
+                  清空所有紀錄
+                </button>
+              </div>
+
+              <div className="table-responsive">
+                <table className="table align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col" className="ps-4">訂單編號 / 日期</th>
+                      <th scope="col">冒險者資訊</th>
+                      <th scope="col">購買品項</th>
+                      <th scope="col">總金幣</th>
+                      <th scope="col" className="text-center">交付狀態</th>
+                      <th scope="col" className="text-center">操作</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {orders.map(order => (
+                      <tr key={order.id}>
+                        {/* 編號與時間 */}
+                        <td className="ps-4">
+                          <div className="text-gold-light fw-bold small">
+                            #
+                            {order.id.slice(-6)}
+                          </div>
+                          <div className="text-gold-dark fs-8">{new Date(order.create_at * 1000).toLocaleDateString()}</div>
+                        </td>
+
+                        {/* 會員簡訊 */}
+                        <td>
+                          <div className="d-flex flex-column">
+                            <span className="text-white fw-medium">{order.user?.name}</span>
+                            <span className="text-gold-dark fs-8">{order.user?.email}</span>
+                            <span className="text-gold-dark fs-8">{order.user?.tel}</span>
+                          </div>
+                        </td>
+
+                        {/* 商品清單：使用小標籤排版 */}
+                        <td>
+                          {Object.values(order.products || {}).map(item => (
+                            <div key={item.id} className="text-nowrap small mb-1">
+                              <span className="badge bg-glass-gold me-2">{item.qty}</span>
+                              <span className="text-gold-mid me-2">{item.product.title}</span>
+                              <span className="text-gold-dark">{item.product.price}</span>
+                            </div>
+                          ))}
+                        </td>
+
+                        {/* 金額 */}
+                        <td>
+                          <span className="fw-bold">
+                            {order.total?.toLocaleString()}
+                          </span>
+                        </td>
+
+                        {/* 付款狀態 */}
+                        <td className="text-center">
+                          {order.is_paid
+                            ? (
+                              <span className="badge-status-paid">
+                                <i className="bi bi-check-circle-fill me-1"></i>
+                                已結清
+                              </span>
+                            )
+                            : (
+                              <span className="badge-status-unpaid">
+                                <i className="bi bi-exclamation-triangle-fill me-1"></i>
+                                待支付
+                              </span>
+                            )}
+                        </td>
+
+                        {/* 操作按鈕 */}
+                        <td className="text-center">
+                          <div className="btn-group shadow-sm">
+                            <button
+                              type="button"
+                              className="btn-action-edit"
+                              onClick={() => {
+                                setNewOrder(order)
+                                setIsEditOpen(true)
+                              }}
+                            >
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                            <button
+                              type="button"
+                              className="btn-action-delete"
+                              onClick={() => deleteOrder(order.id)}
+                            >
+                              <i className="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-4">
+                <Pagination pagination={pagination} changePage={getOrders} />
+              </div>
             </div>
           </div>
-
-          <Pagination
-            pagination={pagination}
-            changePage={getOrders}
-          />
-          <EditOrder
-            editOrderRef={editOrderRef}
-            closeEditModal={closeEditModal}
-            updateOrder={updateOrder}
-            newOrder={newOrder}
-            handleNewOrderChange={handleNewOrderChange}
-            setNewOrder={setNewOrder}
-            updateOrderQty={updateOrderQty}
-            deleteProduct={deleteProduct}
-            errors={error}
-          />
         </div>
+
+        {/* Modal 元件 */}
+        <EditOrder
+          editOrderRef={editOrderRef}
+          closeEditModal={closeEditModal}
+          updateOrder={updateOrder}
+          newOrder={newOrder}
+          handleNewOrderChange={handleNewOrderChange}
+          setNewOrder={setNewOrder}
+          updateOrderQty={updateOrderQty}
+          deleteProduct={deleteProduct}
+          errors={error}
+        />
       </div>
     </>
   )
