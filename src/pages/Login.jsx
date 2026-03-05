@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import useMessage from '../hooks/useMessage'
+import { useEffect } from 'react'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 
@@ -65,16 +66,26 @@ const Login = () => {
       showError(error.response.data.message)
     }
   }
+
+  // 進場動畫：讓表單浮現
+  useEffect(() => {
+    const form = document.getElementById('form')
+    setTimeout(() => {
+      form.classList.add('fade-in-up')
+    }, 100)
+  }, [])
+
   return (
-    <div className="container login-dream-bg login">
+    <div className="login-dream-bg d-flex flex-column align-items-center justify-content-center vh-100">
       <div className="row justify-content-center">
         <div className="text-center mb-5">
           <div className="text-gold-gradient fs-2 font-serif tracking-widest mb-1">Boardreams</div>
           <p className="text-gold-mid small">－ 冒險者公會登入入口 －</p>
         </div>
         <div className="col-8">
-          <form id="form" className="mt-5 bg-panel border border-primary p-5 shadow-lg rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
+          <form id="form" className="mt-5 glass-login-card glass-panel border border-primary p-5 shadow-dream rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
             <div className="form-floating mb-3">
+              <i className="bi bi-person-bounding-box position-absolute text-gold-dark login-icon"></i>
               <input
                 type="email"
                 className={`form-control glass-panel ${errors.username ? 'is-invalid' : ''}`}
@@ -100,6 +111,7 @@ const Login = () => {
               )}
             </div>
             <div className="form-floating">
+              <i className="bi bi-key-fill position-absolute text-gold-dark login-icon"></i>
               <input
                 type="password"
                 className={`form-control glass-panel ${errors.password ? 'is-invalid' : ''}`}
@@ -115,11 +127,13 @@ const Login = () => {
               )}
             </div>
             <button
-              className="btn btn-lg btn-primary w-100 mt-3"
+              className="btn btn-lg btn-login-dream text-dark border-0 fw-bold w-100 mt-3"
               type="submit"
             >
-              登入
+              <i className="bi bi-door-open-fill me-2"></i>
+              開啟夢境
             </button>
+            <p className="mt-5 mb-0 text-center text-gold-dark small">&copy; 2026 Boardreams. Studio</p>
           </form>
         </div>
       </div>

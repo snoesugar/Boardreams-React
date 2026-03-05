@@ -205,8 +205,8 @@ html, body {
 .login-dream-bg::after {
   content: "";
   position: absolute;
-  width: 2px;
-  height: 2px;
+  width: 3px;
+  height: 3px;
   background: white;
   border-radius: 50%;
   box-shadow: 
@@ -229,8 +229,6 @@ html, body {
   background: rgba(22, 27, 38, 0.7) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(197, 163, 103, 0.2) !important;
-  border-radius: 20px !important;
   transition: all 0.5s ease;
 }
 
@@ -243,14 +241,10 @@ html, body {
 .glass-login-card .glass-panel {
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(197, 163, 103, 0.3) !important;
-  color: var(--ds-gold-light) !important;
-  transition: all 0.3s ease;
+  color: var(--bs-gold-mid) !important;
+  transition: all 0.3s ease !important;
 }
 
-.glass-login-card .glass-panel:focus {
-  border-color: var(--ds-gold) !important;
-  box-shadow: 0 0 10px rgba(197, 163, 103, 0.5) !important;
-}
 
 /* 錯誤提示樣式修正 */
 .glass-login-card .is-invalid {
@@ -258,23 +252,20 @@ html, body {
 }
 
 /* 4. 奢華金色按鈕 */
-.btn-dream {
-  background: linear-gradient(135deg, var(--ds-gold) 0%, var(--ds-gold-dark) 100%);
-  color: #000 !important;
-  border: none;
-  font-weight: bold;
+.btn-login-dream {
+  background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
   letter-spacing: 2px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.btn-dream:hover {
-  background: linear-gradient(135deg, var(--ds-gold-light) 0%, var(--ds-gold) 100%);
+.btn-login-dream:hover {
+  background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(197, 163, 103, 0.6);
 }
 
-.btn-dream:active {
+.btn-login-dream:active {
   transform: translateY(1px);
 }
 
@@ -301,12 +292,30 @@ html, body {
   }
 }
 
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+.login-icon {
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+/* 針對自動填充的帳號密碼輸入框 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    /* 使用內陰影遮蓋背景，顏色設為你的黑色 (或與 glass-panel 一致) */
+    -webkit-box-shadow: 0 0 0 1000px rgba(22, 27, 38, 1) inset !important;
+    
+    /* 修正填充後的文字顏色，確保它是金色或白色 */
+    -webkit-text-fill-color: #F2E3B5 !important;
+    
+    /* 保持邊框平滑 */
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* 如果你的玻璃質感背景是有透明度的，建議直接給一個實色背景避免透出底色 */
+.glass-login-card .form-control:-webkit-autofill {
+    border: 1px solid rgba(197, 163, 103, 0.5) !important;
 }
 
 img {
