@@ -98,16 +98,14 @@ html, body {
 
 /* 夢想風格的按鈕 */
 .btn-dream {
-  background: transparent;  
+  background: rgba(22, 27, 38, 0.4);  
   border: 1px solid #C5A367;
   color: #F2E3B5;
   border-radius: 50px;
   transition: all 0.3s ease;
   box-shadow: 0 0 10px rgba(197, 163, 103, 0.2);
-  left: 40%;
-  bottom: 5%;
   &:hover {     
-    background: rgba(22, 27, 38, 0.7);  
+    background: rgba(22, 27, 38, 0.7) !important;  
     box-shadow: 0 0 30px rgba(197, 163, 103, 0.8);
   }
 }
@@ -117,6 +115,44 @@ html, body {
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(197, 163, 103, 0.2) !important;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+/*home*/
+
+/* 輪播導航按鈕 (左右箭頭) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #c9b166 !important; /* 金色 */
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.5rem !important; /* 調整箭頭大小 */
+}
+
+/* 輪播分頁器 (下方小點) */
+.swiper-pagination-bullet {
+  background-color: #555 !important; /* 未選中小點的顏色 */
+  opacity: 1 !important;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #c9b166 !important; /* 選中小點的顏色 */
 }
 
 /*productList*/
