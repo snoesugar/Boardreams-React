@@ -136,6 +136,17 @@ html, body {
   color: #F2E3B5 !important;
 }
 
+/* 添加在你的 CSS 檔中 */
+.skeleton-line {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
 /* 夢想風格分頁 */
 .pagination-dream .page-link {
   background: transparent !important;
@@ -525,7 +536,10 @@ img {
 .cart-img {
   width: 100px;
   height: 100px;
+  min-width: 100px;  /* 強制最小寬度 */
+  min-height: 100px; /* 強制最小高度 */
   object-fit: cover;
+  flex-shrink: 0;    /* 如果父元素是 flex，防止被壓縮 */
 }
 
 .img-fluid.product-main {

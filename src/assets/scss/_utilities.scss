@@ -828,17 +828,12 @@ $utilities: map-merge(
       property: width,
       class: w,
       values: (
-        16: 16%,    //custom
-        24: 24%,    //custom
         25: 25%,
-        27: 27%,   // custom
-        31: 31%,   // custom
-        32: 32%,   // custom
-        45: 45%,   // custom
-        48: 48%,   // custom
         50: 50%,
-        66: 66%,   // custom
-        75: 75%,
+        70: 70%, //custom
+        75: 75%, 
+        80: 80%, //custom
+        90: 90%, //custom
         100: 100%,
         auto: auto
       )

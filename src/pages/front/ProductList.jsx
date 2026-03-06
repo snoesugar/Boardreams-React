@@ -17,7 +17,10 @@ const ProductList = () => {
   const [pagination, setPagination] = useState({})
   const [loading, setLoading] = useState(true)
   const [addingId, setAddingId] = useState(null)
-  const [categories, setCategories] = useState(['全部遊戲'])
+  const [categories, setCategories] = useState(() => {
+    const cached = localStorage.getItem('cachedCategories')
+    return cached ? JSON.parse(cached) : ['全部遊戲']
+  })
   const [currentCategory, setCurrentCategory] = useState('全部遊戲')
   const { showSuccess, showError } = useMessage()
   const dispatch = useDispatch()
@@ -36,7 +39,11 @@ const ProductList = () => {
 
         // 順便產出分類
         const unformatted = data.map(item => item.category)
-        setCategories(['全部遊戲', ...new Set(unformatted)].filter(Boolean))
+        const uniqueCategories = ['全部遊戲', ...new Set(unformatted)].filter(Boolean)
+
+        setCategories(uniqueCategories)
+        // ✅ 存入快取，下次 F5 就能立刻用
+        localStorage.setItem('cachedCategories', JSON.stringify(uniqueCategories))
 
         // 初始化顯示第一頁
         renderPage(data, 1, '全部遊戲')
@@ -48,6 +55,7 @@ const ProductList = () => {
     finally {
       setLoading(false)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // ✅ 核心：處理前端分頁與過濾
@@ -72,45 +80,6 @@ const ProductList = () => {
     })
   }
 
-  // 2. 核心功能：抓取所有產品並提取不重複分類
-  const getAllCategories = useCallback(async () => {
-    try {
-      // 注意：這裡的 URL 去掉了 ?page=...，通常 API 會回傳所有資料（不分頁）
-      // 或者使用專門獲取全部資料的路徑如 /api/${API_PATH}/products/all
-      const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
-
-      if (res.data.success) {
-        const allProducts = res.data.products
-        // 提取分類並去重
-        const unformatted = allProducts.map(item => item.category)
-        const uniqueCategories = ['全部遊戲', ...new Set(unformatted)].filter(Boolean)
-        setCategories(uniqueCategories)
-      }
-    }
-    catch (error) {
-      console.error('無法獲取分類清單', error)
-    }
-  }, [])
-
-  // 抓取產品資料
-  const getProducts = useCallback(async (page = 1, category = '') => {
-    setLoading(true) // 開始抓資料
-    try {
-      const categoryParam = (category && category !== '全部遊戲') ? `&category=${category}` : ''
-      const res = await axios.get(
-        `${API_BASE}/api/${API_PATH}/products?page=${page}${categoryParam}`,
-      )
-
-      setProducts(res.data.products)
-      setPagination(res.data.pagination)
-    }
-    catch (error) {
-      showError(error.response.data.message)
-    }
-    finally {
-      setLoading(false) // 完成抓取
-    }
-  }, [])
   // 加入購物車
   const addToCart = async (product, qty = 1) => {
     if (addingId === product.id) return
@@ -141,143 +110,131 @@ const ProductList = () => {
   const handleCategoryClick = (e, category) => {
     e.preventDefault()
     setCurrentCategory(category)
-    setPagination(1)
+    // 這裡要傳入完整的產品資料 allProducts，不要直接用 products (有時它可能還沒更新)
     renderPage(products, 1, category)
   }
 
   const handlePageChange = (page) => {
-    setPagination(page)
     renderPage(products, page, currentCategory)
   }
 
   useEffect(() => {
     getInitialData()
-    getAllCategories()
-    getProducts()
     dispatch(getCartAsync())
-  }, [dispatch, getProducts, getAllCategories, getInitialData])
+  }, [dispatch, getInitialData])
 
   return (
     <div className="bg-dark pt-83 mt-n83">
       <div className="container mt-4">
-        {loading
-          ? (
-            <div className="row">
-              <div className="col-lg-3 d-none d-lg-block">
-                <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '100px' }}>
-                  <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
-                  <ul className="list-group list-group-flush">
-                    {categories.map(category => (
-                      <li key={category}>
-                        <a
-                          href="#"
-                          className={`list-group-item list-group-item-dream transition-ease02 rounded ${
-                            currentCategory === category ? 'active' : ''
-                          }`}
-                          onClick={e => handleCategoryClick(e, category)}
-                        >
-                          {category}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        <div className="row">
+          <div className="col-lg-3 d-none d-lg-block">
+            <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '135px' }}>
+              <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
+              <ul className="list-group list-group-flush">
+                {loading && categories.length <= 1
+                  ? [...Array(8)].map((_, i) => (
+                    <li key={i} className="list-group-item list-group-item-dream rounded mb-2">
+                      <div className="skeleton-line" style={{ height: '20px', width: '80%', backgroundColor: '#333', borderRadius: '4px' }}></div>
+                    </li>
+                  ))
+                  : categories.map(category => (
+                    <li key={category}>
+                      <a
+                        href="#"
+                        className={`list-group-item list-group-item-dream ... ${currentCategory === category ? 'active' : ''}`}
+                        onClick={e => handleCategoryClick(e, category)}
+                      >
+                        {category}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+          {loading
+            ? (
               <div className="col-lg-9">
                 <div className="row gy-4 mb-4">
                   {[...Array(12)].map((_, i) => (
                     <div className="col-lg-4 col-sm-6 col-12" key={i}>
-                      <div className="card border-0 h-100 opacity-25">
-                        <div className="bg-gray-300 py-6 my-6"></div>
-                        <div className="card-body d-flex justify-content-center align-items-center">
-                          <Spinner />
-                          <div className="bg-gray-200 mb-5"></div>
+                      {/* 骨架卡片，與實際卡片擁有相同的 class 和高度 */}
+                      <div className="card product-card-dream h-100 border-0 overflow-hidden">
+                        {/* 圖片區域骨架 */}
+                        <div className="skeleton-line product-img-dream"></div>
+
+                        <div className="card-body p-4 text-center">
+                          {/* 標題骨架 */}
+                          <div className="skeleton-line mb-3 bg-loading w-70 py-3 mx-auto"></div>
+                          {/* 內文骨架 */}
+                          <div className="skeleton-line mb-4 bg-loading w-90 py-4 mx-auto"></div>
+                          <div className="skeleton-line mb-4 bg-loading w-50 py-3 mx-auto"></div>
+                          {/* 按鈕骨架 */}
+                          <div className="d-flex justify-content-center gap-2">
+                            <div className="skeleton-line w-80 bg-loading py-3 rounded-pill"></div>
+                            <div className="skeleton-line w-80 bg-loading py-3 rounded-pill"></div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          )
-          : (
-            <>
-              <div className="row">
-                <div className="col-lg-3 d-none d-lg-block">
-                  <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '100px' }}>
-                    <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
-                    <ul className="list-group list-group-flush">
-                      {categories.map(category => (
-                        <li key={category}>
-                          <a
-                            href="#"
-                            className={`list-group-item list-group-item-dream transition-ease02 rounded ${
-                              currentCategory === category ? 'active' : ''
-                            }`}
-                            onClick={e => handleCategoryClick(e, category)}
-                          >
-                            {category}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-9">
-                  <div className="row gy-4 mb-4">
-                    {
-                      displayProducts.map((product) => {
-                        return (
-                          <div className="col-lg-4 col-sm-6 col-12" key={product.id}>
-                            <div className="card product-card-dream h-100">
-                              <div className="position-relative overflow-hidden">
-                                <img src={product.imageUrl} className="card-img-top product-img-dream img-fluid" alt={product.title} />
-                              </div>
-                              <div className="d-flex flex-column justify-content-between card-body p-4 text-center">
-                                <h5 className="card-title text-gold-light mb-3">{product.title}</h5>
-                                <p className="card-text text-gold-mid small">{product.content}</p>
+            )
+            : (
+              <div className="col-lg-9">
+                <div className="row gy-4 mb-4">
+                  {
+                    displayProducts.map((product) => {
+                      return (
+                        <div className="col-lg-4 col-sm-6 col-12" key={product.id}>
+                          <div className="card product-card-dream h-100">
+                            <div className="position-relative overflow-hidden">
+                              <img src={product.imageUrl} className="card-img-top product-img-dream img-fluid" alt={product.title} />
+                            </div>
+                            <div className="d-flex flex-column justify-content-between card-body p-4 text-center">
+                              <h5 className="card-title text-gold-light mb-3">{product.title}</h5>
+                              <p className="card-text text-gold-mid small">{product.content}</p>
 
-                                <div className="d-flex justify-content-center align-items-baseline mb-3">
-                                  <span className="small text-gold-dark text-decoration-line-through me-2">
-                                    {product.origin_price}
-                                    元
-                                  </span>
-                                  <span className="fs-4 price-gradient">
-                                    {product.price}
-                                    元
-                                  </span>
-                                </div>
-                                <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                                  <Link type="button" to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm fs-7 px-3 rounded-pill">查看更多</Link>
-                                  <button type="button" className="btn-dream-add btn-sm px-3 rounded-pill" disabled={addingId === product.id} onClick={() => addToCart(product)}>
-                                    {addingId === product.id
-                                      ? (
-                                        <span className="fs-7">
-                                          <i className="bi bi-magic me-2 pulse"></i>
-                                          召喚中...
-                                        </span>
-                                      )
-                                      : (
-                                        <span className="fs-7">加入購物車</span>
-                                      )}
-                                  </button>
-                                </div>
+                              <div className="d-flex justify-content-center align-items-baseline mb-3">
+                                <span className="small text-gold-dark text-decoration-line-through me-2">
+                                  {product.origin_price}
+                                  元
+                                </span>
+                                <span className="fs-4 price-gradient">
+                                  {product.price}
+                                  元
+                                </span>
+                              </div>
+                              <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                <Link type="button" to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm fs-7 px-3 rounded-pill">查看更多</Link>
+                                <button type="button" className="btn-dream-add btn-sm px-3 rounded-pill" disabled={addingId === product.id} onClick={() => addToCart(product)}>
+                                  {addingId === product.id
+                                    ? (
+                                      <span className="fs-7">
+                                        <i className="bi bi-magic me-2 pulse"></i>
+                                        召喚中...
+                                      </span>
+                                    )
+                                    : (
+                                      <span className="fs-7">加入購物車</span>
+                                    )}
+                                </button>
                               </div>
                             </div>
                           </div>
-                        )
-                      })
-                    }
-                  </div>
-                  <Pagination
-                    pagination={pagination}
-                    changePage={handlePageChange}
-                    disabled={loading}
-                  />
+                        </div>
+                      )
+                    })
+                  }
                 </div>
+                <Pagination
+                  pagination={pagination}
+                  changePage={handlePageChange}
+                  disabled={loading}
+                />
               </div>
-            </>
-          )}
+            )}
+        </div>
       </div>
     </div>
   )
