@@ -2,7 +2,63 @@ html, body {
   background-color: var(--bs-dark) !important;
 }
 
+
 /*Navbar*/
+/* 點選後的動畫 (需配合 isOpen 狀態控制類別) */
+.navbar-toggler:not(.collapsed) .top-bar { transform: translateY(7px) rotate(45deg); }
+.navbar-toggler:not(.collapsed) .middle-bar { opacity: 0; }
+.navbar-toggler:not(.collapsed) .bottom-bar { transform: translateY(-7px) rotate(-45deg); }
+
+/* --- 手機版漢堡選單美化 --- */
+.toggler-icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #C5A367;
+  margin: 5px 0;
+  transition: all 0.3s;
+}
+
+.pulse-animation {
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(255, 77, 79, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+}
+
+/* --- 中間連結動效 --- */
+.nav-link-dream {
+  color: rgba(242, 227, 181, 0.7) !important;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  padding: 10px 0;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nav-link-dream::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #C5A367, transparent);
+  transition: width 0.3s ease;
+}
+
+.nav-link-dream:hover {
+  color: #F2E3B5 !important;
+}
+
+.nav-link-dream:hover::after {
+  width: 100%;
+}
+
 /* 導覽列玻璃質感 */
 .navbar-dream {
   z-index: 1050 !important; /* 比 Bootstrap 預設的 1030 更高 */
@@ -112,7 +168,7 @@ html, body {
 .product-card-dream {
   position: relative; /* 這是關鍵：讓 ::after 以這張卡片為邊界 */
   overflow: hidden;    /* 這是關鍵：防止閃光跑出卡片圓角之外 */
-  background: var(--ds-panel) !important; /* 深色背景 */
+  background: var(--bs-panel) !important; /* 深色背景 */
   border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
   border-radius: 15px !important;
   transition: all 0.3s ease !important;
@@ -125,20 +181,22 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 200%;
   height: 100%;
   background: linear-gradient(
     60deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.1) 50%, /* 稍微調亮一點點，效果更明顯 */
-    transparent 70%
+    transparent 0%,
+    rgba(255, 255, 255, 0) 30%,    /* 起始完全透明 */
+    rgba(255, 255, 255, 0.15) 50%,  /* 中心光點 */
+    rgba(255, 255, 255, 0) 70%,    /* 結束完全透明 */
+    transparent 100%
   );
   transform: translateX(-100%);
   pointer-events: none; /* 確保閃光層不會干擾滑鼠點擊 */
 }
 
 .product-card-dream:hover::after {
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 1.5s infinite ease-in-out;
 }
 
 @keyframes shimmer {
@@ -155,6 +213,8 @@ html, body {
 /* 產品圖質感與Hover效果 */
 .product-img-dream {
   border-radius: 12px 12px 0 0;
+  height: 280px !important;
+  object-fit: cover;
   transition: transform 0.5s ease;
 }
 

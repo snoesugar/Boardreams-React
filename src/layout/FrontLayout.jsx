@@ -23,25 +23,28 @@ const FrontLayout = () => {
 
   return (
     <>
-      <div className="sticky-top navbar-dream">
+      <nav className="sticky-top navbar-dream">
         <div className="container-lg">
-          <nav className="navbar navbar-expand-lg navbar-light">
+          <nav className="navbar navbar-expand-lg">
             <div className="container-fluid px-0">
 
               <Link
-                className="navbar-brand text-primary navbar-brand-dream fs-3 p-0"
+                className="navbar-brand navbar-brand-dream py-3"
                 to="/"
                 onClick={closeNavbar}
               >
-                『桌』思夢想
+                <span className="fs-4">『桌』</span>
+                <span className="fs-5">思夢想</span>
               </Link>
 
               <button
-                className="navbar-toggler border-gold-dark"
+                className={`navbar-toggler border-0 ${!isOpen ? 'collapsed' : ''}`}
                 type="button"
                 onClick={toggleNavbar}
               >
-                <span className="navbar-toggler-icon"></span>
+                <span className="toggler-icon-bar top-bar"></span>
+                <span className="toggler-icon-bar middle-bar"></span>
+                <span className="toggler-icon-bar bottom-bar"></span>
               </button>
 
               <div
@@ -50,25 +53,25 @@ const FrontLayout = () => {
                 <ul className="navbar-nav">
                   <li className="nav-item">
                     <Link
-                      className="nav-link px-3 text-primary"
+                      className="nav-link-dream px-3 text-primary"
                       to="/productList"
                       onClick={closeNavbar}
                     >
-                      產品清單
-                      <i className="bi bi-list-stars ms-1"></i>
+                      <span>產品清單</span>
+                      <i className="bi bi-compass ms-1"></i>
                     </Link>
                   </li>
 
                   <li className="nav-item">
                     <Link
-                      className="nav-link px-3 text-primary"
+                      className="nav-link-dream px-3 text-primary"
                       to="/cart"
                       onClick={closeNavbar}
                     >
                       購物車
                       <i className="bi bi-cart-fill ms-1 position-relative">
                         {totalQty > 0 && (
-                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger pulse-animation">
                             {totalQty}
                             <span className="visually-hidden">cart items</span>
                           </span>
@@ -81,12 +84,12 @@ const FrontLayout = () => {
                 <ul className="navbar-nav ms-auto">
                   <li className="nav-item">
                     <Link
-                      className="nav-link px-5 text-primary"
+                      className="nav-link-dream px-lg-5 px-3 text-primary"
                       to="/login"
                       onClick={closeNavbar}
                     >
-                      登入
-                      <i className="bi bi-person-fill ms-1"></i>
+                      <i className="bi bi-person-circle me-2"></i>
+                      <span>冒險者登入</span>
                     </Link>
                   </li>
                 </ul>
@@ -95,7 +98,7 @@ const FrontLayout = () => {
             </div>
           </nav>
         </div>
-      </div>
+      </nav>
 
       <Outlet />
 

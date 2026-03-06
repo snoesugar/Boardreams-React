@@ -13,18 +13,92 @@ const API_PATH = import.meta.env.VITE_API_PATH
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
+  const [displayProducts, setDisplayProducts] = useState([])
   const [pagination, setPagination] = useState({})
   const [loading, setLoading] = useState(true)
   const [addingId, setAddingId] = useState(null)
+  const [categories, setCategories] = useState(['全部遊戲'])
+  const [currentCategory, setCurrentCategory] = useState('全部遊戲')
   const { showSuccess, showError } = useMessage()
   const dispatch = useDispatch()
 
+  const perPage = 12
+
+  // 抓取「所有」產品
+  const getInitialData = useCallback(async () => {
+    setLoading(true)
+    try {
+      // 使用 /products/all 避開後端 10 筆限制
+      const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
+      if (res.data.success) {
+        const data = res.data.products
+        setProducts(data)
+
+        // 順便產出分類
+        const unformatted = data.map(item => item.category)
+        setCategories(['全部遊戲', ...new Set(unformatted)].filter(Boolean))
+
+        // 初始化顯示第一頁
+        renderPage(data, 1, '全部遊戲')
+      }
+    }
+    catch {
+      showError('載入失敗')
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [])
+
+  // ✅ 核心：處理前端分頁與過濾
+  const renderPage = (data, page, category) => {
+    // 1. 先過濾種類
+    const filtered = category === '全部遊戲'
+      ? data
+      : data.filter(item => item.category === category)
+
+    // 2. 再切出該頁的 12 筆
+    const start = (page - 1) * perPage
+    const end = start + perPage
+    setDisplayProducts(filtered.slice(start, end))
+
+    // 3. 手動模擬 pagination 物件給 Pagination 元件用
+    const totalPages = Math.ceil(filtered.length / perPage)
+    setPagination({
+      total_pages: totalPages,
+      current_page: page,
+      has_pre: page > 1,
+      has_next: page < totalPages,
+    })
+  }
+
+  // 2. 核心功能：抓取所有產品並提取不重複分類
+  const getAllCategories = useCallback(async () => {
+    try {
+      // 注意：這裡的 URL 去掉了 ?page=...，通常 API 會回傳所有資料（不分頁）
+      // 或者使用專門獲取全部資料的路徑如 /api/${API_PATH}/products/all
+      const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
+
+      if (res.data.success) {
+        const allProducts = res.data.products
+        // 提取分類並去重
+        const unformatted = allProducts.map(item => item.category)
+        const uniqueCategories = ['全部遊戲', ...new Set(unformatted)].filter(Boolean)
+        setCategories(uniqueCategories)
+      }
+    }
+    catch (error) {
+      console.error('無法獲取分類清單', error)
+    }
+  }, [])
+
   // 抓取產品資料
-  const getProducts = useCallback(async (page = 1) => {
+  const getProducts = useCallback(async (page = 1, category = '') => {
     setLoading(true) // 開始抓資料
     try {
+      const categoryParam = (category && category !== '全部遊戲') ? `&category=${category}` : ''
       const res = await axios.get(
-        `${API_BASE}/api/${API_PATH}/products?page=${page}`,
+        `${API_BASE}/api/${API_PATH}/products?page=${page}${categoryParam}`,
       )
 
       setProducts(res.data.products)
@@ -36,7 +110,6 @@ const ProductList = () => {
     finally {
       setLoading(false) // 完成抓取
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // 加入購物車
   const addToCart = async (product, qty = 1) => {
@@ -65,10 +138,24 @@ const ProductList = () => {
     }
   }
 
+  const handleCategoryClick = (e, category) => {
+    e.preventDefault()
+    setCurrentCategory(category)
+    setPagination(1)
+    renderPage(products, 1, category)
+  }
+
+  const handlePageChange = (page) => {
+    setPagination(page)
+    renderPage(products, page, currentCategory)
+  }
+
   useEffect(() => {
+    getInitialData()
+    getAllCategories()
     getProducts()
     dispatch(getCartAsync())
-  }, [dispatch, getProducts])
+  }, [dispatch, getProducts, getAllCategories, getInitialData])
 
   return (
     <div className="bg-dark pt-83 mt-n83">
@@ -80,17 +167,25 @@ const ProductList = () => {
                 <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '100px' }}>
                   <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
                   <ul className="list-group list-group-flush">
-                    <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 active rounded">全部遊戲</a></li>
-                    <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">合作遊戲</a></li>
-                    <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">派對遊戲</a></li>
-                    <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">硬核策略</a></li>
-                    <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">陣營遊戲</a></li>
+                    {categories.map(category => (
+                      <li key={category}>
+                        <a
+                          href="#"
+                          className={`list-group-item list-group-item-dream transition-ease02 rounded ${
+                            currentCategory === category ? 'active' : ''
+                          }`}
+                          onClick={e => handleCategoryClick(e, category)}
+                        >
+                          {category}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
               <div className="col-lg-9">
                 <div className="row gy-4 mb-4">
-                  {[...Array(9)].map((_, i) => (
+                  {[...Array(12)].map((_, i) => (
                     <div className="col-lg-4 col-sm-6 col-12" key={i}>
                       <div className="card border-0 h-100 opacity-25">
                         <div className="bg-gray-300 py-6 my-6"></div>
@@ -112,26 +207,31 @@ const ProductList = () => {
                   <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '100px' }}>
                     <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
                     <ul className="list-group list-group-flush">
-                      <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 active rounded">全部遊戲</a></li>
-                      <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">合作遊戲</a></li>
-                      <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">派對遊戲</a></li>
-                      <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">硬核策略</a></li>
-                      <li><a href="#" className="list-group-item list-group-item-dream transition-ease02 rounded">陣營遊戲</a></li>
+                      {categories.map(category => (
+                        <li key={category}>
+                          <a
+                            href="#"
+                            className={`list-group-item list-group-item-dream transition-ease02 rounded ${
+                              currentCategory === category ? 'active' : ''
+                            }`}
+                            onClick={e => handleCategoryClick(e, category)}
+                          >
+                            {category}
+                          </a>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
                 <div className="col-lg-9">
                   <div className="row gy-4 mb-4">
                     {
-                      products.map((product) => {
+                      displayProducts.map((product) => {
                         return (
                           <div className="col-lg-4 col-sm-6 col-12" key={product.id}>
                             <div className="card product-card-dream h-100">
                               <div className="position-relative overflow-hidden">
                                 <img src={product.imageUrl} className="card-img-top product-img-dream img-fluid" alt={product.title} />
-                                <div className="position-absolute top-50 start-50 translate-middle d-none d-md-block" style={{ opacity: '0.2' }}>
-                                  <img src="floating-dice.png" className="img-fluid drop-shadow" style={{ transform: 'rotate(15deg)' }} />
-                                </div>
                               </div>
                               <div className="d-flex flex-column justify-content-between card-body p-4 text-center">
                                 <h5 className="card-title text-gold-light mb-3">{product.title}</h5>
@@ -171,7 +271,7 @@ const ProductList = () => {
                   </div>
                   <Pagination
                     pagination={pagination}
-                    changePage={getProducts}
+                    changePage={handlePageChange}
                     disabled={loading}
                   />
                 </div>
