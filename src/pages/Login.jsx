@@ -76,13 +76,13 @@ const Login = () => {
   }, [])
 
   return (
-    <div className="login-dream-bg d-flex flex-column align-items-center justify-content-center vh-100">
+    <div className="container login-dream-bg d-flex flex-column align-items-center justify-content-center vh-100">
       <div className="row justify-content-center">
         <div className="text-center mb-5">
           <div className="text-gold-gradient fs-2 font-serif tracking-widest mb-1">Boardreams</div>
           <p className="text-gold-mid small">－ 冒險者公會登入入口 －</p>
         </div>
-        <div className="col-8">
+        <div className="col-lg-8">
           <form id="form" className="mt-5 glass-login-card glass-panel border border-primary p-5 shadow-dream rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
             <div className="form-floating mb-3">
               <i className="bi bi-person-bounding-box position-absolute text-gold-dark login-icon"></i>

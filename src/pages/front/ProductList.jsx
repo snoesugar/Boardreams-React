@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import { Pagination, Spinner } from '../../components/Components'
 import { Link } from 'react-router-dom'
@@ -17,11 +18,14 @@ const ProductList = () => {
   const [pagination, setPagination] = useState({})
   const [loading, setLoading] = useState(true)
   const [addingId, setAddingId] = useState(null)
+  // 2. 初始化 SearchParams
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoryQuery = searchParams.get('category') // 取得 URL 中的 category 參數
   const [categories, setCategories] = useState(() => {
     const cached = localStorage.getItem('cachedCategories')
     return cached ? JSON.parse(cached) : ['全部遊戲']
   })
-  const [currentCategory, setCurrentCategory] = useState('全部遊戲')
+  const [currentCategory, setCurrentCategory] = useState(categoryQuery || '全部遊戲')
   const { showSuccess, showError } = useMessage()
   const dispatch = useDispatch()
 
@@ -31,22 +35,20 @@ const ProductList = () => {
   const getInitialData = useCallback(async () => {
     setLoading(true)
     try {
-      // 使用 /products/all 避開後端 10 筆限制
       const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
       if (res.data.success) {
         const data = res.data.products
         setProducts(data)
 
-        // 順便產出分類
         const unformatted = data.map(item => item.category)
         const uniqueCategories = ['全部遊戲', ...new Set(unformatted)].filter(Boolean)
-
         setCategories(uniqueCategories)
-        // ✅ 存入快取，下次 F5 就能立刻用
         localStorage.setItem('cachedCategories', JSON.stringify(uniqueCategories))
 
-        // 初始化顯示第一頁
-        renderPage(data, 1, '全部遊戲')
+        // 4. 重要：在此判斷是否有 URL 參數需要立即篩選
+        const targetCategory = categoryQuery || '全部遊戲'
+        setCurrentCategory(targetCategory)
+        renderPage(data, 1, targetCategory)
       }
     }
     catch {
@@ -55,30 +57,27 @@ const ProductList = () => {
     finally {
       setLoading(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // ✅ 核心：處理前端分頁與過濾
-  const renderPage = (data, page, category) => {
-    // 1. 先過濾種類
-    const filtered = category === '全部遊戲'
+  const renderPage = useCallback((data, page, category) => {
+    // 邏輯：過濾種類（處理「全部遊戲」或 URL 傳進來的類別）
+    const filtered = (category === '全部遊戲' || !category)
       ? data
-      : data.filter(item => item.category === category)
+      : data.filter(item => item.category === category || item.category.includes(category))
 
-    // 2. 再切出該頁的 12 筆
     const start = (page - 1) * perPage
     const end = start + perPage
     setDisplayProducts(filtered.slice(start, end))
 
-    // 3. 手動模擬 pagination 物件給 Pagination 元件用
-    const totalPages = Math.ceil(filtered.length / perPage)
+    const totalPages = Math.ceil(filtered.length / perPage) || 1
     setPagination({
       total_pages: totalPages,
       current_page: page,
       has_pre: page > 1,
       has_next: page < totalPages,
     })
-  }
+  }, [perPage])
 
   // 加入購物車
   const addToCart = async (product, qty = 1) => {
@@ -110,6 +109,7 @@ const ProductList = () => {
   const handleCategoryClick = (e, category) => {
     e.preventDefault()
     setCurrentCategory(category)
+    setSearchParams({ category: category }) // 更新網址為 ?category=xxx
     // 這裡要傳入完整的產品資料 allProducts，不要直接用 products (有時它可能還沒更新)
     renderPage(products, 1, category)
   }
@@ -123,6 +123,23 @@ const ProductList = () => {
     dispatch(getCartAsync())
   }, [dispatch, getInitialData])
 
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get('category')
+    if (categoryFromUrl) {
+      setCurrentCategory(categoryFromUrl)
+      // 確保資料載入後執行篩選
+      if (products.length > 0) {
+        renderPage(products, 1, categoryFromUrl)
+      }
+    }
+    else {
+      setCurrentCategory('全部遊戲')
+      if (products.length > 0) {
+        renderPage(products, 1, '全部遊戲')
+      }
+    }
+  }, [searchParams, products, renderPage])
+
   return (
     <div className="bg-dark pt-83 mt-n83">
       <div className="container mt-4">
@@ -130,7 +147,7 @@ const ProductList = () => {
           <div className="col-lg-3 d-none d-lg-block">
             <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '135px' }}>
               <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
-              <ul className="list-group list-group-flush">
+              <ul className="list-group list-group-flush list-unstyled">
                 {loading && categories.length <= 1
                   ? [...Array(8)].map((_, i) => (
                     <li key={i} className="list-group-item list-group-item-dream rounded mb-2">
@@ -141,7 +158,7 @@ const ProductList = () => {
                     <li key={category}>
                       <a
                         href="#"
-                        className={`list-group-item list-group-item-dream ... ${currentCategory === category ? 'active' : ''}`}
+                        className={`list-group-item list-group-item-dream ${currentCategory === category ? 'active' : ''}`}
                         onClick={e => handleCategoryClick(e, category)}
                       >
                         {category}

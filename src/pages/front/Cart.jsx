@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Spinner } from '../../components/Components.jsx'
 import useMessage from '../../hooks/useMessage.jsx'
 
@@ -134,7 +134,7 @@ const Cart = () => {
                   <button type="button" className="btn btn-outline-danger me-3" onClick={delAllProducts} disabled={cartList.length === 0}>清空購物車</button>
                 </div>
                 <div className="table-responsive">
-                  <table className="table table-hover">
+                  <table className="table table-hover d-none d-md-table">
                     <thead>
                       <tr>
                         <th className="text-gold-light">項次</th>
@@ -206,8 +206,11 @@ const Cart = () => {
                         )
                         : (
                           <tr>
-                            <td colSpan="5" className="text-center">
-                              購物車沒有商品
+                            <td colSpan="5" className="text-center py-5">
+                              <p className="text-gold-mid mb-3">購物車目前是空的</p>
+                              <Link to="/productList" className="btn btn-outline-gold-light rounded-pill px-4">
+                                去逛逛遊戲
+                              </Link>
                             </td>
                           </tr>
                         )}
@@ -247,6 +250,100 @@ const Cart = () => {
                       </tr>
                     </tfoot>
                   </table>
+                  {/* 手機板 */}
+                  <div className="d-md-none">
+                    {cartList.length > 0
+                      ? (
+                        cartList.map(item => (
+                          <div key={item.id} className="glass-panel p-3 mb-3 border border-1 border-gold-dark rounded-3 shadow-sm">
+                            <div className="d-flex align-items-center mb-3">
+                              <img
+                                src={item.product.imageUrl}
+                                alt={item.id}
+                                className="rounded-2 me-3"
+                                style={{ width: '70px', height: '70px', objectFit: 'cover' }}
+                              />
+                              <div className="flex-grow-1">
+                                <p className="fw-bold text-primary mb-1 text-truncate" style={{ maxWidth: '150px' }}>
+                                  {item.product.title}
+                                </p>
+                                <p className="text-gold-light small mb-1">
+                                  <del className="text-gold-dark">
+                                    {item.product.origin_price}
+                                    元
+                                  </del>
+                                  /
+                                  {item.product.price}
+                                  元
+                                </p>
+                                <p className="text-gold-dark small mb-0">
+                                  省下
+                                  {item.product.origin_price * item.qty - item.product.price * item.qty}
+                                  元
+                                </p>
+                              </div>
+                              <button type="button" className="btn text-danger p-0" onClick={() => delProduct(item.id)}>
+                                <i className="bi bi-trash fs-5"></i>
+                              </button>
+                            </div>
+
+                            <div className="d-flex justify-content-between align-items-center bg-dark bg-opacity-25 p-2 rounded">
+                              <div className="btn-group btn-group-sm border border-primary">
+                                <button className="btn btn-outline-primary border-0" onClick={() => updateCartQty(item.id, item.product.id, item.qty - 1)} disabled={loadingItem === item.id}>−</button>
+                                <span className="px-3 d-flex align-items-center text-white">{item.qty}</span>
+                                <button className="btn btn-outline-primary border-0" onClick={() => updateCartQty(item.id, item.product.id, item.qty + 1)} disabled={loadingItem === item.id}>+</button>
+                              </div>
+                              <div className="text-end">
+                                <span className="fw-bold text-white">
+                                  NT$
+                                  {item.final_total.toLocaleString()}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      )
+                      : (
+                        <div className="text-center py-5 glass-panel rounded-4">
+                          <p className="text-gold-mid mb-3">購物車目前是空的</p>
+                          <Link to="/productList" className="btn btn-outline-gold-light rounded-pill px-4">
+                            去逛逛遊戲
+                          </Link>
+                        </div>
+                      )}
+                    <div className="mt-4 p-4 glass-panel rounded-4">
+                      <div className="d-flex flex-column align-items-center align-items-md-end">
+                        <div className="text-center text-md-end">
+                          <span className="text-secondary me-md-4 d-block d-md-inline">
+                            共
+                            {totalQty}
+                            件商品
+                          </span>
+                          <span className="fs-1 text-white">
+                            NT$
+                            {totalAmount.toLocaleString()}
+                          </span>
+                        </div>
+                        {totalSaved > 0 && (
+                          <span className="text-secondary me-md-4 mb-2">
+                            一共省下
+                            <span className="text-danger fw-bold mx-1">
+                              {totalSaved.toLocaleString()}
+                            </span>
+                            元
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          className="btn-dream-add fs-3 py-3 px-5 rounded-pill w-100 w-md-auto"
+                          disabled={cartList.length === 0}
+                          onClick={handleCheckout}
+                        >
+                          進行結帳
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </>

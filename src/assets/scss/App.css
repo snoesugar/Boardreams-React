@@ -118,6 +118,60 @@ html, body {
 }
 /*home*/
 
+/* 桌面板：限制在視窗高度的 60~70% 左右，避免佔滿全螢幕 */
+.hero-img {
+  height: 600px; /* 固定高度 */
+}
+
+/* 也可以使用視窗單位，讓它更有彈性 */
+@media (min-width: 992px) {
+  .hero-img {
+    height: 70vh; /* 佔視窗高度的 70% */
+    min-height: 500px;
+    max-height: 800px;
+  }
+}
+
+/* 手機板：高度可以調小一點 */
+@media (max-width: 767px) {
+  .hero-img {
+    height: 300px;
+  }
+}
+
+/* 步驟卡片設計 */
+.step-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(197, 163, 103, 0.2) !important;
+}
+
+.step-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(201, 177, 102, 0.6) !important;
+}
+
+/* 步驟數字標籤 */
+.step-number {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(180deg, rgba(201, 177, 102, 0.3) 0%, rgba(201, 177, 102, 0) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  opacity: 0.5;
+}
+
+/* 金屬漸層線條 */
+.bg-gold-gradient {
+  height: 2px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, #c9b166, transparent);
+}
+
 /* 輪播導航按鈕 (左右箭頭) */
 .swiper-button-next,
 .swiper-button-prev {
@@ -155,6 +209,52 @@ html, body {
   background-color: #c9b166 !important; /* 選中小點的顏色 */
 }
 
+.category-card {
+  height: 250px; /* 調整你想要的高度 */
+  border: 1px solid rgba(197, 163, 103, 0.3);
+  transition: all 0.4s ease;
+}
+
+.category-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+  transition: background 0.4s ease;
+}
+
+/* 文字動畫 */
+.category-desc {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+/* Hover 效果 */
+.category-card-wrapper:hover .category-card {
+  border-color: #F2E3B5;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.category-card-wrapper:hover img {
+  transform: scale(1.15);
+}
+
+.category-card-wrapper:hover .category-overlay {
+  background: rgba(197, 163, 103, 0.2); /* 移入時呈現淡淡金色光暈 */
+}
+
+.category-card-wrapper:hover .category-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.category-card img {
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 /*productList*/
 /* 清單樣式與 Hover 效果 */
 .transition-ease02 {
@@ -164,6 +264,7 @@ html, body {
 .list-group-item-dream:hover {
   background: rgba(197, 163, 103, 0.1) !important;
   transform: translateX(5px);
+  transition: transform 0.2s ease;
 }
 
 .list-group-item-dream.active {
@@ -218,6 +319,7 @@ html, body {
   background: var(--bs-panel) !important; /* 深色背景 */
   border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
   border-radius: 15px !important;
+  min-height: 438px;
   transition: all 0.3s ease !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 柔和陰影 */
 }
