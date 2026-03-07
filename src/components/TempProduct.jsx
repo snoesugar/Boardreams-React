@@ -23,7 +23,7 @@ const TempProduct = ({ tempProduct, modalRef, closeModal }) => {
             <button type="button" className="btn-close btn-close-white" onClick={closeModal}></button>
           </div>
 
-          <div className="modal-body p-0 custom-scrollbar">
+          <div className="modal-body p-0">
             {/* 主圖區：增加高度比例與陰影 */}
             <div className="position-relative">
               <img

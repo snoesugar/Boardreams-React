@@ -74,7 +74,8 @@ const Home = () => {
 
       {/* 桌遊理念文案 */}
       <div className="container py-5 my-5 text-center">
-        <h2 className="text-gold-gradient mb-4">探索無限可能，連結彼此心靈</h2>
+        <h2 className="text-gold-gradient">探索無限可能，連結彼此心靈</h2>
+        <div className="bg-gold-gradient mx-auto mb-2"></div>
         <p className="text-white-50 fs-5 lh-lg w-75 mx-auto">
           在「夢想桌遊」的世界裡，每一款遊戲都是一場全新的冒險。我們相信桌遊不僅僅是娛樂，更是增進人際互動、激發創意思維的橋樑。無論是策略燒腦的挑戰、幽默爆笑的派對遊戲，還是感人至深的合作故事，都能在這裡找到屬於你的那份樂趣。放下手機，與家人朋友一同坐下，點亮你們的桌遊之夜吧！
         </p>
@@ -124,14 +125,14 @@ const Home = () => {
       <div className="container py-5 mb-5">
         <div className="text-center mb-5">
           <h3 className="text-gold-gradient fw-bold">熱門類別探索</h3>
-          <p className="text-white-50">找尋適合你的冒險方向</p>
+          <div className="bg-gold-gradient mx-auto"></div>
         </div>
 
         <div className="row g-4">
           {categories.map((cat, index) => (
             <div className="col-6 col-md-3" key={index}>
               <Link to={`/productList?category=${cat.path}`} className="category-card-wrapper text-decoration-none">
-                <div className="category-card position-relative overflow-hidden rounded-4">
+                <div className="category-card ratio ratio-1x1 position-relative overflow-hidden rounded-4">
                   <img
                     src={`${import.meta.env.BASE_URL}${cat.img}`}
                     alt={cat.title}
@@ -151,18 +152,27 @@ const Home = () => {
 
       {/* 產品輪播區塊 */}
       <div className="container py-5">
-        <h3 className="text-gold-gradient text-center mb-5">精選熱門遊戲</h3>
+        <h3 className="text-gold-gradient text-center">精選熱門遊戲</h3>
+        <div className="bg-gold-gradient mx-auto mb-5"></div>
         {loading
           ? (
             <div className="row gy-4 mb-4">
-              {[...Array(4)].map((_, i) => ( // 顯示4個骨架卡片
-                <div className="col-lg-3 col-md-6 col-12" key={i}>
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`
+        col-lg-3 col-md-4 col-sm-6 col-12 mb-3
+        ${i === 1 ? 'd-none d-sm-block' : ''} 
+        ${i === 2 ? 'd-none d-md-block' : ''} 
+        ${i === 3 ? 'd-none d-xl-block' : ''}
+      `}
+                >
                   <div className="card product-card-dream h-100 border-0 overflow-hidden">
-                    <div className="skeleton-line" style={{ height: '200px', backgroundColor: '#2a2a2a' }}></div>
-                    <div className="card-body p-3 text-center">
-                      <div className="skeleton-line mb-2 mx-auto" style={{ height: '18px', width: '80%', backgroundColor: '#333' }}></div>
-                      <div className="skeleton-line mb-3 mx-auto" style={{ height: '14px', width: '60%', backgroundColor: '#333' }}></div>
-                      <div className="skeleton-line" style={{ height: '30px', width: '100px', borderRadius: '50px', backgroundColor: '#333' }}></div>
+                    <div className="skeleton-line card-img-top product-img-dream"></div>
+                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-3 text-center">
+                      <div className="skeleton-line w-80 mb-2 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
+                      <div className="skeleton-line w-25 mb-3 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
+                      <div className="skeleton-line rounded-pill" style={{ height: '30px', width: '100px', backgroundColor: '#333' }}></div>
                     </div>
                   </div>
                 </div>
@@ -181,15 +191,15 @@ const Home = () => {
               }}
               navigation={true} // 顯示前後導航按鈕
               breakpoints={{
-                640: {
+                720: {
                   slidesPerView: 2,
                   spaceBetween: 20,
                 },
-                768: {
+                960: {
                   slidesPerView: 3,
                   spaceBetween: 30,
                 },
-                1024: {
+                1140: {
                   slidesPerView: 4,
                   spaceBetween: 30,
                 },
@@ -198,14 +208,14 @@ const Home = () => {
             >
               {products.map(product => (
                 <SwiperSlide key={product.id}>
-                  <div className="card product-card-dream h-100">
+                  <div className="card product-card-dream h-100 mb-5">
                     <div className="position-relative overflow-hidden">
                       <img src={product.imageUrl} className="card-img-top product-img-dream" alt={product.title} />
                     </div>
-                    <div className="card-body p-3 text-center">
+                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-3 text-center">
                       <h5 className="card-title text-gold-light mb-2">{product.title}</h5>
                       <p className="card-text text-gold-mid small mb-3">{product.category}</p>
-                      <Link to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm px-3 rounded-pill">
+                      <Link to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm w-50 rounded-pill">
                         查看更多
                       </Link>
                     </div>

@@ -183,12 +183,12 @@ const ProductList = () => {
                           {/* 標題骨架 */}
                           <div className="skeleton-line mb-3 bg-loading w-70 py-3 mx-auto"></div>
                           {/* 內文骨架 */}
-                          <div className="skeleton-line mb-4 bg-loading w-90 py-4 mx-auto"></div>
-                          <div className="skeleton-line mb-4 bg-loading w-50 py-3 mx-auto"></div>
+                          <div className="skeleton-line mb-2 bg-loading w-90 py-4 mx-auto"></div>
+                          <div className="skeleton-line mb-3 bg-loading w-50 py-3 mx-auto"></div>
                           {/* 按鈕骨架 */}
-                          <div className="d-flex justify-content-center gap-2">
-                            <div className="skeleton-line w-80 bg-loading py-3 rounded-pill"></div>
-                            <div className="skeleton-line w-80 bg-loading py-3 rounded-pill"></div>
+                          <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <div className="skeleton-line w-100 bg-loading py-3 rounded-pill"></div>
+                            <div className="skeleton-line w-100 bg-loading py-3 rounded-pill"></div>
                           </div>
                         </div>
                       </div>

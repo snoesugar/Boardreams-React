@@ -210,7 +210,6 @@ html, body {
 }
 
 .category-card {
-  height: 250px; /* 調整你想要的高度 */
   border: 1px solid rgba(197, 163, 103, 0.3);
   transition: all 0.4s ease;
 }
@@ -457,7 +456,7 @@ html, body {
 
 /* 2. 玻璃擬物化登入卡片 */
 .glass-login-card {
-  background: rgba(22, 27, 38, 0.7) !important;
+  background: rgba(22, 27, 38, 1) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all 0.5s ease;

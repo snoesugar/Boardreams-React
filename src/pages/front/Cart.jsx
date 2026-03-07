@@ -288,10 +288,22 @@ const Cart = () => {
                             </div>
 
                             <div className="d-flex justify-content-between align-items-center bg-dark bg-opacity-25 p-2 rounded">
-                              <div className="btn-group btn-group-sm border border-primary">
-                                <button className="btn btn-outline-primary border-0" onClick={() => updateCartQty(item.id, item.product.id, item.qty - 1)} disabled={loadingItem === item.id}>−</button>
-                                <span className="px-3 d-flex align-items-center text-white">{item.qty}</span>
-                                <button className="btn btn-outline-primary border-0" onClick={() => updateCartQty(item.id, item.product.id, item.qty + 1)} disabled={loadingItem === item.id}>+</button>
+                              <div className="btn-group">
+                                <button
+                                  className="btn btn-outline-primary"
+                                  disabled={loadingItem === item.id}
+                                  onClick={() => updateCartQty(item.id, item.product.id, item.qty - 1)}
+                                >
+                                  −
+                                </button>
+                                <span className="text-gold-light px-3 d-flex align-items-center">{item.qty}</span>
+                                <button
+                                  className="btn btn-outline-primary"
+                                  disabled={loadingItem === item.id}
+                                  onClick={() => updateCartQty(item.id, item.product.id, item.qty + 1)}
+                                >
+                                  +
+                                </button>
                               </div>
                               <div className="text-end">
                                 <span className="fw-bold text-white">
@@ -311,7 +323,7 @@ const Cart = () => {
                           </Link>
                         </div>
                       )}
-                    <div className="mt-4 p-4 glass-panel rounded-4">
+                    <div className="mt-4 p-4 glass-panel rounded-4 mb-4">
                       <div className="d-flex flex-column align-items-center align-items-md-end">
                         <div className="text-center text-md-end">
                           <span className="text-secondary me-md-4 d-block d-md-inline">
