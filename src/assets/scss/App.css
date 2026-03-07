@@ -1058,3 +1058,63 @@ img {
   color: var(--bs-gold-light); /* 變回明亮金 */
   transform: translateY(2px); /* Hover 時向下輕微位移 */
 }
+
+/*訊息樣式*/
+/* 1. 玻璃質感通知框本體 */
+.custom-toast-dream {
+  background: rgba(10, 14, 23, 0.9) !important; /* 深色透明背景 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 163, 103, 0.2) !important; /* 金色細邊框 */
+  min-width: 300px;
+  border-radius: 12px !important;
+  overflow: hidden; /* 確保圓角切割 */
+  position: relative;
+}
+
+/* 2. 側邊發光裝飾條 */
+.toast-glow-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+/* 3. 自定義通知色彩 (取代原生 bg-success / bg-danger) */
+
+/* 成功狀態：翠金色 (帶有發光感) */
+.text-dream-success {
+  color: #a8e6cf !important;
+  text-shadow: 0 0 10px rgba(168, 230, 207, 0.6);
+}
+.bg-dream-success {
+  background: linear-gradient(180deg, #a8e6cf 0%, #1d7a57 100%) !important;
+  box-shadow: 0 0 15px rgba(168, 230, 207, 0.5); /* 側邊發光 */
+}
+
+/* 失敗狀態：熔岩紅 (帶有警示發光感) */
+.text-dream-danger {
+  color: #ff8b8b !important;
+  text-shadow: 0 0 10px rgba(255, 139, 139, 0.6);
+}
+.bg-dream-danger {
+  background: linear-gradient(180deg, #ff8b8b 0%, #a32a2a 100%) !important;
+  box-shadow: 0 0 15px rgba(255, 139, 139, 0.5); /* 側邊發光 */
+}
+
+/* 4. 進場動畫：從右側滑入 (slide-in-right) */
+.slide-in-right {
+  animation: toast-slide-in 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(110%); /* 從螢幕外開始 */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

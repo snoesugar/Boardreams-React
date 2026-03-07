@@ -323,7 +323,7 @@ const Cart = () => {
                           </Link>
                         </div>
                       )}
-                    <div className="mt-4 p-4 glass-panel rounded-4 mb-4">
+                    <div className="mt-4 p-4 glass-panel rounded-4 mb-5">
                       <div className="d-flex flex-column align-items-center align-items-md-end">
                         <div className="text-center text-md-end">
                           <span className="text-secondary me-md-4 d-block d-md-inline">
