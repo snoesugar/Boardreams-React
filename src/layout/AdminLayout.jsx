@@ -94,7 +94,7 @@ const AdminLayout = () => {
 
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             {/* 中間主要連結 */}
-            <ul className="navbar-nav mx-auto glass-nav-pills px-3 py-1 rounded-pill mt-3 mt-lg-0">
+            <ul className="navbar-nav mx-auto glass-panel rounded-pill px-3 py-1 mt-3 mt-lg-0">
               <li className="nav-item">
                 <Link
                   className={`nav-link admin-nav-link ${location.pathname === '/admin/product' ? 'active' : ''}`}

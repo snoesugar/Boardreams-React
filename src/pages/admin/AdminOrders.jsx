@@ -276,7 +276,7 @@ function AdminOrders() {
               <div className="d-flex justify-content-between align-items-center mb-5">
                 <div>
                   <h2 className="text-gold-gradient font-serif mb-0">訂單管理秘書</h2>
-                  <p className="text-muted small mt-2">監控所有來自冒險者的交易紀錄</p>
+                  <p className="text-gold-dark small mt-2">監控所有來自冒險者的交易紀錄</p>
                 </div>
                 <button
                   type="button"
@@ -288,7 +288,7 @@ function AdminOrders() {
                 </button>
               </div>
 
-              <div className="table-responsive">
+              <div className="table-responsive d-none d-lg-block">
                 <table className="table align-middle">
                   <thead>
                     <tr>
@@ -382,6 +382,81 @@ function AdminOrders() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              {/* 手機板 */}
+              <div className="d-lg-none mt-4">
+                {orders.map(order => (
+                  <div key={order.id} className="card bg-dark border-gold-dark mb-3 shadow">
+                    <div className="card-body">
+                      {/* 標題區：ID 與 狀態 */}
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="text-gold-light fw-bold">
+                          #
+                          {order.id.slice(-6)}
+                        </span>
+                        {order.is_paid
+                          ? (
+                            <span className="badge-status-paid">
+                              <i className="bi bi-check-circle-fill me-1"></i>
+                              已結清
+                            </span>
+                          )
+                          : (
+                            <span className="badge-status-unpaid">
+                              <i className="bi bi-exclamation-triangle-fill me-1"></i>
+                              待支付
+                            </span>
+                          )}
+                      </div>
+
+                      {/* 使用者與內容 */}
+                      <div className="text-white small mb-2">
+                        <i className="bi bi-person me-2"></i>
+                        {order.user?.name}
+                        {' '}
+                        :
+                        {' '}
+                        {order.user?.email}
+                        (
+                        {order.user?.tel}
+                        )
+                      </div>
+
+                      <div className="border-top border-gold-dark pt-2 mt-2 mb-2">
+                        {Object.values(order.products || {}).map(item => (
+                          <div key={item.id} className="d-flex justify-content-between text-gold-dark fs-7">
+                            <span>
+                              {item.product.title}
+                              x
+                              {item.qty}
+                            </span>
+                            <span>{item.product.price}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="text-end fw-bold text-gold-light mt-2 mb-3">
+                        總金額：NT$
+                        {order.total?.toLocaleString()}
+                      </div>
+
+                      {/* 操作按鈕 */}
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-outline-primary btn-sm flex-fill"
+                          onClick={() => {
+                            setNewOrder(order)
+                            setIsEditOpen(true)
+                          }}
+                        >
+                          編輯
+                        </button>
+                        <button className="btn btn-outline-danger btn-sm flex-fill" onClick={() => deleteOrder(order.id)}>刪除</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <div className="mt-4">

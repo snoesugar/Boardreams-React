@@ -330,6 +330,7 @@ function AdminProducts() {
 
   useEffect(() => {
     getProducts()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /* ---------- product modal ---------- */
@@ -420,7 +421,7 @@ function AdminProducts() {
                     <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
                       <div>
                         <h2 className="text-gold-gradient font-serif mb-1">產品藏寶庫</h2>
-                        <p className="text-muted small mb-0">管理您的桌遊藏品與庫存狀態</p>
+                        <p className="text-gold-dark small mb-0">管理您的桌遊藏品與庫存狀態</p>
                       </div>
 
                       <div className="d-flex gap-2">
@@ -444,7 +445,7 @@ function AdminProducts() {
                     </div>
 
                     {/* 產品表格區 */}
-                    <div className="table-responsive">
+                    <div className="table-responsive d-none d-lg-block">
                       <table className="table admin-table align-middle">
                         <thead>
                           <tr>
@@ -523,6 +524,56 @@ function AdminProducts() {
                       </table>
                     </div>
 
+                    {/* 手機板 */}
+                    <div className="d-lg-none mt-4">
+                      {products.map(item => (
+                        <div key={item.id} className="card bg-dark border-gold-dark mb-3">
+                          <div className="card-body">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                              <span className="badge bg-panel text-gold-light border border-gold-dark">{item.category}</span>
+                              {/* 上架狀態 */}
+                              {item.is_enabled ? <span className="status-dot active"></span> : <span className="status-dot inactive"></span>}
+                            </div>
+                            <div className="d-flex">
+                              <div className="product-thumb me-3">
+                                <img src={item.imageUrl} alt={item.title} />
+                              </div>
+                              <div>
+                                <h5 className="text-white mb-0">{item.title}</h5>
+                                <span className="text-primary fs-7">
+                                  ID:
+                                  {item.id.slice(-8)}
+                                </span>
+                                <p className="text-gold-light fw-bold mb-3">
+                                  NT$
+                                  {item.price}
+                                  <del className="text-gold-dark fs-7 ms-1">
+                                    NT$
+                                    {item.origin_price}
+                                  </del>
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* 操作按鈕 */}
+                            <div className="btn-group w-100">
+                              <button className="btn btn-outline-secondary btn-sm" onClick={() => openModal(item)}>查看</button>
+                              <button
+                                className="btn btn-outline-primary btn-sm"
+                                onClick={() => {
+                                  setNewProduct(item)
+                                  openEditModal()
+                                }}
+                              >
+                                編輯
+                              </button>
+                              <button className="btn btn-outline-danger btn-sm" onClick={() => deleteProduct(item.id)}>刪除</button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
                     {/* 分頁 */}
                     <div className="mt-4">
                       <Pagination pagination={pagination} changePage={getProducts} />
@@ -561,9 +612,7 @@ function AdminProducts() {
                   handleFileChange={handleFileChange}
                 />
               </div>
-
             </div>
-
           )
       }
     </>

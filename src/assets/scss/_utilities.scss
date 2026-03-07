@@ -922,6 +922,14 @@ $utilities: map-merge(
         8: var(--#{$prefix}border-radius-5xl),     //100px
       )
     ),
+    "viewport-height": (
+      property: height,
+      class: vh,
+      values: (
+        100: 100vh,
+        68:68vh,
+        )
+    ),
   )
 );
 

@@ -11,7 +11,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onTouched',
   })
@@ -76,7 +76,7 @@ const Login = () => {
   }, [])
 
   return (
-    <div className="container login-dream-bg d-flex flex-column align-items-center justify-content-center vh-100">
+    <div className="px-4 login-dream-bg d-flex flex-column align-items-center justify-content-center vh-68">
       <div className="row justify-content-center">
         <div className="text-center mb-5">
           <div className="text-gold-gradient fs-2 font-serif tracking-widest mb-1">Boardreams</div>
@@ -129,15 +129,26 @@ const Login = () => {
             <button
               className="btn btn-lg btn-login-dream text-dark border-0 fw-bold w-100 mt-3"
               type="submit"
+              disabled={isSubmitting}
             >
-              <i className="bi bi-door-open-fill me-2"></i>
-              開啟夢境
+              {isSubmitting
+                ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    開啟中...
+                  </>
+                )
+                : (
+                  <>
+                    <i className="bi bi-door-open-fill me-2"></i>
+                    開啟夢境
+                  </>
+                )}
             </button>
             <p className="mt-5 mb-0 text-center text-gold-dark small">&copy; 2026 Boardreams. Studio</p>
           </form>
         </div>
       </div>
-      <p className="mt-5 mb-3 text-muted">&copy; 2024~∞ - 六角學院</p>
     </div>
   )
 }

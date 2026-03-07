@@ -394,18 +394,32 @@ html, body {
 
 .btn-outline-gold-mid:hover {
   background: linear-gradient(180deg, var(--bs-glow) 0%, var(--bs-gold-light) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
 }
 
 .btn-outline-primary:hover {
   background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
 }
 
 .btn-outline-danger:hover {
   background: linear-gradient(180deg, #dc3545 0%, #360409 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
   background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  background: linear-gradient(180deg, var(--bs-secondary) 0%, var(--bs-gray-700) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
 }
 
 /* Login.css */
@@ -566,11 +580,11 @@ input:-webkit-autofill:active {
   background: linear-gradient(135deg, var(--bs-gold-mid) 0%, var(--bs-gold-dark) 100%);
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
 }
 
 .btn-dream-submit:hover:not(:disabled) {
   transform: translateY(-3px);
+  transition: all 0.3s ease;
   box-shadow: 0 8px 25px var(--bs-glow);
   background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
 }
@@ -687,8 +701,8 @@ img {
 }
 
 .img-thumbnail.product-small {
-  width: 80px;
-  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
   object-fit: cover;
   border: 2px solid #ddd; /*預設邊框*/
   border-radius: 4px;
@@ -723,10 +737,6 @@ img {
 }
 
 /* 中間藥丸型導航欄 */
-.glass-nav-pills {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(197, 163, 103, 0.1);
-}
 
 .admin-nav-link {
   color: rgba(197, 163, 103, 0.6) !important;
@@ -772,6 +782,99 @@ img {
     color: var(--bs-gold-light);
     background: rgba(197, 163, 103, 0.15);
     transition: all 0.3s ease;
+  }
+}
+
+/* 行政管理輸入框樣式 */
+.admin-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-input:focus {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.admin-input::placeholder {
+  color: rgba(197, 163, 103, 0.4) !important;
+}
+
+.admin-input::-webkit-outer-spin-button,
+.admin-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 隱藏 Firefox 的上下箭頭 */
+.admin-input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* 圖片預覽特效 */
+.main-preview {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+
+.group:hover .image-overlay {
+  opacity: 1;
+}
+
+/* 手機版適應：原本 row 會擠在一起，但在長表單中建議維持縱向 */
+@media (max-width: 768px) {
+  .col-md-5 {
+    border-start: none !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+}
+
+/* 上架按鈕 */
+.custom-switch {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(212, 175, 55, 0.5)'/%3e%3c/svg%3e") !important;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 啟動狀態 (Checked) */
+.custom-switch:checked {
+  background-color: rgba(212, 175, 55, 0.2) !important;
+  border-color: #d4af37 !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23d4af37'/%3e%3c/svg%3e") !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* 聚焦狀態 (Focus) */
+.custom-switch:focus {
+  box-shadow: 0 0 0 0.25 margin rgba(212, 175, 55, 0.25) !important;
+  border-color: #d4af37 !important;
+}
+
+/* 只有在桌機版 (992px以上) 才顯示左邊框線 */
+@media (min-width: 992px) {
+  .border-lg-start {
+    border-left: 1px solid rgba(212, 175, 55, 0.3) !important;
   }
 }
 
@@ -837,17 +940,17 @@ img {
 
 /* 操作按鈕細節 */
 .btn-action-view { 
-  color: #F2E3B5; 
+  color: var(--bs-gold-light); 
   background-color: rgba(197, 163, 103, 0.2);
   border: 1px solid rgba(197, 163, 103, 0.2); 
 }
 .btn-action-edit { 
-  color: #C5A367; 
+  color: var(--bs-gold-mid); 
   background-color: rgba(197, 163, 103, 0.2);
   border: 1px solid rgba(197, 163, 103, 0.2); 
 }
 .btn-action-delete { 
-  color: #ff6b6b; 
+  color: var(--bs-danger); 
   background-color: rgba(197, 163, 103, 0.2);
   border: 1px solid rgba(197, 163, 103, 0.2); 
 }
@@ -855,4 +958,61 @@ img {
 .btn-action-view:hover, .btn-action-edit:hover, .btn-action-delete:hover {
   background: rgba(255, 255, 255, 0.05);
   color: white;
+}
+
+/* 讓 Modal 內容過長時有精美的捲軸 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+}
+
+/* 隱藏數量箭頭 */
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 商品卡片懸浮效果 */
+.item-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.item-card:hover {
+  border-color: var(--bs-gold-light) !important;
+  transform: translateX(4px); /* 輕微向右位移感 */
+}
+
+/* 手機版適應：讓刪除按鈕更明顯，資訊更集中 */
+@media (max-width: 576px) {
+  .item-card {
+    padding: 1rem !important;
+  }
+  .input-group-sm {
+    flex-grow: 1; /* 讓數量輸入框在手機版撐開 */
+  }
+  .btn-outline-danger {
+    flex-shrink: 0;
+  }
+}
+
+/* 1. 隱藏 Bootstrap 預設的右側箭頭 (如果有的話) */
+.custom-accordion-btn::after {
+  display: none !important;
+}
+
+/* 2. 自定義箭頭基礎樣式 */
+.accordion-arrow {
+  transition: transform 0.3s ease-in-out, color 0.3s ease;
+  font-size: 0.9rem;
+  color: rgba(212, 175, 55, 0.6); /* 初始金色半透明 */
+}
+
+/* 3. Hover 效果：讓箭頭輕微跳動或變亮 */
+.custom-accordion-btn:hover .accordion-arrow {
+  color: var(--bs-gold-light); /* 變回明亮金 */
+  transform: translateY(2px); /* Hover 時向下輕微位移 */
 }
