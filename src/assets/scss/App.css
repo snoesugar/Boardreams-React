@@ -718,6 +718,49 @@ img {
   }
 }
 
+/* 讓文字區塊有向內凹陷的質感，增加深度 */
+.shadow-inner {
+  box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 縮圖外框 */
+.product-thumb-wrapper {
+  border: 2px solid transparent;
+  padding: 2px;
+}
+
+.product-thumb-wrapper.border-gold-light {
+  border-color: var(--bs-gold-light) !important;
+  box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
+}
+
+/* 圖片下方的漸層，讓圖片與深色背景銜接 */
+.image-bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(10, 14, 23, 0.8), transparent);
+  pointer-events: none;
+}
+
+/* 讓召喚按鈕更有「動」感 */
+.btn-dream-add:disabled {
+  opacity: 0.8;
+  background: rgba(197, 163, 103, 0.1);
+  border-color: rgba(197, 163, 103, 0.3);
+  cursor: wait;
+}
+
+/* 讓主圖與容器高度自適應手機 */
+@media (max-width: 768px) {
+  .img-fluid.product-main {
+    height: 300px !important;
+  }
+}
+
 .pt-83 {
   padding-top: 83px;
 }

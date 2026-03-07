@@ -134,10 +134,10 @@ const EditOrder = ({
                             <span className="badge bg-gold-dark me-2">{index + 1}</span>
                             <h6 className="mb-0 text-white text-truncate">{item.product?.title || '未知商品'}</h6>
                           </div>
-                          <div className="mt-2 small text-muted">
+                          <div className="mt-2 small text-gold-mid">
                             <span className="me-3">
                               單價:
-                              <del className="text-gold-dark me-1">
+                              <del className="text-gold-dark mx-1">
                                 $
                                 {item.product?.origin_price}
                               </del>
