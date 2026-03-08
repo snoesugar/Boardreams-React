@@ -5,6 +5,7 @@ import TempProduct from './TempProduct'
 import Spinner from './Spinner'
 import EditOrder from './EditOrder'
 import MessageToast from './MessageToast'
+import EditCoupon from './EditCoupon'
 
 export {
   ProductModal,
@@ -14,4 +15,5 @@ export {
   Spinner,
   EditOrder,
   MessageToast,
+  EditCoupon,
 }

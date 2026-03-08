@@ -10,6 +10,7 @@ import CheckOut from '../pages/front/CheckOut'
 import Success from '../pages/front/Success'
 import AdminProducts from '../pages/admin/AdminProducts'
 import AdminOrders from '../pages/admin/AdminOrders'
+import AdminCoupon from '../pages/admin/AdminCoupon'
 import Login from '../pages/Login'
 
 const router = createHashRouter([
@@ -60,6 +61,10 @@ const router = createHashRouter([
       {
         path: 'order',
         element: <AdminOrders />,
+      },
+      {
+        path: 'coupon',
+        element: <AdminCoupon />,
       },
     ],
   },

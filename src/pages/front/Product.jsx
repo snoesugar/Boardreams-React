@@ -153,7 +153,7 @@ const Product = () => {
             <div className="d-flex justify-content-between align-items-end mb-4">
               <div>
                 <span className="text-gold-dark small d-block mb-1">冒險者通行價</span>
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-end gap-2">
                   <h2 className="text-gold-light fw-bold mb-0">
                     NT$
                     {product.price}

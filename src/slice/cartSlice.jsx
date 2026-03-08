@@ -17,7 +17,10 @@ const cartSlice = createSlice({
         state.loading = true
       })
       .addCase(getCartAsync.fulfilled, (state, action) => {
-        state.carts = action.payload
+        // 請確認這裡直接賦值，而非保留舊狀態
+        state.carts = action.payload.carts
+        state.total = action.payload.total
+        state.final_total = action.payload.final_total
         state.loading = false
       })
       .addCase(getCartAsync.rejected, (state) => {
@@ -32,7 +35,8 @@ export const getCartAsync = createAsyncThunk(
     const res = await axios.get(
       `${API_BASE}/api/${API_PATH}/cart`,
     )
-    return res.data.data.carts
+
+    return res.data.data
   },
 )
 

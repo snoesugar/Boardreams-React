@@ -79,11 +79,11 @@ const Login = () => {
     <div className="px-4 login-dream-bg d-flex flex-column align-items-center justify-content-center vh-68">
       <div className="row justify-content-center">
         <div className="text-center mb-5">
-          <div className="text-gold-gradient fs-2 font-serif tracking-widest mb-1">Boardreams</div>
+          <div className="text-gold-gradient fs-2 font-serif mb-1">Boardreams</div>
           <p className="text-gold-mid small">－ 冒險者公會登入入口 －</p>
         </div>
         <div className="col-lg-8">
-          <form id="form" className="mt-5 glass-login-card glass-panel border border-primary p-5 shadow-dream rounded-4" onSubmit={handleSubmit(handleSubmitToken)}>
+          <form id="form" className="glass-login-card glass-panel border border-primary p-5 shadow-dream rounded-4 mb-5" onSubmit={handleSubmit(handleSubmitToken)}>
             <div className="form-floating mb-3">
               <i className="bi bi-person-bounding-box position-absolute text-gold-dark login-icon"></i>
               <input
