@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
 import { Spinner, Pagination, EditCoupon } from '../../components/Components'
@@ -91,15 +93,41 @@ function AdminCoupon() {
 
   // 刪除所有優惠券
   const deleteAllCoupon = async () => {
-    if (!window.confirm('確定要刪除所有優惠券嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
+
     try {
-      setLoading(true)
-      const deleteRequests = coupons.map(item =>
-        axios.delete(`${API_BASE}/api/${API_PATH}/admin/coupon/${item.id}`),
-      )
-      await Promise.all(deleteRequests)
-      showSuccess('已清除所有優惠券')
-      getCoupons()
+      const result = await swalModern.fire({
+        title: '確定要清空優惠券嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
+
+      if (result.isConfirmed) {
+        setLoading(true)
+        const deleteRequests = coupons.map(item =>
+          axios.delete(`${API_BASE}/api/${API_PATH}/admin/coupon/${item.id}`),
+        )
+        await Promise.all(deleteRequests)
+        showSuccess('已清除所有優惠券')
+        getCoupons()
+      }
     }
     catch (error) {
       showError(error.response?.data?.message)
@@ -203,19 +231,19 @@ function AdminCoupon() {
           <div className="d-flex gap-2">
             <button
               type="button"
-              className="btn btn-dream-submit"
-              onClick={openCreateModal}
-            >
-              <i className="bi bi-plus-lg me-2"></i>
-              新增優惠券
-            </button>
-            <button
-              type="button"
               className="btn btn-outline-danger"
               onClick={deleteAllCoupon}
             >
               <i className="bi bi-trash3 me-2"></i>
               清空優惠券
+            </button>
+            <button
+              type="button"
+              className="btn btn-dream-submit"
+              onClick={openCreateModal}
+            >
+              <i className="bi bi-plus-lg me-2"></i>
+              新增優惠券
             </button>
           </div>
         </div>

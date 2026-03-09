@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import { useState, useEffect, useRef } from 'react'
 import { Modal, Collapse } from 'bootstrap'
 import { TempProduct, ProductModal, Pagination, Spinner } from '../../components/Components'
@@ -163,36 +165,61 @@ function AdminProducts() {
 
   // 刪除所有品項
   const deleteAllProduct = async () => {
-    if (!window.confirm('確定要刪除所有品項嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
 
     try {
-      setLoading(true)
-      // 1️⃣ 先取得目前所有產品
-      const response = await axios.get(
-        `${API_BASE}/api/${API_PATH}/admin/products?page=1&per_page=1000`,
-      )
+      const result = await swalModern.fire({
+        title: '確定要清空產品嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
 
-      const products = response.data.products
+      if (result.isConfirmed) {
+        setLoading(true)
+        // 1️⃣ 先取得目前所有產品
+        const response = await axios.get(
+          `${API_BASE}/api/${API_PATH}/admin/products?page=1&per_page=1000`,
+        )
 
-      if (products.length === 0) {
-        showSuccess('目前沒有產品可刪除')
-        return
+        const products = response.data.products
+
+        if (products.length === 0) {
+          showSuccess('目前沒有產品可刪除')
+          return
+        }
+
+        // 2️⃣ 組成刪除請求陣列
+        const deleteRequests = products.map(item =>
+          axios.delete(
+            `${API_BASE}/api/${API_PATH}/admin/product/${item.id}`,
+          ),
+        )
+
+        // 3️⃣ 同時刪除所有產品（真的刪資料庫）
+        await Promise.all(deleteRequests)
+
+        showSuccess(response.data.message)
+
+        // 4️⃣ 重新取得產品（畫面同步）
+        getProducts()
       }
-
-      // 2️⃣ 組成刪除請求陣列
-      const deleteRequests = products.map(item =>
-        axios.delete(
-          `${API_BASE}/api/${API_PATH}/admin/product/${item.id}`,
-        ),
-      )
-
-      // 3️⃣ 同時刪除所有產品（真的刪資料庫）
-      await Promise.all(deleteRequests)
-
-      showSuccess(response.data.message)
-
-      // 4️⃣ 重新取得產品（畫面同步）
-      getProducts()
     }
     catch (error) {
       showError(error.response.data.message)

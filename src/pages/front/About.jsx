@@ -38,7 +38,7 @@ const About = () => {
               <p className="lh-lg fs-5">
                 在這個螢幕無處不在的時代，我們發現最珍貴的感動，往往不在手機的通知裡，而是在一張桌子兩端、眼神交會的瞬間。
               </p>
-              <p className="lh-lg text-gold-dark">
+              <p className="lh-lg text-white-50">
                 我們的任務是將那些被數位噪音稀釋的笑聲、專注與競爭感，重新帶回實體世界。每一場開局，都是一次心靈的重新對焦。
               </p>
             </div>
@@ -61,7 +61,7 @@ const About = () => {
               <p className="lh-lg fs-5">
                 每一款精心挑選的遊戲，都是一場未知的遠征。
               </p>
-              <p className="lh-lg text-gold-dark">
+              <p className="lh-lg text-white-50">
                 我們不販售塑膠與紙張，我們提供的是開啟史詩冒險的鑰匙。
                 無論是建設文明的策略，或是派對上的機智對談，我們都是你與夥伴回憶的共同建築師。
               </p>
@@ -116,7 +116,7 @@ const About = () => {
                   <i className={`bi ${item.icon} fs-1 text-gold-mid`}></i>
                 </div>
                 <h4 className="text-gold-light mb-3">{item.title}</h4>
-                <p className="text-primary-subtle mb-0 leading-relaxed">{item.desc}</p>
+                <p className="text-white-50 mb-0 leading-relaxed">{item.desc}</p>
               </div>
             </div>
           ))}

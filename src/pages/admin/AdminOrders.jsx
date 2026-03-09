@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
 import { Spinner, Pagination, EditOrder } from '../../components/Components'
@@ -81,36 +83,61 @@ function AdminOrders() {
 
   // 刪除所有訂單
   const deleteAllOrder = async () => {
-    if (!window.confirm('確定要刪除所有訂單嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
 
     try {
-      setLoading(true)
-      // 1️⃣ 先取得目前所有產品
-      const response = await axios.get(
-        `${API_BASE}/api/${API_PATH}/admin/orders?all`,
-      )
+      const result = await swalModern.fire({
+        title: '確定要清空訂單嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
 
-      const orders = response.data.orders
+      if (result.isConfirmed) {
+        setLoading(true)
+        // 1️⃣ 先取得目前所有產品
+        const response = await axios.get(
+          `${API_BASE}/api/${API_PATH}/admin/orders?all`,
+        )
 
-      if (orders.length === 0) {
-        showSuccess('目前沒有訂單可刪除')
-        return
+        const orders = response.data.orders
+
+        if (orders.length === 0) {
+          showSuccess('目前沒有訂單可刪除')
+          return
+        }
+
+        // 2️⃣ 組成刪除請求陣列
+        const deleteRequests = orders.map(item =>
+          axios.delete(
+            `${API_BASE}/api/${API_PATH}/admin/order/${item.id}`,
+          ),
+        )
+
+        // 3️⃣ 同時刪除所有產品（真的刪資料庫）
+        await Promise.all(deleteRequests)
+
+        showSuccess(response.data.message)
+
+        // 4️⃣ 重新取得產品（畫面同步）
+        getOrders()
       }
-
-      // 2️⃣ 組成刪除請求陣列
-      const deleteRequests = orders.map(item =>
-        axios.delete(
-          `${API_BASE}/api/${API_PATH}/admin/order/${item.id}`,
-        ),
-      )
-
-      // 3️⃣ 同時刪除所有產品（真的刪資料庫）
-      await Promise.all(deleteRequests)
-
-      showSuccess(response.data.message)
-
-      // 4️⃣ 重新取得產品（畫面同步）
-      getOrders()
     }
     catch (error) {
       showError(error.response.data.message)
