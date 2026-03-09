@@ -282,7 +282,7 @@ const Cart = () => {
                           <div className="input-group w-40 ms-auto mt-3">
                             <input
                               type="text"
-                              className="form-control"
+                              className="form-control glass-input"
                               placeholder="請輸入優惠券代碼"
                               value={couponCode}
                               onChange={e => setCouponCode(e.target.value)}
