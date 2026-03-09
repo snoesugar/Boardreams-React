@@ -177,6 +177,7 @@ function AdminCoupon() {
 
   useEffect(() => {
     getCoupons()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /* ---------- Modal 實例管理 ---------- */
@@ -219,7 +220,7 @@ function AdminCoupon() {
           </div>
         </div>
 
-        <div className="table-responsive">
+        <div className="table-responsive d-none d-lg-block">
           <table className="table align-middle">
             <thead>
               <tr>
@@ -238,7 +239,6 @@ function AdminCoupon() {
                   <td className="text-gold-light fw-bold">{coupon.code}</td>
                   <td className="text-white">
                     {coupon.percent}
-                    {' '}
                     折
                   </td>
                   <td className="text-gold-dark">{new Date(coupon.due_date * 1000).toLocaleDateString()}</td>
@@ -271,6 +271,54 @@ function AdminCoupon() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* 手機板 */}
+        <div className="d-lg-none mt-4">
+          {coupons.map(coupon => (
+            <div key={coupon.id} className="card bg-dark border-gold-dark mb-3">
+              <div className="card-body">
+                <div className="d-flex">
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <h5 className="text-white mb-0">{coupon.title}</h5>
+                      {/* 上架狀態 */}
+                      {coupon.is_enabled ? <span className="status-dot active"></span> : <span className="status-dot inactive"></span>}
+                    </div>
+                    <span className="text-primary fs-7">
+                      折扣代碼:
+                      {coupon.code}
+                    </span>
+                    <p className="text-primary fs-7 mb-0">
+                      到期日:
+                      {' '}
+                      {new Date(coupon.due_date * 1000).toLocaleDateString()}
+                    </p>
+                    <p className="text-gold-light fw-bold mb-3">
+                      折扣(%):
+                      {' '}
+                      {coupon.percent}
+                      折
+                    </p>
+                  </div>
+                </div>
+
+                {/* 操作按鈕 */}
+                <div className="btn-group w-100">
+                  <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={() => {
+                      setNewCoupon(coupon)
+                      setIsEditOpen(true)
+                    }}
+                  >
+                    編輯
+                  </button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => deleteCoupon(coupon.id)}>刪除</button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
         <Pagination pagination={pagination} changePage={getCoupons} />
       </div>
