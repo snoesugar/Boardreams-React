@@ -54,6 +54,17 @@ const FrontLayout = () => {
                   <li className="nav-item">
                     <Link
                       className="nav-link-dream px-3 text-primary"
+                      to="/about"
+                      onClick={closeNavbar}
+                    >
+                      <span>關於我們</span>
+                      <i className="bi bi-feather ms-1"></i>
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link-dream px-3 text-primary"
                       to="/productList"
                       onClick={closeNavbar}
                     >

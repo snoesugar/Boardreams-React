@@ -2,6 +2,7 @@ import { createHashRouter } from 'react-router-dom'
 import FrontLayout from '../layout/FrontLayout'
 import AdminLayout from '../layout/AdminLayout'
 import Home from '../pages/front/Home'
+import About from '../pages/front/About'
 import ProductList from '../pages/front/ProductList'
 import Cart from '../pages/front/Cart'
 import Product from '../pages/front/Product'
@@ -22,6 +23,10 @@ const router = createHashRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: 'about',
+        element: <About />,
       },
       {
         path: 'productList',
@@ -51,7 +56,7 @@ const router = createHashRouter([
   },
   // 後台路由
   {
-    path: 'admin',
+    path: '/admin',
     element: <AdminLayout />,
     children: [
       {
