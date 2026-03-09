@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import { Link } from 'react-router-dom' // 注意：這裡應該是 'react-router-dom'
 import useMessage from '../../hooks/useMessage' // 假設你也需要在首頁顯示訊息
 
@@ -66,6 +68,14 @@ const Home = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true })
+  }, [])
+
+  useEffect(() => {
+    AOS.refresh()
+  }, [products])
+
   return (
     <div className="bg-dark pt-83 mt-n83">
       {/* Hero Section */}
@@ -78,6 +88,7 @@ const Home = () => {
         <Link
           to="/productList"
           className="btn-dream text-decoration-none p-4 position-absolute start-50 top-50 translate-middle" // 置中
+          data-aos="fade-up"
         >
           <span className="text-gold-gradient text-nowrap fs-2">
             開啟夢想冒險
@@ -88,9 +99,9 @@ const Home = () => {
 
       {/* 桌遊理念文案 */}
       <div className="container py-5 my-5 text-center">
-        <h2 className="text-gold-gradient">探索無限可能，連結彼此心靈</h2>
-        <div className="bg-gold-gradient mx-auto mb-2"></div>
-        <p className="text-white-50 fs-5 lh-lg w-75 mx-auto">
+        <h2 className="text-gold-gradient" data-aos="zoom-in-up">探索無限可能，連結彼此心靈</h2>
+        <div className="bg-gold-gradient mx-auto mb-2" data-aos="zoom-in-up"></div>
+        <p className="text-white-50 fs-5 lh-lg w-75 mx-auto" data-aos="flip-right">
           在「夢想桌遊」的世界裡，每一款遊戲都是一場全新的冒險。我們相信桌遊不僅僅是娛樂，更是增進人際互動、激發創意思維的橋樑。無論是策略燒腦的挑戰、幽默爆笑的派對遊戲，還是感人至深的合作故事，都能在這裡找到屬於你的那份樂趣。放下手機，與家人朋友一同坐下，點亮你們的桌遊之夜吧！
         </p>
       </div>
@@ -98,14 +109,14 @@ const Home = () => {
       {/* 玩桌遊心情變好三步驟 */}
       <div className="container py-5 mb-5">
         <div className="text-center mb-5">
-          <h3 className="text-gold-gradient fw-bold">簡單三步驟，點亮好心情</h3>
-          <div className="bg-gold-gradient mx-auto"></div>
+          <h3 className="text-gold-gradient fw-bold" data-aos="zoom-in-up">簡單三步驟，點亮好心情</h3>
+          <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
         </div>
 
         <div className="row g-4">
           {/* 步驟 1 */}
           <div className="col-md-4">
-            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02">
+            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02" data-aos="flip-up">
               <div className="step-number mb-3">01</div>
               <div className="fs-1 mb-3"><i className="bi bi-people-fill text-gold-light"></i></div>
               <h4 className="text-gold-mid mb-3">相聚共鳴</h4>
@@ -115,7 +126,7 @@ const Home = () => {
 
           {/* 步驟 2 */}
           <div className="col-md-4">
-            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02">
+            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02" data-aos="flip-up">
               <div className="step-number mb-3">02</div>
               <div className="fs-1 mb-3"><i className="bi bi-controller text-gold-light"></i></div>
               <h4 className="text-gold-mid mb-3">沉浸挑戰</h4>
@@ -125,7 +136,7 @@ const Home = () => {
 
           {/* 步驟 3 */}
           <div className="col-md-4">
-            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02">
+            <div className="step-card p-4 h-100 rounded-4 position-relative overflow-hidden text-center transition-ease02" data-aos="flip-up">
               <div className="step-number mb-3">03</div>
               <div className="fs-1 mb-3"><i className="bi bi-stars text-gold-light"></i></div>
               <h4 className="text-gold-mid mb-3">釋放歡笑</h4>
@@ -138,13 +149,13 @@ const Home = () => {
       {/* 熱門類別探索 */}
       <div className="container py-5 mb-5">
         <div className="text-center mb-5">
-          <h3 className="text-gold-gradient fw-bold">熱門類別探索</h3>
-          <div className="bg-gold-gradient mx-auto"></div>
+          <h3 className="text-gold-gradient fw-bold" data-aos="zoom-in-up">熱門類別探索</h3>
+          <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
         </div>
 
         <div className="row g-4">
           {categories.map((cat, index) => (
-            <div className="col-6 col-md-3" key={index}>
+            <div className="col-6 col-md-3" key={index} data-aos="flip-right">
               <Link to={`/productList?category=${cat.path}`} className="category-card-wrapper text-decoration-none">
                 <div className="category-card ratio ratio-1x1 position-relative overflow-hidden rounded-4">
                   <img
@@ -167,8 +178,8 @@ const Home = () => {
       {/* 優惠券資訊 */}
       {coupons.length > 0 && (
         <div className="container py-5">
-          <h3 className="text-gold-gradient text-center">限時優惠領取</h3>
-          <div className="bg-gold-gradient mx-auto mb-5"></div>
+          <h3 className="text-gold-gradient text-center" data-aos="zoom-in-up">限時優惠領取</h3>
+          <div className="bg-gold-gradient mx-auto mb-5" data-aos="zoom-in-up"></div>
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={20}
@@ -183,7 +194,7 @@ const Home = () => {
           >
             {coupons.map(coupon => (
               <SwiperSlide key={coupon.id}>
-                <div className="card bg-dark border-gold-light p-3 rounded-4 position-relative">
+                <div className="card bg-dark border-gold-light p-3 rounded-4 position-relative" data-aos="fade-up">
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <div className="text-gold-light fw-bold">{coupon.title}</div>
@@ -219,8 +230,8 @@ const Home = () => {
 
       {/* 產品輪播區塊 */}
       <div className="container py-5">
-        <h3 className="text-gold-gradient text-center">精選熱門遊戲</h3>
-        <div className="bg-gold-gradient mx-auto mb-5"></div>
+        <h3 className="text-gold-gradient text-center" data-aos="zoom-in-up">精選熱門遊戲</h3>
+        <div className="bg-gold-gradient mx-auto mb-5" data-aos="zoom-in-up"></div>
         {loading
           ? (
             <div className="row gy-4 mb-4">
@@ -234,7 +245,7 @@ const Home = () => {
         ${i === 3 ? 'd-none d-xl-block' : ''}
       `}
                 >
-                  <div className="card product-card-dream h-100 border-0 overflow-hidden">
+                  <div className="card product-card-dream h-100 border-0 overflow-hidden" data-aos="flip-left">
                     <div className="skeleton-line card-img-top product-img-dream"></div>
                     <div className="card-body d-flex flex-column justify-content-between align-items-center p-3 text-center">
                       <div className="skeleton-line w-80 mb-2 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
@@ -275,7 +286,7 @@ const Home = () => {
             >
               {products.map(product => (
                 <SwiperSlide key={product.id}>
-                  <div className="card product-card-dream h-100 mb-5">
+                  <div className="card product-card-dream h-100 mb-5" data-aos="flip-left">
                     <div className="position-relative overflow-hidden">
                       <img src={product.imageUrl} className="card-img-top product-img-dream" alt={product.title} />
                     </div>

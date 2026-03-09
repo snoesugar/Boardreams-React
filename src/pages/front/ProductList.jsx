@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
-import { Pagination, Spinner } from '../../components/Components'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import { Pagination } from '../../components/Components'
 import { Link } from 'react-router-dom'
 import useMessage from '../../hooks/useMessage'
 import { useDispatch } from 'react-redux'
@@ -141,11 +143,19 @@ const ProductList = () => {
     }
   }, [searchParams, products, renderPage])
 
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true })
+  }, [])
+
+  useEffect(() => {
+    AOS.refresh()
+  }, [])
+
   return (
     <div className="bg-dark pt-83 mt-n83">
       <div className="container mt-4">
         <div className="row">
-          <div className="col-lg-3 d-none d-lg-block">
+          <div className="col-lg-3 d-none d-lg-block" data-aos="fade-up">
             <div className="glass-panel rounded-3 p-4 sticky-top" style={{ top: '135px' }}>
               <h5 className="text-gold-gradient mb-4">遊戲分類</h5>
               <ul className="list-group list-group-flush list-unstyled">

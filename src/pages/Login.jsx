@@ -79,7 +79,7 @@ const Login = () => {
     <div className="px-4 login-dream-bg d-flex flex-column align-items-center justify-content-center vh-68">
       <div className="row justify-content-center">
         <div className="text-center mb-5">
-          <div className="text-gold-gradient fs-2 font-serif mb-1">Boardreams</div>
+          <div className="text-gold-gradient fs-2 mb-1">Boardreams</div>
           <p className="text-gold-mid small">－ 冒險者公會登入入口 －</p>
         </div>
         <div className="col-lg-8">
