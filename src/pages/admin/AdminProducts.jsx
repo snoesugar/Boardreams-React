@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect, useRef } from 'react'
 import { Modal, Collapse } from 'bootstrap'
-import { ProductList, TempProduct, ProductModal, Pagination, Spinner } from '../../components/Components'
+import { TempProduct, ProductModal, Pagination, Spinner } from '../../components/Components'
 import useMessage from '../../hooks/useMessage'
 
 const API_BASE = import.meta.env.VITE_API_BASE

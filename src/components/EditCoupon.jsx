@@ -10,6 +10,7 @@ const EditCoupon = ({
   const dateInput = (newCoupon.due_date && !isNaN(newCoupon.due_date))
     ? new Date(newCoupon.due_date * 1000).toISOString().split('T')[0]
     : ''
+  const minDate = new Date().toISOString().split('T')[0]
 
   return (
     <div className="modal fade" ref={editOrderRef} tabIndex="-1">
@@ -67,6 +68,7 @@ const EditCoupon = ({
               <input
                 type="date"
                 name="due_date"
+                min={minDate}
                 className={`form-control bg-dark border-gold-dark text-white ${errors.due_date ? 'is-invalid' : ''}`}
                 value={dateInput}
                 onChange={(e) => {

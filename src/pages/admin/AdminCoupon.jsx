@@ -64,10 +64,14 @@ function AdminCoupon() {
   // 編輯優惠券
   const updateCoupon = async () => {
     // 基本欄位防呆
-    if (!newCoupon.title || !newCoupon.code) {
-      showError('請填寫完整資訊')
+    const validateErrors = validateProduct(newCoupon)
+
+    if (Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors)
       return
     }
+
+    setErrors({}) // 清空錯誤
 
     const url = newCoupon.id
       ? `${API_BASE}/api/${API_PATH}/admin/coupon/${newCoupon.id}`
@@ -120,6 +124,43 @@ function AdminCoupon() {
     catch (error) {
       showError(error.response?.data?.message || '刪除失敗')
     }
+  }
+
+  // 表單驗證資訊
+  const validateProduct = (product) => {
+    const error = {}
+
+    // 1. 驗證名稱
+    if (!product.title?.trim()) {
+      error.title = '請輸入優惠券名稱'
+    }
+
+    // 2. 驗證折扣 (限制在 0-100)
+    // 修正原本代碼中的 !product.percent === '' 邏輯錯誤
+    if (product.percent === '' || product.percent === undefined) {
+      error.percent = '請輸入折扣(%)'
+    }
+    else {
+      const percentNum = Number(product.percent)
+      if (percentNum <= 0) { // 通常折扣不會是 0，若要允許 0 則改為 < 0
+        error.percent = '折扣必須大於 0'
+      }
+      else if (percentNum > 100) {
+        error.percent = '折扣不可大於 100'
+      }
+    }
+
+    // 3. 驗證折扣代碼
+    if (!product.code?.trim()) {
+      error.code = '請輸入折扣代碼'
+    }
+
+    // 4. 驗證到期日 (不可早於今天)
+    if (!product.due_date) {
+      error.due_date = '請選擇到期日'
+    }
+
+    return error
   }
 
   const handleCouponChange = (e) => {
@@ -197,7 +238,8 @@ function AdminCoupon() {
                   <td className="text-gold-light fw-bold">{coupon.code}</td>
                   <td className="text-white">
                     {coupon.percent}
-                    % OFF
+                    {' '}
+                    折
                   </td>
                   <td className="text-gold-dark">{new Date(coupon.due_date * 1000).toLocaleDateString()}</td>
                   <td className="text-center">

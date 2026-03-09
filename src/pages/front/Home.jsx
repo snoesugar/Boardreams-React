@@ -20,10 +20,19 @@ const categories = [
   { title: '情境解謎', path: '硬核策略', img: 'cat-mystery.jpg', desc: '沉浸劇情，尋找真相' },
 ]
 
+const myCoupons = [
+  { id: 1, title: '開幕慶優惠', code: 'OPEN2026', percent: '95', due_date: '2026/04/30' },
+  { id: 2, title: '春季折扣', code: 'SPRING50', percent: '90', due_date: '2026/04/01' },
+  { id: 3, title: '快樂大禮包', code: 'happy', percent: '50', due_date: '2026/04/10' },
+  { id: 4, title: '88大優惠', code: '888', percent: '88', due_date: '2026/03/12' },
+  { id: 5, title: '新手優惠券', code: '123', percent: '23', due_date: '2026/03/27' },
+]
+
 const Home = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  const { showError } = useMessage() // 引入錯誤訊息提示
+  const [coupons, setCoupons] = useState([])
+  const { showError, showSuccess } = useMessage() // 引入錯誤訊息提示
 
   const getProducts = async () => {
     try {
@@ -47,9 +56,13 @@ const Home = () => {
     }
   }
 
+  const handleCopy = (code) => {
+    navigator.clipboard.writeText(code)
+    showSuccess(`已複製優惠碼: ${code}`)
+  }
   useEffect(() => {
     getProducts()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setCoupons(myCoupons)
   }, [])
 
   return (
@@ -150,6 +163,59 @@ const Home = () => {
         </div>
       </div>
 
+      {/* 優惠券資訊 */}
+      {coupons.length > 0 && (
+        <div className="container py-5">
+          <h3 className="text-gold-gradient text-center">限時優惠領取</h3>
+          <div className="bg-gold-gradient mx-auto mb-5"></div>
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}
+            slidesPerView={1}
+            loop={coupons.length >= 3}
+            autoplay={{ delay: 3000 }}
+            pagination={{ clickable: true }}
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              992: { slidesPerView: 3 },
+            }}
+          >
+            {coupons.map(coupon => (
+              <SwiperSlide key={coupon.id}>
+                <div className="card bg-dark border-gold-light p-3 rounded-4 position-relative">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div className="text-gold-light fw-bold">{coupon.title}</div>
+                      <div className="text-white-50 small">
+                        折扣:
+                        {coupon.percent}
+                      </div>
+                      <div className="text-white-50 small">
+                        代碼:
+                        {coupon.code}
+                      </div>
+                      <div className="text-white-50 small">
+                        期限:
+                        {coupon.due_date}
+                      </div>
+                    </div>
+                    <button
+                      className="btn btn-outline-gold-light btn-sm"
+                      onClick={() => handleCopy(coupon.code)}
+                    >
+                      複製
+                    </button>
+                  </div>
+                  {/* 優惠券邊緣鋸齒裝飾 (CSS 需配合) */}
+                  <div className="coupon-edge-left"></div>
+                  <div className="coupon-edge-right"></div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
+
       {/* 產品輪播區塊 */}
       <div className="container py-5">
         <h3 className="text-gold-gradient text-center">精選熱門遊戲</h3>
@@ -184,7 +250,7 @@ const Home = () => {
               modules={[Autoplay, Pagination, Navigation]}
               spaceBetween={30} // 每個 Slide 之間的距離
               slidesPerView={1} // 預設顯示一個
-              loop={true} // 循環播放
+              loop={coupons.length >= 2}
               autoplay={{
                 delay: 3500,
                 disableOnInteraction: false,

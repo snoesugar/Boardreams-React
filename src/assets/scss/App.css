@@ -196,6 +196,31 @@ html, body {
   font-size: 1.5rem !important; /* 調整箭頭大小 */
 }
 
+/* 優惠券輪播卡片樣式 */
+
+.coupon-edge-left, .coupon-edge-right {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--bs-dark);
+  border: 1px solid var(--bs-gold-light);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+/* 左邊的孔：保留右半邊，裁切掉左半邊 */
+.coupon-edge-left { 
+  left: -12px; 
+  clip-path: inset(0 0 0 50%); /* 只顯示右半邊 */
+}
+
+/* 右邊的孔：保留左半邊，裁切掉右半邊 */
+.coupon-edge-right { 
+  right: -12px; 
+  clip-path: inset(0 50% 0 0); /* 只顯示左半邊 */
+}
+
 /* 輪播分頁器 (下方小點) */
 .swiper-pagination-bullet {
   background-color: #555 !important; /* 未選中小點的顏色 */
@@ -1075,6 +1100,19 @@ img {
 .custom-accordion-btn:hover .accordion-arrow {
   color: var(--bs-gold-light); /* 變回明亮金 */
   transform: translateY(2px); /* Hover 時向下輕微位移 */
+}
+
+/* 隱藏原生圖示 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  -webkit-appearance: none;
+}
+
+/* 使用背景圖片注入 Bootstrap Icon */
+input[type="date"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23d4af37' class='bi bi-calendar-event' viewBox='0 0 16 16'%3E%3Cpath d='M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z'/%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
 }
 
 /*訊息樣式*/
