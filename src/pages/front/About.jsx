@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import 'animate.css'
 
 const About = () => {
   useEffect(() => {
@@ -57,7 +58,7 @@ const About = () => {
           </div>
 
           {/* 第二節：啟動碼 */}
-          <div className="row align-items-center flex-row-reverse g-5">
+          <div className="row align-items-center flex-row-reverse g-5 my-8">
             <div className="col-md-6 position-relative">
               <div className="about-img-frame shadow-dream border-gold-subtle" data-aos="zoom-out-left">
                 <img
@@ -83,7 +84,7 @@ const About = () => {
       </section>
 
       {/* 3. 數據實績：建立信任感 */}
-      <section className="bg-panel py-8 mb-8">
+      <section className="bg-panel py-5 my-8">
         <div className="container text-center">
           <div className="mb-5">
             <h3 className="text-gold-gradient mb-2" data-aos="zoom-in-up">冒險者的旅程紀錄</h3>
@@ -111,7 +112,7 @@ const About = () => {
       </section>
 
       {/* 4. 願景卡片：冒險者公約 */}
-      <section className="container mb-8">
+      <section className="container py-5 my-8">
         <div className="text-center mb-6">
           <h3 className="text-gold-gradient" data-aos="zoom-in-up">冒險者公約</h3>
           <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
@@ -138,13 +139,13 @@ const About = () => {
       {/* 5. 品牌呼籲：最後的引言 */}
       <section className="bg-panel text-center py-6">
         <div className="p-5 border-gold-subtle rounded-4">
-          <h3 className="font-serif text-gold-light mb-4" data-aos="zoom-out">準備好開啟你的下一場傳說嗎？</h3>
+          <h3 className="text-gold-gradient fs-2 mb-4" data-aos="zoom-out">準備好開啟你的下一場傳說嗎？</h3>
           <p className="text-primary mb-5" data-aos="zoom-out-up">加入我們的行列，在方寸之間建築屬於你的夢想。</p>
-          <button className="btn btn-outline-gold-light px-5 py-3 rounded-pill tracking-widest" data-aos="flip-left">
+          <button className="btn-dream-add fs-4 px-5 py-3 rounded-pill tracking-widest animate__animated animate__headShake animate__infinite" data-aos="flip-left">
             瀏覽產品清單
           </button>
         </div>
-        <hr class="border-gold-dark" />
+        <hr className="border-gold-dark" />
       </section>
     </div>
   )

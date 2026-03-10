@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { Link } from 'react-router-dom' // 注意：這裡應該是 'react-router-dom'
-import useMessage from '../../hooks/useMessage' // 假設你也需要在首頁顯示訊息
+import { Link } from 'react-router-dom'
+import useMessage from '../../hooks/useMessage'
 
 // Swiper 相關導入
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -98,7 +98,7 @@ const Home = () => {
       </div>
 
       {/* 桌遊理念文案 */}
-      <div className="container py-5 my-5 text-center">
+      <div className="container py-5 my-8 text-center">
         <h2 className="text-gold-gradient" data-aos="zoom-in-up">探索無限可能，連結彼此心靈</h2>
         <div className="bg-gold-gradient mx-auto mb-2" data-aos="zoom-in-up"></div>
         <p className="text-white-50 fs-5 lh-lg w-75 mx-auto" data-aos="flip-right">
@@ -107,7 +107,7 @@ const Home = () => {
       </div>
 
       {/* 玩桌遊心情變好三步驟 */}
-      <div className="container py-5 mb-5">
+      <div className="container py-5 my-8">
         <div className="text-center mb-5">
           <h3 className="text-gold-gradient fw-bold" data-aos="zoom-in-up">簡單三步驟，點亮好心情</h3>
           <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
@@ -147,7 +147,7 @@ const Home = () => {
       </div>
 
       {/* 熱門類別探索 */}
-      <div className="container py-5 mb-5">
+      <div className="container py-5 my-8">
         <div className="text-center mb-5">
           <h3 className="text-gold-gradient fw-bold" data-aos="zoom-in-up">熱門類別探索</h3>
           <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
@@ -177,7 +177,7 @@ const Home = () => {
 
       {/* 優惠券資訊 */}
       {coupons.length > 0 && (
-        <div className="container py-5">
+        <div className="container py-5 my-8">
           <h3 className="text-gold-gradient text-center" data-aos="zoom-in-up">限時優惠領取</h3>
           <div className="bg-gold-gradient mx-auto mb-5" data-aos="zoom-in-up"></div>
           <Swiper
@@ -229,7 +229,7 @@ const Home = () => {
       )}
 
       {/* 產品輪播區塊 */}
-      <div className="container py-5">
+      <div className="container py-5 my-8">
         <h3 className="text-gold-gradient text-center" data-aos="zoom-in-up">精選熱門遊戲</h3>
         <div className="bg-gold-gradient mx-auto mb-5" data-aos="zoom-in-up"></div>
         {loading
