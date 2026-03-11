@@ -65,16 +65,41 @@ function AdminOrders() {
 
   // 刪除單一品項
   const deleteOrder = async (id) => {
-    if (!window.confirm('確定要刪除這個訂單嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
 
     try {
-      const response = await axios.delete(
-        `${API_BASE}/api/${API_PATH}/admin/order/${id}`,
-      )
-      showSuccess(response.data.message)
+      const result = await swalModern.fire({
+        title: '確定要刪除此訂單嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
 
-      // 重新取得產品（畫面同步）
-      getOrders()
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          `${API_BASE}/api/${API_PATH}/admin/order/${id}`,
+        )
+        showSuccess(response.data.message)
+
+        // 重新取得產品（畫面同步）
+        getOrders()
+      }
     }
     catch (error) {
       showError(error.response.data.message)
@@ -301,19 +326,21 @@ function AdminOrders() {
             <div className="glass-panel p-4 p-md-5 shadow-dream rounded-4 border-gold-subtle">
 
               {/* 標題與功能按鈕 */}
-              <div className="d-flex justify-content-between align-items-center mb-5">
+              <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
                 <div>
                   <h2 className="text-gold-gradient font-serif mb-0">訂單管理秘書</h2>
                   <p className="text-gold-dark small mt-2">監控所有來自冒險者的交易紀錄</p>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-outline-danger btn-sm rounded-pill px-4"
-                  onClick={deleteAllOrder}
-                >
-                  <i className="bi bi-trash3 me-2"></i>
-                  清空所有紀錄
-                </button>
+                <div className="d-flex gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={deleteAllOrder}
+                  >
+                    <i className="bi bi-trash3 me-2"></i>
+                    清空所有紀錄
+                  </button>
+                </div>
               </div>
 
               <div className="table-responsive d-none d-lg-block">

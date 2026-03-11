@@ -35,7 +35,7 @@ html, body {
   text-decoration: none;
   font-weight: 500;
   position: relative;
-  padding: 10px 0;
+  padding: 15px 0;
   display: inline-block;
   transition: color 0.3s ease;
 }
@@ -65,7 +65,7 @@ html, body {
   background: rgba(10, 14, 23, 0.8) !important; /* 深色背景透明 */
   backdrop-filter: blur(12px); /* 模糊背景 */
   border-bottom: 1px solid rgba(197, 163, 103, 0.3); /* 金色細邊框 */
-  padding: 0.8rem 1rem;
+  padding: 0rem 1rem;
 }
 
 /* Logo 樣式 */
@@ -479,6 +479,12 @@ html, body {
   height: 280px !important;
   object-fit: cover;
   transition: transform 0.5s ease;
+}
+
+@media (max-width: 540px) {
+  .product-img-dream {
+    height: 200px !important;
+  }
 }
 
 .product-card-dream:hover .product-img-dream {
@@ -902,15 +908,6 @@ img {
   margin-top: -83px;
 }
 
-/* Admin Navbar 專屬樣式 */
-
-.admin-navbar {
-  background: rgba(10, 14, 23, 0.95) !important;
-  border-bottom: 1px solid rgba(197, 163, 103, 0.3);
-  backdrop-filter: blur(10px);
-  padding: 1rem 0;
-}
-
 /* 中間藥丸型導航欄 */
 
 .admin-nav-link {
@@ -918,7 +915,7 @@ img {
   font-size: 0.95rem;
   transition: all 0.3s ease;
   border-radius: 50px;
-  padding: 0.5rem 1.25rem !important;
+  padding: 0.8rem 1.25rem !important;
 }
 
 .admin-nav-link:hover, .admin-nav-link.active {
@@ -933,7 +930,7 @@ img {
   border: 1px solid #8A6D3B;
   color: #8A6D3B;
   border-radius: 50px;
-  padding: 0.5rem 1.5rem;
+  padding: 1rem 1.5rem;
   transition: all 0.3s ease;
 }
 

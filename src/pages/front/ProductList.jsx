@@ -184,7 +184,7 @@ const ProductList = () => {
               <div className="col-lg-9">
                 <div className="row gy-4 mb-4">
                   {[...Array(12)].map((_, i) => (
-                    <div className="col-lg-4 col-sm-6 col-12" key={i}>
+                    <div className="col-lg-4 col-6" key={i}>
                       {/* 骨架卡片，與實際卡片擁有相同的 class 和高度 */}
                       <div className="card product-card-dream h-100 border-0 overflow-hidden">
                         {/* 圖片區域骨架 */}
@@ -192,10 +192,10 @@ const ProductList = () => {
 
                         <div className="card-body p-4 text-center">
                           {/* 標題骨架 */}
-                          <div className="skeleton-line mb-3 bg-loading w-70 py-3 mx-auto"></div>
+                          <div className="skeleton-line mb-sm-3 mb-1 bg-loading w-70 py-3 mx-auto"></div>
                           {/* 內文骨架 */}
                           <div className="skeleton-line mb-2 bg-loading w-90 py-4 mx-auto"></div>
-                          <div className="skeleton-line mb-3 bg-loading w-50 py-3 mx-auto"></div>
+                          <div className="skeleton-line mb-sm-3 mb-1 bg-loading w-50 py-3 mx-auto"></div>
                           {/* 按鈕骨架 */}
                           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
                             <div className="skeleton-line w-100 bg-loading py-3 rounded-pill"></div>
@@ -214,16 +214,16 @@ const ProductList = () => {
                   {
                     displayProducts.map((product) => {
                       return (
-                        <div className="col-lg-4 col-sm-6 col-12" key={product.id}>
+                        <div className="col-lg-4 col-6" key={product.id}>
                           <div className="card product-card-dream h-100">
                             <div className="position-relative overflow-hidden">
                               <img src={product.imageUrl} className="card-img-top product-img-dream img-fluid" alt={product.title} />
                             </div>
-                            <div className="d-flex flex-column justify-content-between card-body p-4 text-center">
-                              <h5 className="card-title text-gold-light mb-3">{product.title}</h5>
-                              <p className="card-text text-gold-mid small">{product.content}</p>
+                            <div className="d-flex flex-column justify-content-between card-body p-sm-4 p-2 text-center">
+                              <h5 className="card-title text-gold-light mb-sm-3 mb-1">{product.title}</h5>
+                              <p className="card-text text-gold-mid mb-sm-3 mb-1 small">{product.content}</p>
 
-                              <div className="d-flex justify-content-center align-items-baseline mb-3">
+                              <div className="d-flex justify-content-center align-items-baseline mb-sm-3 mb-1">
                                 <span className="small text-gold-dark text-decoration-line-through me-2">
                                   {product.origin_price}
                                   元

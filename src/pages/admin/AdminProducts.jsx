@@ -179,7 +179,7 @@ function AdminProducts() {
 
     try {
       const result = await swalModern.fire({
-        title: '確定要清空產品嗎？',
+        title: '確定要清空所有產品嗎？',
         text: '此動作無法復原！',
         icon: 'warning',
         showCancelButton: true,
@@ -231,16 +231,41 @@ function AdminProducts() {
 
   // 刪除單一品項
   const deleteProduct = async (id) => {
-    if (!window.confirm('確定要刪除這個品項嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
 
     try {
-      const response = await axios.delete(
-        `${API_BASE}/api/${API_PATH}/admin/product/${id}`,
-      )
-      showSuccess(response.data.message)
+      const result = await swalModern.fire({
+        title: '確定要刪除此產品嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
 
-      // 重新取得產品（畫面同步）
-      getProducts()
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          `${API_BASE}/api/${API_PATH}/admin/product/${id}`,
+        )
+        showSuccess(response.data.message)
+
+        // 重新取得產品（畫面同步）
+        getProducts()
+      }
     }
     catch (error) {
       showError(error.response.data.message)

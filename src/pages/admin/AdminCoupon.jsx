@@ -139,15 +139,40 @@ function AdminCoupon() {
 
   // 刪除單一優惠券
   const deleteCoupon = async (id) => {
-    if (!window.confirm('確定要刪除這個優惠券嗎？')) return
+    const swalModern = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
+        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
+        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
+      },
+      buttonsStyling: false,
+      confirmButtonText: '確定',
+      cancelButtonText: '取消',
+      reverseButtons: true,
+    })
 
     try {
-      const response = await axios.delete(
-        `${API_BASE}/api/${API_PATH}/admin/coupon/${id}`,
-      )
-      showSuccess(response.data.message)
+      const result = await swalModern.fire({
+        title: '確定要刪除此優惠券嗎？',
+        text: '此動作無法復原！',
+        icon: 'warning',
+        showCancelButton: true,
+        didOpen: (popup) => {
+          const title = popup.querySelector('.swal2-title')
+          const content = popup.querySelector('.swal2-html-container')
+          if (title) title.style.color = '#F2E3B5'
+          if (content) content.style.color = '#FFFFFF'
+        },
+      })
 
-      getCoupons()
+      if (result.isConfirmed) {
+        const response = await axios.delete(
+          `${API_BASE}/api/${API_PATH}/admin/coupon/${id}`,
+        )
+        showSuccess(response.data.message)
+
+        getCoupons()
+      }
     }
     catch (error) {
       showError(error.response?.data?.message || '刪除失敗')
@@ -223,7 +248,7 @@ function AdminCoupon() {
   return (
     <div className="container py-5">
       <div className="glass-panel p-4 p-md-5 shadow-dream rounded-4 border-gold-subtle">
-        <div className="d-flex justify-content-between align-items-center mb-5">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
           <div>
             <h2 className="text-gold-gradient font-serif mb-0">優惠券管理</h2>
             <p className="text-gold-dark small mt-2">管理你的促銷與折扣活動</p>

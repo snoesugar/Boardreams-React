@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import 'animate.css'
+import { Link } from 'react-router'
 
 const About = () => {
   useEffect(() => {
@@ -141,9 +142,15 @@ const About = () => {
         <div className="p-5 border-gold-subtle rounded-4">
           <h3 className="text-gold-gradient fs-2 mb-4" data-aos="zoom-out">準備好開啟你的下一場傳說嗎？</h3>
           <p className="text-primary mb-5" data-aos="zoom-out-up">加入我們的行列，在方寸之間建築屬於你的夢想。</p>
-          <button className="btn-dream-add fs-4 px-5 py-3 rounded-pill tracking-widest animate__animated animate__headShake animate__infinite" data-aos="flip-left">
-            瀏覽產品清單
-          </button>
+          <div className="animate__animated animate__headShake animate__infinite">
+            <Link
+              className="btn-dream-add text-decoration-none fs-4 px-5 py-3 rounded-pill tracking-widest"
+              data-aos="flip-left"
+              to="/productList"
+            >
+              瀏覽產品清單
+            </Link>
+          </div>
         </div>
         <hr className="border-gold-dark" />
       </section>
