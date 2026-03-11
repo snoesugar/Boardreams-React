@@ -239,17 +239,16 @@ const Home = () => {
                 <div
                   key={i}
                   className={`
-        col-lg-3 col-md-4 col-sm-6 col-12 mb-3
-        ${i === 1 ? 'd-none d-sm-block' : ''} 
+        col-lg-3 col-md-4 col-6 mb-3
         ${i === 2 ? 'd-none d-md-block' : ''} 
         ${i === 3 ? 'd-none d-xl-block' : ''}
       `}
                 >
                   <div className="card product-card-dream h-100 border-0 overflow-hidden" data-aos="flip-left">
                     <div className="skeleton-line card-img-top product-img-dream"></div>
-                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-3 text-center">
+                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-md-3 p-2 text-center">
                       <div className="skeleton-line w-80 mb-2 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
-                      <div className="skeleton-line w-25 mb-3 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
+                      <div className="skeleton-line w-25 mb-md-3 mb-1 py-3 mx-auto" style={{ backgroundColor: '#333' }}></div>
                       <div className="skeleton-line rounded-pill" style={{ height: '30px', width: '100px', backgroundColor: '#333' }}></div>
                     </div>
                   </div>
@@ -261,7 +260,7 @@ const Home = () => {
             <Swiper
               modules={[Autoplay, Pagination, Navigation]}
               spaceBetween={30} // 每個 Slide 之間的距離
-              slidesPerView={1} // 預設顯示一個
+              slidesPerView={2} // 預設顯示一個
               loop={coupons.length >= 2}
               autoplay={{
                 delay: 3500,
@@ -269,11 +268,11 @@ const Home = () => {
               }}
               navigation={true} // 顯示前後導航按鈕
               breakpoints={{
-                720: {
+                0: {
                   slidesPerView: 2,
                   spaceBetween: 20,
                 },
-                960: {
+                760: {
                   slidesPerView: 3,
                   spaceBetween: 30,
                 },
@@ -290,9 +289,9 @@ const Home = () => {
                     <div className="position-relative overflow-hidden">
                       <img src={product.imageUrl} className="card-img-top product-img-dream" alt={product.title} />
                     </div>
-                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-3 text-center">
+                    <div className="card-body d-flex flex-column justify-content-between align-items-center p-md-3 p-2 text-center">
                       <h5 className="card-title text-gold-light mb-2">{product.title}</h5>
-                      <p className="card-text text-gold-mid small mb-3">{product.category}</p>
+                      <p className="card-text text-gold-mid small mb-md-3 mb-1">{product.category}</p>
                       <Link to={`/product/${product.id}`} className="btn btn-outline-gold-mid btn-sm w-50 rounded-pill">
                         查看更多
                       </Link>

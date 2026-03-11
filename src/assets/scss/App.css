@@ -433,7 +433,7 @@ html, body {
   background: var(--bs-panel) !important; /* 深色背景 */
   border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
   border-radius: 15px !important;
-  min-height: 438px;
+  min-height: 436px;
   transition: all 0.3s ease !important;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 柔和陰影 */
 }
