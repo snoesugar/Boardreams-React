@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import useSwal from '../../hooks/useSwal.jsx'
 import { Link, useNavigate } from 'react-router'
 import { Spinner } from '../../components/Components.jsx'
 import useMessage from '../../hooks/useMessage.jsx'
@@ -24,6 +23,7 @@ const Cart = () => {
   )
   const isInitialLoading = loading && cartList.length === 0
   const isCouponUsed = cartList.some(item => item.coupon)
+  const { confirmDelete } = useSwal()
 
   // 修改商品數量
   const updateCartQty = async (cartId, productId, qty) => {
@@ -60,33 +60,10 @@ const Cart = () => {
       return
     }
 
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要清空購物車嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要清空購物車嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         const response = await axios.delete(
           `${API_BASE}/api/${API_PATH}/carts`,
         )

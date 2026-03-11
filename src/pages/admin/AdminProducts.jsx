@@ -1,6 +1,5 @@
 import axios from 'axios'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import useSwal from '../../hooks/useSwal.jsx'
 import { useState, useEffect, useRef } from 'react'
 import { Modal, Collapse } from 'bootstrap'
 import { TempProduct, ProductModal, Pagination, Spinner } from '../../components/Components'
@@ -36,6 +35,7 @@ function AdminProducts() {
   const addModalInstance = useRef(null)
   const editProductInstance = useRef(null)
   const { showSuccess, showError } = useMessage()
+  const { confirmDelete } = useSwal()
 
   /* ---------- 查看細節 ---------- */
   const openModal = item => setTempProduct(item)
@@ -165,33 +165,10 @@ function AdminProducts() {
 
   // 刪除所有品項
   const deleteAllProduct = async () => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要清空所有產品嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要清空所有產品嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         setLoading(true)
         // 1️⃣ 先取得目前所有產品
         const response = await axios.get(
@@ -231,33 +208,10 @@ function AdminProducts() {
 
   // 刪除單一品項
   const deleteProduct = async (id) => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要刪除此產品嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要刪除此產品嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         const response = await axios.delete(
           `${API_BASE}/api/${API_PATH}/admin/product/${id}`,
         )

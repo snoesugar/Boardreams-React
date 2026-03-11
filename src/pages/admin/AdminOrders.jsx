@@ -1,6 +1,5 @@
 import axios from 'axios'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import useSwal from '../../hooks/useSwal.jsx'
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
 import { Spinner, Pagination, EditOrder } from '../../components/Components'
@@ -36,6 +35,7 @@ function AdminOrders() {
   const editOrderRef = useRef(null)
   const editOrderInstance = useRef(null)
   const { showSuccess, showError } = useMessage()
+  const { confirmDelete } = useSwal()
 
   /* ---------- 編輯 Modal ---------- */
   const closeEditModal = () => {
@@ -65,33 +65,10 @@ function AdminOrders() {
 
   // 刪除單一品項
   const deleteOrder = async (id) => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要刪除此訂單嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要刪除此訂單嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         const response = await axios.delete(
           `${API_BASE}/api/${API_PATH}/admin/order/${id}`,
         )
@@ -108,33 +85,10 @@ function AdminOrders() {
 
   // 刪除所有訂單
   const deleteAllOrder = async () => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要清空訂單嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要清空所有訂單嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         setLoading(true)
         // 1️⃣ 先取得目前所有產品
         const response = await axios.get(

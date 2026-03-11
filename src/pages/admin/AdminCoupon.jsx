@@ -1,6 +1,5 @@
 import axios from 'axios'
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import useSwal from '../../hooks/useSwal.jsx'
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
 import { Spinner, Pagination, EditCoupon } from '../../components/Components'
@@ -27,6 +26,7 @@ function AdminCoupon() {
   const editCouponInstance = useRef(null)
 
   const { showSuccess, showError } = useMessage()
+  const { confirmDelete } = useSwal()
 
   // 關閉優惠券
   const closeEditModal = () => {
@@ -93,33 +93,10 @@ function AdminCoupon() {
 
   // 刪除所有優惠券
   const deleteAllCoupon = async () => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要清空優惠券嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要清空所有優惠券嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         setLoading(true)
         const deleteRequests = coupons.map(item =>
           axios.delete(`${API_BASE}/api/${API_PATH}/admin/coupon/${item.id}`),
@@ -139,33 +116,10 @@ function AdminCoupon() {
 
   // 刪除單一優惠券
   const deleteCoupon = async (id) => {
-    const swalModern = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-danger px-4 py-2 mx-2',
-        cancelButton: 'btn btn-secondary px-4 py-2 mx-2',
-        popup: 'rounded-4 shadow glass-login-card border border-gold-light',
-      },
-      buttonsStyling: false,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      reverseButtons: true,
-    })
-
     try {
-      const result = await swalModern.fire({
-        title: '確定要刪除此優惠券嗎？',
-        text: '此動作無法復原！',
-        icon: 'warning',
-        showCancelButton: true,
-        didOpen: (popup) => {
-          const title = popup.querySelector('.swal2-title')
-          const content = popup.querySelector('.swal2-html-container')
-          if (title) title.style.color = '#F2E3B5'
-          if (content) content.style.color = '#FFFFFF'
-        },
-      })
+      const isConfirmed = await confirmDelete('確定要刪除此優惠券嗎？', '此動作無法復原！')
 
-      if (result.isConfirmed) {
+      if (isConfirmed) {
         const response = await axios.delete(
           `${API_BASE}/api/${API_PATH}/admin/coupon/${id}`,
         )
