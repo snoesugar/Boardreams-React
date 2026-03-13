@@ -419,14 +419,14 @@ function AdminProducts() {
           )
           : (
             <div className="bg-dark pt-83 mt-n83">
-              <div className="admin-products-page py-5">
+              <div className="py-5">
                 <div className="container">
-                  <div className="glass-panel p-4 p-lg-5 shadow-dream rounded-4 border-gold-subtle">
+                  <div className="glass-panel p-4 p-lg-5 shadow-dream rounded-4">
 
                     {/* 頂部功能列 */}
                     <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
                       <div>
-                        <h2 className="text-gold-gradient font-serif mb-1">產品藏寶庫</h2>
+                        <h2 className="text-gold-gradient mb-1">產品藏寶庫</h2>
                         <p className="text-gold-dark small mb-0">管理您的桌遊藏品與庫存狀態</p>
                       </div>
 
@@ -452,7 +452,7 @@ function AdminProducts() {
 
                     {/* 產品表格區 */}
                     <div className="table-responsive d-none d-lg-block">
-                      <table className="table admin-table align-middle">
+                      <table className="table align-middle">
                         <thead>
                           <tr>
                             <th className="ps-4">分類</th>

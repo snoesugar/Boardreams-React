@@ -1,4 +1,4 @@
-import { Outlet, Link, useNavigate } from 'react-router-dom'
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Spinner } from '../components/Components'
@@ -11,6 +11,7 @@ const AdminLayout = () => {
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const { showSuccess, showError } = useMessage()
+  const location = useLocation()
 
   const toggleNavbar = () => {
     setIsOpen(prev => !prev)

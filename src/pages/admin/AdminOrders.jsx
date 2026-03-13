@@ -1,7 +1,7 @@
 import axios from 'axios'
-import useSwal from '../../hooks/useSwal.jsx'
 import { useState, useEffect, useRef } from 'react'
 import { Modal } from 'bootstrap'
+import useSwal from '../../hooks/useSwal.jsx'
 import { Spinner, Pagination, EditOrder } from '../../components/Components'
 import useMessage from '../../hooks/useMessage'
 
@@ -211,6 +211,7 @@ function AdminOrders() {
     setNewOrder({ ...newOrder, products: updatedProducts, total: newTotal })
   }
 
+  // 刪除單一產品
   const deleteProduct = (id) => {
     const updatedProducts = { ...newOrder.products }
     delete updatedProducts[id]
@@ -224,6 +225,7 @@ function AdminOrders() {
     setNewOrder({ ...newOrder, products: updatedProducts, total: newTotal })
   }
 
+  // 驗證
   const validateOrder = (order) => {
     const error = {}
     // 可選：驗證留言是否太長
@@ -282,7 +284,7 @@ function AdminOrders() {
               {/* 標題與功能按鈕 */}
               <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
                 <div>
-                  <h2 className="text-gold-gradient font-serif mb-0">訂單管理秘書</h2>
+                  <h2 className="text-gold-gradient mb-0">訂單管理秘書</h2>
                   <p className="text-gold-dark small mt-2">監控所有來自冒險者的交易紀錄</p>
                 </div>
                 <div className="d-flex gap-2">
