@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCartAsync } from '../slice/cartSlice'
@@ -8,6 +8,7 @@ const FrontLayout = () => {
   const dispatch = useDispatch()
   const carts = useSelector(state => state.cart.carts)
   const totalQty = carts?.reduce((sum, item) => sum + item.qty, 0) || 0
+  const location = useLocation()
 
   const toggleNavbar = () => {
     setIsOpen(prev => !prev)
@@ -53,7 +54,7 @@ const FrontLayout = () => {
                 <ul className="navbar-nav">
                   <li className="nav-item">
                     <Link
-                      className="nav-link-dream px-3 text-primary"
+                      className={`nav-link-dream px-3 text-primary ${location.pathname === '/about' ? 'active' : ''}`}
                       to="/about"
                       onClick={closeNavbar}
                     >
@@ -64,7 +65,7 @@ const FrontLayout = () => {
 
                   <li className="nav-item">
                     <Link
-                      className="nav-link-dream px-3 text-primary"
+                      className={`nav-link-dream px-3 text-primary ${location.pathname === '/productList' ? 'active' : ''}`}
                       to="/productList"
                       onClick={closeNavbar}
                     >
@@ -75,7 +76,7 @@ const FrontLayout = () => {
 
                   <li className="nav-item">
                     <Link
-                      className="nav-link-dream px-3 text-primary"
+                      className={`nav-link-dream px-3 text-primary ${location.pathname === '/cart' ? 'active' : ''}`}
                       to="/cart"
                       onClick={closeNavbar}
                     >
@@ -95,7 +96,7 @@ const FrontLayout = () => {
                 <ul className="navbar-nav ms-auto">
                   <li className="nav-item">
                     <Link
-                      className="nav-link-dream px-lg-5 px-3 text-primary"
+                      className={`nav-link-dream px-3 text-primary ${location.pathname === '/login' ? 'active' : ''}`}
                       to="/login"
                       onClick={closeNavbar}
                     >

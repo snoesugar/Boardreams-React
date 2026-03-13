@@ -188,14 +188,14 @@ img {
 
 /* --- 中間連結動效 --- */
 .nav-link-dream {
-  color: rgba(242, 227, 181, 0.7) !important;
+  color: rgba(242, 227, 181, 0.7);
   text-decoration: none;
   font-weight: 500;
   position: relative;
   padding: 15px 0;
   display: inline-block;
   transition: color 0.3s ease;
-    &:hover {
+    &:hover, &.active {
       color: #F2E3B5 !important;
       &::after {
         width: 100%;
