@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios'
-import useMessage from '../../hooks/useMessage'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import { getCartAsync } from '../../slice/cartSlice'
+import useMessage from '../../hooks/useMessage'
+
 const API_BASE = import.meta.env.VITE_API_BASE
 const API_PATH = import.meta.env.VITE_API_PATH
 
@@ -19,6 +20,7 @@ const Product = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    // 取得資料
     const fetchProduct = async () => {
       setLoading(true)
       try {
@@ -42,6 +44,7 @@ const Product = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
+  // 加入購物車
   const addToCart = async (qty = 1) => {
     if (addingId === product.id) return
     try {
@@ -77,7 +80,7 @@ const Product = () => {
 
   return (
     <div className="container pt-83 pb-5">
-      {/* 麵包屑/返回按鈕 */}
+      {/* 返回按鈕 */}
       <nav className="mb-6">
         <button
           className="btn btn-outline-gold-light border-0 d-flex align-items-center"
@@ -108,7 +111,7 @@ const Product = () => {
             {images.map((img, index) => (
               <div
                 key={index}
-                className={`product-thumb-wrapper rounded border-2 transition-ease02 ${mainImage === img ? 'border-gold-light' : 'border-transparent opacity-60'}`}
+                className={`product-thumb-wrapper rounded border-2 transition-ease02 ${mainImage === img ? 'border-gold-light' : 'opacity-60'}`}
                 style={{ cursor: 'pointer', flex: '0 0 80px', height: '80px' }}
                 onClick={() => setMainImage(img)}
               >
@@ -135,7 +138,7 @@ const Product = () => {
               <h6 className="text-gold-light fw-bold small tracking-widest border-start border-3 border-gold-mid ps-2 mb-3">
                 物品傳說
               </h6>
-              <p className="text-white-50 lh-lg bg-glass-dark p-3 rounded border border-gold-dark shadow-inner mb-4">
+              <p className="text-white-50 lh-lg p-3 rounded border border-gold-dark shadow-inner mb-4">
                 {product.content}
               </p>
 

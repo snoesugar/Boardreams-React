@@ -2,8 +2,165 @@ html, body {
   background-color: var(--bs-dark) !important;
 }
 
+/* ---- 整合 ----- */
 
-/*Navbar*/
+/* navbar的空間 */
+.pt-83 {
+  padding-top: 83px;
+}
+.mt-n83 {
+  margin-top: -83px;
+}
+
+/* 金屬漸層線條 */
+.bg-gold-gradient {
+  height: 2px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, #c9b166, transparent);
+}
+
+/* 商品清單小 Badge */
+.bg-glass-gold {
+  background: rgba(197, 163, 103, 0.2);
+  color: #F2E3B5;
+  border: 1px solid rgba(197, 163, 103, 0.4);
+}
+
+/* 標題使用金色漸層 */
+.text-gold-gradient {
+  background: linear-gradient(180deg, #F2E3B5 0%, #C5A367 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+/* 玻璃質感面板 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(197, 163, 103, 0.2) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* 文字追蹤與間距 */
+.tracking-widest { letter-spacing: 0.2em; }
+
+.transition-ease02 {
+  transition: all 0.2s ease;
+}
+
+/* 按鈕 */
+.btn-outline-gold-mid:hover {
+  background: linear-gradient(180deg, var(--bs-glow) 0%, var(--bs-gold-light) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background: linear-gradient(180deg, #dc3545 0%, #360409 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  background: linear-gradient(180deg, var(--bs-secondary) 0%, var(--bs-gray-700) 100%);
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-gold {
+  color: var(--bs-gold-mid);
+  transition: all 0.3s ease;
+  &:hover {
+    background: var(--bs-glow);
+    color: var(--bs-gold-light);
+    border-color: var(--bs-gold-light);
+  }
+}
+
+img {
+  object-fit: contain;
+  max-width: 100%;
+}
+
+/* 產品卡片質感 */
+.product-card-dream {
+  position: relative; /* 這是關鍵：讓 ::after 以這張卡片為邊界 */
+  overflow: hidden;    /* 這是關鍵：防止閃光跑出卡片圓角之外 */
+  background: var(--bs-panel) !important; /* 深色背景 */
+  border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
+  border-radius: 15px !important;
+  min-height: 436px;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 柔和陰影 */
+  /* Hover 時卡片翹起並發光 */
+    &:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px rgba(197, 163, 103, 0.4);
+    &::after {
+      animation: shimmer 1.5s infinite ease-in-out;
+    }
+  }
+  /* 閃光動畫主體 */
+    &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      60deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 30%,    /* 起始完全透明 */
+      rgba(255, 255, 255, 0.15) 50%,  /* 中心光點 */
+      rgba(255, 255, 255, 0) 70%,    /* 結束完全透明 */
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    pointer-events: none; /* 確保閃光層不會干擾滑鼠點擊 */
+  }
+  /*響應式設定*/
+  @media (max-width: 540px) {
+    min-height: 375px !important;
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 產品圖質感與Hover效果 */
+.product-img-dream {
+  border-radius: 12px 12px 0 0;
+  height: 280px !important;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  .product-card-dream:hover & {
+    transform: scale(1.03); /* 輕微放大圖示 */
+  }
+  /*響應式設定*/
+  @media (max-width: 540px) {
+    height: 200px !important;
+  }
+}
+
+/* ----------- 前台 ---------- */
+
+/* ----- Navbar ----- */
+
 /* 點選後的動畫 (需配合 isOpen 狀態控制類別) */
 .navbar-toggler:not(.collapsed) .top-bar { transform: translateY(7px) rotate(45deg); }
 .navbar-toggler:not(.collapsed) .middle-bar { opacity: 0; }
@@ -38,25 +195,22 @@ html, body {
   padding: 15px 0;
   display: inline-block;
   transition: color 0.3s ease;
-}
-
-.nav-link-dream::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #C5A367, transparent);
-  transition: width 0.3s ease;
-}
-
-.nav-link-dream:hover {
-  color: #F2E3B5 !important;
-}
-
-.nav-link-dream:hover::after {
-  width: 100%;
+    &:hover {
+      color: #F2E3B5 !important;
+      &::after {
+        width: 100%;
+      }
+    }
+    &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #C5A367, transparent);
+    transition: width 0.3s ease;
+  }
 }
 
 /* 導覽列玻璃質感 */
@@ -66,6 +220,14 @@ html, body {
   backdrop-filter: blur(12px); /* 模糊背景 */
   border-bottom: 1px solid rgba(197, 163, 103, 0.3); /* 金色細邊框 */
   padding: 0rem 1rem;
+  /*footer的連結*/
+    .nav-link {
+    transition: all 0.3s ease;
+    &:hover {
+      color: #F2E3B5 !important;
+      text-shadow: 0 0 8px rgba(242, 227, 181, 0.5);
+    }
+  }
 }
 
 /* Logo 樣式 */
@@ -79,21 +241,22 @@ html, body {
   letter-spacing: 2px;
 }
 
-/* 導覽連結顏色與 Hover 效果 */
-.navbar-dream .nav-link {
-  transition: all 0.3s ease;
-  &:hover {
-    color: #F2E3B5 !important;
-    text-shadow: 0 0 8px rgba(242, 227, 181, 0.5);
-  }
-}
+/* ----- home -----*/
 
-/* 標題使用金色漸層 */
-.text-gold-gradient {
-  background: linear-gradient(180deg, #F2E3B5 0%, #C5A367 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
+/* -- Hero Section -- */
+.hero-img {
+  height: 600px; /* 固定高度 */
+  /* 也可以使用視窗單位，讓它更有彈性 */
+  @media (min-width: 992px) {
+    height: 70vh; /* 佔視窗高度的 70% */
+    min-height: 500px;
+    max-height: 800px;
+  }
+
+  /* 手機板：高度可以調小一點 */
+  @media (max-width: 767px) {
+    height: 300px;
+  }
 }
 
 /* 夢想風格的按鈕 */
@@ -110,44 +273,14 @@ html, body {
   }
 }
 
-/* 玻璃質感面板 */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(197, 163, 103, 0.2) !important;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-}
-/*home*/
-
-/* 桌面板：限制在視窗高度的 60~70% 左右，避免佔滿全螢幕 */
-.hero-img {
-  height: 600px; /* 固定高度 */
-}
-
-/* 也可以使用視窗單位，讓它更有彈性 */
-@media (min-width: 992px) {
-  .hero-img {
-    height: 70vh; /* 佔視窗高度的 70% */
-    min-height: 500px;
-    max-height: 800px;
-  }
-}
-
-/* 手機板：高度可以調小一點 */
-@media (max-width: 767px) {
-  .hero-img {
-    height: 300px;
-  }
-}
-
-/* 步驟卡片設計 */
+/* -- 玩桌遊心情變好三步驟 -- */
 .step-card {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(197, 163, 103, 0.2) !important;
-}
-
-.step-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(201, 177, 102, 0.6) !important;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(197, 163, 103, 0.2);
+    &:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(201, 177, 102, 0.6);
+  }
 }
 
 /* 步驟數字標籤 */
@@ -165,39 +298,53 @@ html, body {
   opacity: 0.5;
 }
 
-/* 金屬漸層線條 */
-.bg-gold-gradient {
-  height: 2px;
-  width: 60px;
-  background: linear-gradient(90deg, transparent, #c9b166, transparent);
+/* -- 熱門類別探索 -- */
+.category-card {
+  border: 1px solid rgba(197, 163, 103, 0.3);
+  transition: all 0.4s ease;
+    img {
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
 }
 
-/* 輪播導航按鈕 (左右箭頭) */
-.swiper-button-next,
-.swiper-button-prev {
-  color: #c9b166 !important; /* 金色 */
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
+.category-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+  transition: background 0.4s ease;
 }
 
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+/* 文字動畫 */
+.category-desc {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
 }
 
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 1.5rem !important; /* 調整箭頭大小 */
+/* Hover 效果 */
+.category-card-wrapper {
+  &:hover {
+    img {
+      transform: scale(1.15);
+    }
+    .category-card {
+      border-color: #F2E3B5;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    .category-overlay {
+      background: rgba(197, 163, 103, 0.2); /* 移入時呈現淡淡金色光暈 */
+    }
+    .category-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
-/* 優惠券輪播卡片樣式 */
-
+/* -- 限時優惠券 -- */
 .coupon-edge-left, .coupon-edge-right {
   position: absolute;
   top: 50%;
@@ -234,52 +381,33 @@ html, body {
   background-color: #c9b166 !important; /* 選中小點的顏色 */
 }
 
-.category-card {
-  border: 1px solid rgba(197, 163, 103, 0.3);
-  transition: all 0.4s ease;
+/* -- 熱門遊戲 -- */
+/* 輪播導航按鈕 (左右箭頭) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #c9b166 !important; /* 金色 */
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
-.category-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
-  transition: background 0.4s ease;
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* 文字動畫 */
-.category-desc {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.5rem !important; /* 調整箭頭大小 */
 }
 
-/* Hover 效果 */
-.category-card-wrapper:hover .category-card {
-  border-color: #F2E3B5;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-.category-card-wrapper:hover img {
-  transform: scale(1.15);
-}
-
-.category-card-wrapper:hover .category-overlay {
-  background: rgba(197, 163, 103, 0.2); /* 移入時呈現淡淡金色光暈 */
-}
-
-.category-card-wrapper:hover .category-desc {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.category-card img {
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* About */
+/* ----- About ----- */
+/* -- 英雄區 -- */
 .about-hero {
   padding-top: 150px;
   background: radial-gradient(circle at 50% 50%, rgba(197, 163, 103, 0.05) 0%, transparent 70%);
@@ -297,30 +425,25 @@ html, body {
   pointer-events: none;
 }
 
+/* -- 核心理想 -- */
 .about-img-frame {
   position: relative;
   padding: 10px;
   background: rgba(197, 163, 103, 0.1);
   border-radius: 20px;
   transition: transform 0.5s ease;
+  img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    filter: brightness(0.9);  /* 讓圖片稍微暗一點點，符合 bg-dark 的神秘感 */
+  }
+  &:hover {
+    transform: translateY(-10px);
+    img {
+      transform: scale(1.05); /* 輕微放大效果 */
+      filter: brightness(1.1); /* 滑過時亮起來，像被點燃的冒險 */
+    }
+  }
 }
-
-.about-img-frame:hover {
-  transform: translateY(-10px);
-}
-
-.about-img-frame img {
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-  filter: brightness(0.9); /* 讓圖片稍微暗一點點，符合 bg-dark 的神秘感 */
-}
-
-.about-img-frame:hover img {
-  transform: scale(1.05); /* 輕微放大效果 */
-  filter: brightness(1.1); /* 滑過時亮起來，像被點燃的冒險 */
-}
-
-/* 文字追蹤與間距 */
-.tracking-widest { letter-spacing: 0.2em; }
 
 /* 漂浮裝飾標籤 */
 .floating-badge {
@@ -351,6 +474,7 @@ html, body {
   z-index: 2;
 }
 
+/* -- 冒險公約 -- */
 .hover-lift-up:hover {
   transform: translateY(-15px);
   background: rgba(197, 163, 103, 0.08);
@@ -369,25 +493,23 @@ html, body {
   justify-content: center;
 }
 
-/*productList*/
-/* 清單樣式與 Hover 效果 */
-.transition-ease02 {
-  transition: all 0.2s ease;
+/* ----- productList ----- */
+
+.list-group-item-dream {
+  transition: all 0.3s ease; 
+  &:hover {
+    background: rgba(197, 163, 103, 0.1) !important;
+    transform: translateX(5px);
+    transition: transform 0.2s ease; 
+  }
+  &.active {
+    background: linear-gradient(90deg, rgba(197, 163, 103, 0.3) 0%, transparent 100%) !important;
+    border-left: 3px solid #C5A367 !important;
+    color: #F2E3B5 !important;
+  }
 }
 
-.list-group-item-dream:hover {
-  background: rgba(197, 163, 103, 0.1) !important;
-  transform: translateX(5px);
-  transition: transform 0.2s ease;
-}
-
-.list-group-item-dream.active {
-  background: linear-gradient(90deg, rgba(197,163,103,0.3) 0%, transparent 100%) !important;
-  border-left: 3px solid #C5A367 !important;
-  color: #F2E3B5 !important;
-}
-
-/* 添加在你的 CSS 檔中 */
+/* 讀取的動畫 */
 .skeleton-line {
   animation: pulse 1.5s infinite;
 }
@@ -398,106 +520,6 @@ html, body {
   100% { opacity: 0.6; }
 }
 
-/* 夢想風格分頁 */
-.pagination-dream .page-link {
-  background: transparent !important;
-  border: 1px solid rgba(197, 163, 103, 0.3) !important;
-  color: var(--bs-gold-light) !important;
-  border-radius: 50% !important;
-  margin: 0 5px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.pagination-dream .page-item.active .page-link {
-  background: var(--bs-gold-light) !important;
-  color: #000 !important;
-  border-color: var(--bs-gold-light) !important;
-  box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
-}
-
-.pagination-dream .page-link:hover:not(.active) {
-  background: rgba(197, 163, 103, 0.1) !important;
-  color: var(--bs-gold-light) !important;
-  transform: scale(1.1);
-}
-
-/* 產品卡片質感 */
-.product-card-dream {
-  position: relative; /* 這是關鍵：讓 ::after 以這張卡片為邊界 */
-  overflow: hidden;    /* 這是關鍵：防止閃光跑出卡片圓角之外 */
-  background: var(--bs-panel) !important; /* 深色背景 */
-  border: 1px solid rgba(197, 163, 103, 0.3) !important; /* 金色細邊框 */
-  border-radius: 15px !important;
-  min-height: 436px;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 柔和陰影 */
-}
-
-@media (max-width: 540px) {
-  .product-card-dream {
-    min-height: 375px !important;
-  }
-}
-
-
-/* 閃光動畫主體 */
-.product-card-dream::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    60deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0) 30%,    /* 起始完全透明 */
-    rgba(255, 255, 255, 0.15) 50%,  /* 中心光點 */
-    rgba(255, 255, 255, 0) 70%,    /* 結束完全透明 */
-    transparent 100%
-  );
-  transform: translateX(-100%);
-  pointer-events: none; /* 確保閃光層不會干擾滑鼠點擊 */
-}
-
-.product-card-dream:hover::after {
-  animation: shimmer 1.5s infinite ease-in-out;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Hover 時卡片翹起並發光 */
-.product-card-dream:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(197, 163, 103, 0.4);
-}
-
-/* 產品圖質感與Hover效果 */
-.product-img-dream {
-  border-radius: 12px 12px 0 0;
-  height: 280px !important;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-@media (max-width: 540px) {
-  .product-img-dream {
-    height: 200px !important;
-  }
-}
-
-.product-card-dream:hover .product-img-dream {
-  transform: scale(1.03); /* 輕微放大圖示 */
-}
-
 /* 價格漸層 */
 .price-gradient {
   background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
@@ -506,75 +528,81 @@ html, body {
   font-weight: bold;
 }
 
+/* 夢想風格分頁 */
+.pagination-dream {
+  .page-link {
+    background: transparent !important;
+    border: 1px solid rgba(197, 163, 103, 0.3) !important;
+    color: var(--bs-gold-light) !important;
+    border-radius: 50% !important;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    &:hover:not(.active) {
+      background: rgba(197, 163, 103, 0.1) !important;
+      color: var(--bs-gold-light) !important;
+      transform: scale(1.1);
+    }
+  }
+  .page-item.active {
+    .page-link {
+      background: var(--bs-gold-light) !important;
+      color: #000 !important;
+      border-color: var(--bs-gold-light) !important;
+      box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
+    }
+  }
+}
+
 /* 按鈕樣式 */
 .btn-dream-add {
   background: transparent;
   border: 1px solid var(--bs-gold-light);
   color: var(--bs-gold-light);
   transition: all 0.3s ease;
+    &:hover {
+    background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
+    color: #000;
+  }
 }
 
-.btn-dream-add:hover {
-  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
-  color: #000;
+/* 讓召喚按鈕更有「動」感 */
+.btn-dream-add:disabled {
+  opacity: 0.8;
+  background: rgba(197, 163, 103, 0.1);
+  border-color: rgba(197, 163, 103, 0.3);
+  cursor: wait;
 }
 
-.btn-outline-gold-mid:hover {
-  background: linear-gradient(180deg, var(--bs-glow) 0%, var(--bs-gold-light) 100%);
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-}
+/* ----- Login ----- */
 
-.btn-outline-primary:hover {
-  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-}
-
-.btn-outline-danger:hover {
-  background: linear-gradient(180deg, #dc3545 0%, #360409 100%);
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(180deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-}
-
-.btn-outline-secondary:hover {
-  background: linear-gradient(180deg, var(--bs-secondary) 0%, var(--bs-gray-700) 100%);
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-}
-
-/* Login.css */
-
-/* 1. 全螢幕奇幻背景 */
+/* 全螢幕奇幻背景 */
 .login-dream-bg {
   background: radial-gradient(circle at center, #1a233a 0%, #0A0E17 100%);
   background-attachment: fixed;
   overflow: hidden;
   position: relative;
-}
-
-/* 模擬魔法顆粒背景 (選擇性加入，需要額外在 HTML 放一個 div) */
-.login-dream-bg::after {
-  content: "";
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 
-    50px 100px #F2E3B5, 
-    150px 250px #C5A367,
-    300px 500px white,
-    600px 100px #8A6D3B,
-    900px 700px white;
-  opacity: 0.3;
-  animation: fairyDustAnimation 20s linear infinite;
+  /* 模擬魔法顆粒背景 */
+  &::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 
+      50px 100px #F2E3B5, 
+      150px 250px #C5A367,
+      300px 500px white,
+      600px 100px #8A6D3B,
+      900px 700px white;
+    opacity: 0.3;
+    animation: fairyDustAnimation 20s linear infinite;
+  }
 }
 
 @keyframes fairyDustAnimation {
@@ -582,12 +610,23 @@ html, body {
   to { transform: translateY(-1000px); }
 }
 
-/* 2. 玻璃擬物化登入卡片 */
+/* 玻璃擬物化登入卡片 */
 .glass-login-card {
   background: rgba(22, 27, 38, 1) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all 0.5s ease;
+  /* 輸入框優化 (玻璃質感 + 金色邊框) */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(197, 163, 103, 0.3) !important;
+    color: var(--bs-gold-mid) !important;
+    transition: all 0.3s ease !important;
+  }
+  /* 錯誤提示樣式修正 */
+  .is-invalid {
+    border-color: #ff6b6b !important; /* 紅色修正為柔和一點 */
+  }
 }
 
 /* 夢幻發光陰影 */
@@ -595,36 +634,26 @@ html, body {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(197, 163, 103, 0.2);
 }
 
-/* 3. 輸入框優化 (玻璃質感 + 金色邊框) */
-.glass-login-card .glass-panel {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(197, 163, 103, 0.3) !important;
-  color: var(--bs-gold-mid) !important;
-  transition: all 0.3s ease !important;
-}
-
-
-/* 錯誤提示樣式修正 */
-.glass-login-card .is-invalid {
-  border-color: #ff6b6b !important; /* 紅色修正為柔和一點 */
-}
-
-/* 4. 奢華金色按鈕 */
+/* 登入按紐 */
 .btn-login-dream {
   background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-dark) 100%);
   letter-spacing: 2px;
   transition: all 0.3s ease !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  &:hover {
+    background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197, 163, 103, 0.6);
+  }
+    &:active {
+    transform: translateY(1px);
+  }
 }
 
-.btn-login-dream:hover {
-  background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(197, 163, 103, 0.6);
-}
-
-.btn-login-dream:active {
-  transform: translateY(1px);
+.login-icon {
+  top: 16px;
+  right: 16px;
+  z-index: 10;
 }
 
 /* 5. 進場動畫類別 */
@@ -650,25 +679,19 @@ html, body {
   }
 }
 
-.login-icon {
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-}
-
 /* 針對自動填充的帳號密碼輸入框 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active {
-    /* 使用內陰影遮蓋背景，顏色設為你的黑色 (或與 glass-panel 一致) */
-    -webkit-box-shadow: 0 0 0 1000px rgba(22, 27, 38, 1) inset !important;
-    
-    /* 修正填充後的文字顏色，確保它是金色或白色 */
-    -webkit-text-fill-color: #F2E3B5 !important;
-    
-    /* 保持邊框平滑 */
-    transition: background-color 5000s ease-in-out 0s;
+  /* 使用內陰影遮蓋背景，顏色設為你的黑色 (或與 glass-panel 一致) */
+  -webkit-box-shadow: 0 0 0 1000px rgba(22, 27, 38, 1) inset !important;
+  
+  /* 修正填充後的文字顏色，確保它是金色或白色 */
+  -webkit-text-fill-color: #F2E3B5 !important;
+  
+  /* 保持邊框平滑 */
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* 如果你的玻璃質感背景是有透明度的，建議直接給一個實色背景避免透出底色 */
@@ -676,30 +699,34 @@ input:-webkit-autofill:active {
     border: 1px solid rgba(197, 163, 103, 0.5) !important;
 }
 
-/* CheckOut */
+/* ----- CheckOut ----- */
 
 /* 輸入框：深色透明感 + 金色微光 */
 .glass-input {
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid var(--bs-glow) !important;
   color: var(--bs-gold-light) !important;
-}
+  transition: all 0.3s ease; 
+  /* 針對 Placeholder 顏色 */
+  &::placeholder {
+    color: rgba(197, 163, 103, 0.4) !important;
+  }
 
-.glass-input:focus {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: var(--bs-gold-mid) !important;
-  box-shadow: 0 0 15px var(--bs-glow) !important;
-}
-
-/* 針對 Placeholder 顏色 */
-.glass-input::placeholder {
-  color: rgba(197, 163, 103, 0.4) !important;
-}
-
-/* 錯誤狀態樣式微調 */
-.glass-input.is-invalid {
-  border-color: #ff6b6b !important;
-  background-image: none; /* 移除預設驚嘆號，我們自己做 Icon */
+  &:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--bs-gold-mid) !important;
+    box-shadow: 0 0 15px var(--bs-glow) !important;
+    outline: 0; 
+  }
+  /* 錯誤狀態樣式微調 */
+  &.is-invalid {
+    border-color: #ff6b6b !important;
+    background-image: none; /* 移除預設驚嘆號，我們自己做 Icon */
+    
+    &:focus {
+      box-shadow: 0 0 10px rgba(255, 107, 107, 0.3) !important;
+    }
+  }
 }
 
 /* 送出按鈕：奢華發光感 */
@@ -707,38 +734,29 @@ input:-webkit-autofill:active {
   background: linear-gradient(135deg, var(--bs-gold-mid) 0%, var(--bs-gold-dark) 100%);
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px var(--bs-glow);
+    background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
+  }
 }
 
-.btn-dream-submit:hover:not(:disabled) {
-  transform: translateY(-3px);
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px var(--bs-glow);
-  background: linear-gradient(135deg, var(--bs-gold-light) 0%, var(--bs-gold-mid) 100%);
-}
-
-/* 返回按鈕：金色邊框 */
-.btn-outline-gold {
-  color: var(--bs-gold-mid);
-  transition: all 0.3s ease;
-}
-
-.btn-outline-gold:hover {
-  background: var(--bs-glow);
-  color: var(--bs-gold-light);
-  border-color: var(--bs-gold-light);
-}
-
-/* 分隔線 */
-.border-gold-dark {
-  border-color: var(--bs-glow) !important;
-}
-
-/* 404 專用樣式 */
+/* ----- NotFound ----- */
 
 .not-found-bg {
   background: radial-gradient(circle at center, #1a233a 0%, #05070a 100%);
   position: relative;
   overflow: hidden;
+  /* 讓背景多一點煙霧感 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.6;
+    pointer-events: none;
+  }
 }
 
 /* 緩慢旋轉的羅盤動畫 */
@@ -771,97 +789,7 @@ input:-webkit-autofill:active {
   100% { opacity: 1; }
 }
 
-/* 讓背景多一點煙霧感 (選擇性) */
-.not-found-bg::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://www.transparenttextures.com/patterns/stardust.png');
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-img {
-  object-fit: contain;
-  max-width: 100%;
-}
-
-
-.primary-image {
-  height: 500px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.images {
-  height: 200px;
-  width: 200px;
-  margin-right: 16px; /* 加點邊距 */
-  object-fit: cover;
-}
-
-.product-images {
-  border-left: 6px solid #445e3f; /* 左側粗線，顏色可改 */
-  background-color: #fff;          /* 框內背景 */
-}
-
-.preview-image {
-  width: 100%;
-  max-height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.cart-img {
-  width: 100px;
-  height: 100px;
-  min-width: 100px;  /* 強制最小寬度 */
-  min-height: 100px; /* 強制最小高度 */
-  object-fit: cover;
-  flex-shrink: 0;    /* 如果父元素是 flex，防止被壓縮 */
-}
-
-.img-fluid.product-main {
-  width: 500px;
-  height: 350px;
-  object-fit: cover;
-}
-
-.img-thumbnail.product-small {
-  min-width: 80px;
-  min-height: 80px;
-  object-fit: cover;
-  border: 2px solid #ddd; /*預設邊框*/
-  border-radius: 4px;
-  cursor: pointer;
-  transition: border 0.2s, opacity 0.2s;
-
-  &.active {
-    border: 2px solid #F0AD25; /* 選中邊框*/
-    opacity: 1;
-  }
-
-  &:not(.active) {
-    opacity: 0.6; /*未選中縮圖透明度*/
-  }
-}
-
-/* 讓文字區塊有向內凹陷的質感，增加深度 */
-.shadow-inner {
-  box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.6);
-  background: rgba(0, 0, 0, 0.2);
-}
-
-/* 縮圖外框 */
-.product-thumb-wrapper {
-  border: 2px solid transparent;
-  padding: 2px;
-}
-
-.product-thumb-wrapper.border-gold-light {
-  border-color: var(--bs-gold-light) !important;
-  box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
-}
+/* ----- Product ----- */
 
 /* 圖片下方的漸層，讓圖片與深色背景銜接 */
 .image-bottom-gradient {
@@ -874,22 +802,43 @@ img {
   pointer-events: none;
 }
 
-/* 讓召喚按鈕更有「動」感 */
-.btn-dream-add:disabled {
-  opacity: 0.8;
-  background: rgba(197, 163, 103, 0.1);
-  border-color: rgba(197, 163, 103, 0.3);
-  cursor: wait;
+/* 讓 Modal 內容過長時有精美的捲軸 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
 }
 
-/* 讓主圖與容器高度自適應手機 */
-@media (max-width: 768px) {
-  .img-fluid.product-main {
-    height: 300px !important;
+/* 縮圖外框 */
+.product-thumb-wrapper {
+  border: 2px solid transparent;
+  padding: 2px;
+  .border-gold-light {
+    border-color: var(--bs-gold-light) !important;
+    box-shadow: 0 0 10px rgba(197, 163, 103, 0.5);
   }
 }
 
-/*success*/
+/* 讓文字區塊有向內凹陷的質感，增加深度 */
+.shadow-inner {
+  box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ----- 購物車 ----- */
+
+.cart-img {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;  /* 強制最小寬度 */
+  min-height: 100px; /* 強制最小高度 */
+  object-fit: cover;
+  flex-shrink: 0;    /* 如果父元素是 flex，防止被壓縮 */
+}
+
+/* ----- success ----- */
 /* 魔法光暈背景 */
 .magic-glow {
   position: absolute;
@@ -907,13 +856,7 @@ img {
   50% { opacity: 0.8; transform: scale(1.05); }
 }
 
-.pt-83 {
-  padding-top: 83px;
-}
-
-.mt-n83 {
-  margin-top: -83px;
-}
+/* ---------- 後台 ---------- */
 
 /* 中間藥丸型導航欄 */
 
@@ -1078,12 +1021,7 @@ img {
   font-size: 0.8rem;
 }
 
-/* 商品清單小 Badge */
-.bg-glass-gold {
-  background: rgba(197, 163, 103, 0.2);
-  color: #F2E3B5;
-  border: 1px solid rgba(197, 163, 103, 0.4);
-}
+
 
 /* 產品列表專屬樣式 */
 
@@ -1139,14 +1077,7 @@ img {
   color: white;
 }
 
-/* 讓 Modal 內容過長時有精美的捲軸 */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.3);
-  border-radius: 10px;
-}
+
 
 /* 隱藏數量箭頭 */
 .no-spinners::-webkit-outer-spin-button,

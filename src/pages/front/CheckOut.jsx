@@ -82,7 +82,7 @@ const CheckOut = () => {
         <div className="col-lg-8">
           {/* 標題區 */}
           <div className="text-center mb-5">
-            <h2 className="text-gold-gradient font-serif fs-1">簽署收貨契約</h2>
+            <h2 className="text-gold-gradient fs-1">簽署收貨契約</h2>
             <p className="text-gold-dark small">請填寫精確的座標，確保冒險物資準時送達</p>
           </div>
 

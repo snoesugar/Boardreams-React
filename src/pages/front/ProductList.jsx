@@ -1,17 +1,14 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { Pagination } from '../../components/Components'
-import { Link } from 'react-router-dom'
-import useMessage from '../../hooks/useMessage'
-import { useDispatch } from 'react-redux'
 import { getCartAsync } from '../../slice/cartSlice'
+import { Pagination } from '../../components/Components'
+import useMessage from '../../hooks/useMessage'
 
 const API_BASE = import.meta.env.VITE_API_BASE
-
-// 請自行替換 API_PATH
 const API_PATH = import.meta.env.VITE_API_PATH
 
 const ProductList = () => {
@@ -20,13 +17,13 @@ const ProductList = () => {
   const [pagination, setPagination] = useState({})
   const [loading, setLoading] = useState(true)
   const [addingId, setAddingId] = useState(null)
-  // 2. 初始化 SearchParams
-  const [searchParams, setSearchParams] = useSearchParams()
-  const categoryQuery = searchParams.get('category') // 取得 URL 中的 category 參數
   const [categories, setCategories] = useState(() => {
     const cached = localStorage.getItem('cachedCategories')
     return cached ? JSON.parse(cached) : ['全部遊戲']
   })
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoryQuery = searchParams.get('category') // 取得 URL 中的 category 參數
   const [currentCategory, setCurrentCategory] = useState(categoryQuery || '全部遊戲')
   const { showSuccess, showError } = useMessage()
   const dispatch = useDispatch()
@@ -97,7 +94,6 @@ const ProductList = () => {
           },
         },
       )
-      // ✅ 直接 dispatch API 訊息
       showSuccess(response.data.message)
       dispatch(getCartAsync())
     }
@@ -162,7 +158,7 @@ const ProductList = () => {
                 {loading && categories.length <= 1
                   ? [...Array(8)].map((_, i) => (
                     <li key={i} className="list-group-item list-group-item-dream rounded mb-2">
-                      <div className="skeleton-line" style={{ height: '20px', width: '80%', backgroundColor: '#333', borderRadius: '4px' }}></div>
+                      <div className="skeleton-line loading fs-5 w-80 rounded-1"></div>
                     </li>
                   ))
                   : categories.map(category => (

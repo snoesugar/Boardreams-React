@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router'
 import axios from 'axios'
 import useSwal from '../../hooks/useSwal.jsx'
-import { Link, useNavigate } from 'react-router'
 import { Spinner } from '../../components/Components.jsx'
 import useMessage from '../../hooks/useMessage.jsx'
-
-import { useSelector, useDispatch } from 'react-redux'
 import { getCartAsync } from '../../slice/cartSlice.jsx'
 
 const API_BASE = import.meta.env.VITE_API_BASE
@@ -364,8 +363,8 @@ const Cart = () => {
                               <img
                                 src={item.product.imageUrl}
                                 alt={item.id}
-                                className="rounded-2 me-3"
-                                style={{ width: '70px', height: '70px', objectFit: 'cover' }}
+                                className="object-fit-cover rounded-2 me-3"
+                                style={{ width: '70px', height: '70px' }}
                               />
                               <div className="flex-grow-1">
                                 <p className="fw-bold text-primary mb-1 text-truncate" style={{ maxWidth: '150px' }}>

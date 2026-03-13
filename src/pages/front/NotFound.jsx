@@ -31,7 +31,7 @@ const NotFound = () => {
           <i className="bi bi-compass spin-slow display-1 text-gold-gradient"></i>
         </div>
 
-        <h1 className="display-1 fw-bold text-gold-gradient font-serif">404</h1>
+        <h1 className="display-1 fw-bold text-gold-gradient">404</h1>
         <h2 className="text-gold-light mb-4 tracking-widest">地圖尚未探索的區域</h2>
 
         <p className="text-gold-dark fs-5 mb-5">

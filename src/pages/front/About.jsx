@@ -4,6 +4,12 @@ import 'aos/dist/aos.css'
 import 'animate.css'
 import { Link } from 'react-router'
 
+const convention = [
+  { title: '工匠選品', icon: 'bi-gem', desc: '我們對品質近乎挑剔，只為確保那份觸手可及的精緻。從美術到機制，我們只選最好的。' },
+  { title: '智力探險', icon: 'bi-lightbulb', desc: '不只是消遣，更是一場關於靈魂與智慧的深度激盪。在這裡，大腦是您最強大的武器。' },
+  { title: '社交綠洲', icon: 'bi-cup-hot', desc: '讓實體桌面成為數位沙漠中的一片清涼綠洲。關掉手機，開啟一場真實的面對面交談。' },
+]
+
 const About = () => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true })
@@ -14,7 +20,7 @@ const About = () => {
   }, [])
 
   return (
-    <div className="about-page bg-dark text-primary">
+    <div className="bg-dark text-primary">
       {/* 1. 英雄區：視覺張力 */}
       <section className="about-hero py-8 text-center position-relative">
         <div className="container position-relative z-1">
@@ -119,18 +125,14 @@ const About = () => {
           <div className="bg-gold-gradient mx-auto" data-aos="zoom-in-up"></div>
         </div>
         <div className="row g-4">
-          {[
-            { title: '工匠選品', icon: 'bi-gem', desc: '我們對品質近乎挑剔，只為確保那份觸手可及的精緻。從美術到機制，我們只選最好的。' },
-            { title: '智力探險', icon: 'bi-lightbulb', desc: '不只是消遣，更是一場關於靈魂與智慧的深度激盪。在這裡，大腦是您最強大的武器。' },
-            { title: '社交綠洲', icon: 'bi-cup-hot', desc: '讓實體桌面成為數位沙漠中的一片清涼綠洲。關掉手機，開啟一場真實的面對面交談。' },
-          ].map((item, index) => (
+          {convention.map((item, index) => (
             <div className="col-md-4" key={index} data-aos="flip-right">
               <div className="glass-panel p-5 h-100 text-center hover-lift-up rounded-4 transition-ease02">
                 <div className="icon-wrapper mb-4">
                   <i className={`bi ${item.icon} fs-1 text-gold-mid`}></i>
                 </div>
                 <h4 className="text-gold-light mb-3">{item.title}</h4>
-                <p className="text-white-50 mb-0 leading-relaxed">{item.desc}</p>
+                <p className="text-white-50 mb-0">{item.desc}</p>
               </div>
             </div>
           ))}

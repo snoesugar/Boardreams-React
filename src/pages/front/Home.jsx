@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { Link } from 'react-router-dom'
-import useMessage from '../../hooks/useMessage'
-
-// Swiper 相關導入
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination, Navigation } from 'swiper/modules' // 導入所需的模組
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+import useMessage from '../../hooks/useMessage'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 const API_PATH = import.meta.env.VITE_API_PATH
 
+// 熱門類別探索
 const categories = [
   { title: '策略燒腦', path: '策略桌遊', img: 'cat-strategy.jpg', desc: '深度思考，運籌帷幄' },
   { title: '歡樂派對', path: '派對遊戲', img: 'cat-party.jpg', desc: '聚會首選，笑聲不斷' },
@@ -22,6 +21,7 @@ const categories = [
   { title: '情境解謎', path: '硬核策略', img: 'cat-mystery.jpg', desc: '沉浸劇情，尋找真相' },
 ]
 
+// 優惠券
 const myCoupons = [
   { id: 1, title: '開幕慶優惠', code: 'OPEN2026', percent: '95', due_date: '2026/04/30' },
   { id: 2, title: '春季折扣', code: 'SPRING50', percent: '90', due_date: '2026/04/01' },
@@ -36,6 +36,7 @@ const Home = () => {
   const [coupons, setCoupons] = useState([])
   const { showError, showSuccess } = useMessage() // 引入錯誤訊息提示
 
+  // 取得購物車資訊
   const getProducts = async () => {
     try {
       setLoading(true)
@@ -58,20 +59,23 @@ const Home = () => {
     }
   }
 
+  // 複製優惠碼
   const handleCopy = (code) => {
     navigator.clipboard.writeText(code)
     showSuccess(`已複製優惠碼: ${code}`)
   }
+
+  // 渲染畫面
   useEffect(() => {
     getProducts()
     setCoupons(myCoupons)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // 渲染動畫
   useEffect(() => {
     AOS.init({ duration: 800, once: true })
   }, [])
-
   useEffect(() => {
     AOS.refresh()
   }, [products])
@@ -81,9 +85,9 @@ const Home = () => {
       {/* Hero Section */}
       <div className="position-relative mb-5">
         <img
-          src={`${import.meta.env.BASE_URL}home.jpg`} // 請確認你的圖片路徑
+          src={`${import.meta.env.BASE_URL}home.jpg`}
           alt="首頁主視覺"
-          className="w-100 object-fit-cover object-position-center hero-img"
+          className="w-100 object-fit-cover hero-img"
         />
         <Link
           to="/productList"
