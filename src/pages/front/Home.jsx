@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AOS from 'aos'
@@ -37,7 +37,7 @@ const Home = () => {
   const { showError, showSuccess } = useMessage() // 引入錯誤訊息提示
 
   // 取得購物車資訊
-  const getProducts = async () => {
+  const getProducts = useCallback(async () => {
     try {
       setLoading(true)
       const res = await axios.get(`${API_BASE}/api/${API_PATH}/products/all`)
@@ -57,7 +57,7 @@ const Home = () => {
     finally {
       setLoading(false)
     }
-  }
+  }, [showError])
 
   // 複製優惠碼
   const handleCopy = (code) => {
@@ -69,8 +69,7 @@ const Home = () => {
   useEffect(() => {
     getProducts()
     setCoupons(myCoupons)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getProducts])
 
   // 渲染動畫
   useEffect(() => {

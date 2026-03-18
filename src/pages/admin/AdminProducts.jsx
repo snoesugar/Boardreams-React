@@ -1,6 +1,6 @@
 import axios from 'axios'
 import useSwal from '../../hooks/useSwal.jsx'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Modal, Collapse } from 'bootstrap'
 import { TempProduct, ProductModal, Pagination, Spinner } from '../../components/Components'
 import useMessage from '../../hooks/useMessage'
@@ -95,7 +95,7 @@ function AdminProducts() {
   }
 
   // 先宣告工具 抓取產品資料 getProducts
-  const getProducts = async (page = 1) => {
+  const getProducts = useCallback(async (page = 1) => {
     setLoading(true)
     try {
       const res = await axios.get(
@@ -111,7 +111,7 @@ function AdminProducts() {
     finally {
       setLoading(false) // 完成抓取
     }
-  }
+  }, [showError])
 
   // 建立新產品
   const addNewProduct = async () => {
@@ -336,8 +336,7 @@ function AdminProducts() {
 
   useEffect(() => {
     getProducts()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getProducts])
 
   /* ---------- product modal ---------- */
   useEffect(() => {

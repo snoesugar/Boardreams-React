@@ -30,6 +30,26 @@ const ProductList = () => {
 
   const perPage = 12
 
+  // ✅ 核心：處理前端分頁與過濾
+  const renderPage = useCallback((data, page, category) => {
+    // 邏輯：過濾種類（處理「全部遊戲」或 URL 傳進來的類別）
+    const filtered = (category === '全部遊戲' || !category)
+      ? data
+      : data.filter(item => item.category === category || item.category.includes(category))
+
+    const start = (page - 1) * perPage
+    const end = start + perPage
+    setDisplayProducts(filtered.slice(start, end))
+
+    const totalPages = Math.ceil(filtered.length / perPage) || 1
+    setPagination({
+      total_pages: totalPages,
+      current_page: page,
+      has_pre: page > 1,
+      has_next: page < totalPages,
+    })
+  }, [perPage])
+
   // 抓取「所有」產品
   const getInitialData = useCallback(async () => {
     setLoading(true)
@@ -56,28 +76,7 @@ const ProductList = () => {
     finally {
       setLoading(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // ✅ 核心：處理前端分頁與過濾
-  const renderPage = useCallback((data, page, category) => {
-    // 邏輯：過濾種類（處理「全部遊戲」或 URL 傳進來的類別）
-    const filtered = (category === '全部遊戲' || !category)
-      ? data
-      : data.filter(item => item.category === category || item.category.includes(category))
-
-    const start = (page - 1) * perPage
-    const end = start + perPage
-    setDisplayProducts(filtered.slice(start, end))
-
-    const totalPages = Math.ceil(filtered.length / perPage) || 1
-    setPagination({
-      total_pages: totalPages,
-      current_page: page,
-      has_pre: page > 1,
-      has_next: page < totalPages,
-    })
-  }, [perPage])
+  }, [categoryQuery, renderPage, showError])
 
   // 加入購物車
   const addToCart = async (product, qty = 1) => {

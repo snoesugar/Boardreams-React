@@ -144,7 +144,7 @@ const CheckOut = () => {
               </div>
 
               {/* 留言 */}
-              <div className="col-12 mb-5">
+              <div className="mb-5">
                 <label className="form-label text-gold-mid mb-2 ps-1" htmlFor="comment">
                   <i className="bi bi-chat-dots me-2"></i>
                   給公會的備註

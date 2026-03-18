@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Modal } from 'bootstrap'
 import useSwal from '../../hooks/useSwal.jsx'
 import { Spinner, Pagination, EditOrder } from '../../components/Components'
@@ -45,7 +45,7 @@ function AdminOrders() {
   }
 
   // 獲得訂單資料
-  const getOrders = async (page = 1) => {
+  const getOrders = useCallback(async (page = 1) => {
     setLoading(true)
     try {
       const res = await axios.get(
@@ -61,7 +61,7 @@ function AdminOrders() {
     finally {
       setLoading(false) // 完成抓取
     }
-  }
+  }, [showError])
 
   // 刪除單一品項
   const deleteOrder = async (id) => {
@@ -244,8 +244,7 @@ function AdminOrders() {
 
   useEffect(() => {
     getOrders()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getOrders])
 
   /* ---------- edit modal ---------- */
   useEffect(() => {
@@ -278,7 +277,7 @@ function AdminOrders() {
     <>
       <div className="container py-5">
         <div className="row">
-          <div className="col-12">
+          <div>
             <div className="glass-panel p-4 p-md-5 shadow-dream rounded-4 border-gold-subtle">
 
               {/* 標題與功能按鈕 */}

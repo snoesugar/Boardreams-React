@@ -1,6 +1,6 @@
 import axios from 'axios'
 import useSwal from '../../hooks/useSwal.jsx'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Modal } from 'bootstrap'
 import { Spinner, Pagination, EditCoupon } from '../../components/Components'
 import useMessage from '../../hooks/useMessage'
@@ -48,7 +48,7 @@ function AdminCoupon() {
   }
 
   // 取得優惠券資訊
-  const getCoupons = async (page = 1) => {
+  const getCoupons = useCallback(async (page = 1) => {
     setLoading(true)
     try {
       const res = await axios.get(`${API_BASE}/api/${API_PATH}/admin/coupons?page=${page}`)
@@ -61,7 +61,7 @@ function AdminCoupon() {
     finally {
       setLoading(false)
     }
-  }
+  }, [showError])
 
   // 編輯優惠券
   const updateCoupon = async () => {
@@ -184,8 +184,7 @@ function AdminCoupon() {
 
   useEffect(() => {
     getCoupons()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getCoupons])
 
   /* ---------- Modal 實例管理 ---------- */
   useEffect(() => {

@@ -41,8 +41,7 @@ const Product = () => {
     }
 
     fetchProduct()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id, showError])
 
   // 加入購物車
   const addToCart = async (qty = 1) => {

@@ -61,7 +61,7 @@ const EditOrder = ({
                       })}
                     />
                   </div>
-                  <div className="col-12">
+                  <div>
                     <label htmlFor="email" className="form-label small text-primary">Email 地址</label>
                     <input
                       type="email"
@@ -74,7 +74,7 @@ const EditOrder = ({
                       })}
                     />
                   </div>
-                  <div className="col-12">
+                  <div>
                     <label htmlFor="address" className="form-label small text-primary">收件地址</label>
                     <input
                       type="text"
@@ -87,7 +87,7 @@ const EditOrder = ({
                       })}
                     />
                   </div>
-                  <div className="col-12">
+                  <div>
                     <label htmlFor="message" className="form-label small text-primary">訂單備註</label>
                     <textarea
                       className={`form-control admin-input ${errors.message ? 'is-invalid' : ''}`}
@@ -129,7 +129,7 @@ const EditOrder = ({
                     <div key={item.id} className="item-card mb-3 p-3 rounded-3 border border-gold-dark bg-glass-dark shadow-sm position-relative overflow-hidden">
                       <div className="row align-items-center g-3">
                         {/* 商品資訊 */}
-                        <div className="col-12 col-md-6">
+                        <div className="col-md-6">
                           <div className="d-flex align-items-center">
                             <span className="badge bg-gold-dark me-2">{index + 1}</span>
                             <h6 className="mb-0 text-white text-truncate">{item.product?.title || '未知商品'}</h6>
@@ -158,7 +158,7 @@ const EditOrder = ({
                         </div>
 
                         {/* 數量控制與刪除 */}
-                        <div className="col-12 col-md-6">
+                        <div className="col-md-6">
                           <div className="d-flex align-items-center justify-content-md-end gap-2">
                             <div className="input-group input-group-sm w-auto">
                               <span className="input-group-text admin-input border-gold-dark px-2 text-primary small">數量</span>
