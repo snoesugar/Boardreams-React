@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import useMessage from '../../hooks/useMessage'
+import { clearCart, getCartAsync } from '../../slice/cartSlice.jsx'
+import { useDispatch } from 'react-redux'
 
 const API_BASE = import.meta.env.VITE_API_BASE
 const API_PATH = import.meta.env.VITE_API_PATH
@@ -35,6 +37,7 @@ const UserInput = ({ register, errors, id, labelText, type, rules, icon }) => {
 
 const CheckOut = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -64,6 +67,9 @@ const CheckOut = () => {
           message: formData.comment || '',
         },
       })
+
+      dispatch(clearCart())
+      dispatch(getCartAsync())
 
       // 3️⃣ 成功提示
       showSuccess('訂單已送出，購物車已清空')

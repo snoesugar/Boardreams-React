@@ -8,9 +8,17 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     carts: [],
+    total: 0,
+    final_total: 0,
     loading: false,
   },
-  reducers: {},
+  reducers: {
+    clearCart(state) {
+      state.carts = []
+      state.total = 0
+      state.final_total = 0
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCartAsync.pending, (state) => {
@@ -39,5 +47,7 @@ export const getCartAsync = createAsyncThunk(
     return res.data.data
   },
 )
+
+export const { clearCart } = cartSlice.actions
 
 export default cartSlice.reducer
