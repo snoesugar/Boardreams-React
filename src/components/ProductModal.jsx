@@ -164,7 +164,7 @@ const ProductModal = ({
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label small text-primary">或輸入圖片網址</label>
+                    <label htmlFor="imageUrl" className="form-label small text-primary">或輸入圖片網址</label>
                     <input
                       type="text"
                       className="form-control admin-input form-control-sm"

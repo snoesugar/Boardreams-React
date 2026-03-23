@@ -20,7 +20,7 @@ const About = () => {
   }, [])
 
   return (
-    <div className="bg-dark text-primary">
+    <div className="bg-dark text-primary overflow-hidden">
       {/* 1. 英雄區：視覺張力 */}
       <section className="about-hero py-8 text-center position-relative">
         <div className="container position-relative z-1">
@@ -141,7 +141,7 @@ const About = () => {
 
       {/* 5. 品牌呼籲：最後的引言 */}
       <section className="bg-panel text-center py-6">
-        <div className="p-5 border-gold-subtle rounded-4">
+        <div className="p-5 rounded-4">
           <h3 className="text-gold-gradient fs-2 mb-4" data-aos="zoom-out">準備好開啟你的下一場傳說嗎？</h3>
           <p className="text-primary mb-5" data-aos="zoom-out-up">加入我們的行列，在方寸之間建築屬於你的夢想。</p>
           <div className="animate__animated animate__headShake animate__infinite">

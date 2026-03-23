@@ -25,7 +25,7 @@ function AdminProducts() {
   const [tempProduct, setTempProduct] = useState(null)
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [isEditOpen, setIsEditOpen] = useState(false)
-  const [error, setErrors] = useState({})
+  const [errors, setErrors] = useState({})
   const [pagination, setPagination] = useState({})
   const [loading, setLoading] = useState(true)
   const productModalRef = useRef(null)
@@ -86,9 +86,9 @@ function AdminProducts() {
     })
 
     // 有錯就清掉該欄位錯誤
-    if (error[id]) {
+    if (errors[id]) {
       setErrors({
-        ...error,
+        ...errors,
         [id]: '',
       })
     }
@@ -601,7 +601,7 @@ function AdminProducts() {
                   newProduct={newProduct}
                   handleNewProductChange={handleNewProductChange}
                   setNewProduct={setNewProduct}
-                  errors={error}
+                  errors={errors}
                   handleFileChange={handleFileChange}
                 />
                 <ProductModal
@@ -613,7 +613,7 @@ function AdminProducts() {
                   newProduct={newProduct}
                   handleNewProductChange={handleNewProductChange}
                   setNewProduct={setNewProduct}
-                  errors={error}
+                  errors={errors}
                   handleFileChange={handleFileChange}
                 />
               </div>

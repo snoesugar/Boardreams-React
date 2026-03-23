@@ -25,8 +25,9 @@ const EditCoupon = ({
           <div className="modal-body p-4">
             {/* 優惠券名稱 */}
             <div className="mb-3">
-              <label className="form-label text-gold-dark small">優惠券名稱</label>
+              <label htmlFor="couponName" className="form-label text-gold-dark small">優惠券名稱</label>
               <input
+                id="couponName"
                 type="text"
                 name="title"
                 className={`form-control bg-dark border-gold-dark text-white ${errors.title ? 'is-invalid' : ''}`}
@@ -39,8 +40,9 @@ const EditCoupon = ({
             {/* 折扣碼與百分比 */}
             <div className="row">
               <div className="col-md-6 mb-3">
-                <label className="form-label text-gold-dark small">折扣代碼</label>
+                <label htmlFor="couponCode" className="form-label text-gold-dark small">折扣代碼</label>
                 <input
+                  id="couponCode"
                   type="text"
                   name="code"
                   className={`form-control bg-dark border-gold-dark text-white ${errors.code ? 'is-invalid' : ''}`}
@@ -50,8 +52,9 @@ const EditCoupon = ({
                 {errors.code && <div className="invalid-feedback text-danger">{errors.code}</div>}
               </div>
               <div className="col-md-6 mb-3">
-                <label className="form-label text-gold-dark small">折扣 (%)</label>
+                <label htmlFor="couponPercent" className="form-label text-gold-dark small">折扣 (%)</label>
                 <input
+                  id="couponPercent"
                   type="number"
                   name="percent"
                   className={`form-control bg-dark border-gold-dark text-white ${errors.percent ? 'is-invalid' : ''}`}
@@ -64,8 +67,9 @@ const EditCoupon = ({
 
             {/* 到期日 */}
             <div className="mb-3">
-              <label className="form-label text-gold-dark small">到期日</label>
+              <label htmlFor="couponDate" className="form-label text-gold-dark small">到期日</label>
               <input
+                id="couponDate"
                 type="date"
                 name="due_date"
                 min={minDate}
@@ -84,7 +88,7 @@ const EditCoupon = ({
               <input
                 className="form-check-input"
                 type="checkbox"
-                id="isEnabled"
+                id="is_enabled"
                 checked={!!newCoupon.is_enabled}
                 onChange={e => handleNewOrderChange({
                   target: { name: 'is_enabled', value: e.target.checked ? 1 : 0 },

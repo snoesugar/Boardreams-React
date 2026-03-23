@@ -12,13 +12,7 @@ function AdminOrders() {
   const [newOrder, setNewOrder] = useState({
     is_paid: false,
     message: '',
-    products: {
-      L8nBrq8Ym4ARI1Kog4t: {
-        id: '',
-        product_id: '',
-        qty: '',
-      },
-    },
+    products: {},
     user: {
       address: '',
       email: '',
@@ -31,7 +25,7 @@ function AdminOrders() {
   const [orders, setOrders] = useState([])
   const [pagination, setPagination] = useState({})
   const [isEditOpen, setIsEditOpen] = useState(false)
-  const [error, setErrors] = useState({})
+  const [errors, setErrors] = useState({})
   const editOrderRef = useRef(null)
   const editOrderInstance = useRef(null)
   const { showSuccess, showError } = useMessage()
@@ -137,12 +131,17 @@ function AdminOrders() {
 
     setErrors({}) // 清空錯誤
 
-    // 通過驗證才送 API
-
     try {
+      const { user, is_paid, message, products } = newOrder
+      const payload = {
+        user,
+        is_paid,
+        message,
+        products,
+      }
       const response = await axios.put(
         `${API_BASE}/api/${API_PATH}/admin/order/${newOrder.id}`,
-        { data: newOrder },
+        { data: payload },
       )
       showSuccess(response.data.message)
 
@@ -151,20 +150,6 @@ function AdminOrders() {
 
       // 重新抓資料
       getOrders()
-
-      // 重置 newProduct
-      setNewOrder({
-        is_paid: false,
-        message: '',
-        products: {},
-        user: {
-          address: '',
-          email: '',
-          name: '',
-          tel: '',
-        },
-        num: null,
-      })
     }
     catch (error) {
       showError(error.response.data.message)
@@ -174,6 +159,8 @@ function AdminOrders() {
   // 取建立產品的值
   const handleNewOrderChange = (e) => {
     const { name, value } = e.target
+
+    if (!name) return // 如果忘記寫 name 屬性，這裡會提早發現
 
     if (name.startsWith('user.')) {
       const key = name.split('.')[1]
@@ -192,29 +179,30 @@ function AdminOrders() {
       }))
     }
 
-    if (error[name]) {
+    if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
   }
 
   // 更新總價錢
-  const updateOrderQty = (id, qty) => {
+  const updateOrderQty = (cartId, qty) => {
     const updatedProducts = { ...newOrder.products }
-    updatedProducts[id].qty = Number(qty)
+    if (updatedProducts[cartId]) {
+      updatedProducts[cartId].qty = Number(qty)
 
-    // 計算總金額
-    const newTotal = Object.values(updatedProducts).reduce(
-      (sum, item) => sum + (item.product?.price || 0) * item.qty,
-      0,
-    )
+      const newTotal = Object.values(updatedProducts).reduce(
+        (sum, item) => sum + (item.product?.price || 0) * item.qty,
+        0,
+      )
 
-    setNewOrder({ ...newOrder, products: updatedProducts, total: newTotal })
+      setNewOrder({ ...newOrder, products: updatedProducts, total: newTotal })
+    }
   }
 
   // 刪除單一產品
-  const deleteProduct = (id) => {
+  const deleteProduct = (cartId) => {
     const updatedProducts = { ...newOrder.products }
-    delete updatedProducts[id]
+    delete updatedProducts[cartId]
 
     // 計算新總金額
     const newTotal = Object.values(updatedProducts).reduce(
@@ -325,7 +313,7 @@ function AdminOrders() {
                         {/* 會員簡訊 */}
                         <td>
                           <div className="d-flex flex-column">
-                            <span className="text-white fw-medium">{order.user?.name}</span>
+                            <span className="text-white fw-medium">{typeof order.user?.name === 'string' ? order.user.name : ''}</span>
                             <span className="text-gold-dark fs-8">{order.user?.email}</span>
                             <span className="text-gold-dark fs-8">{order.user?.tel}</span>
                           </div>
@@ -333,8 +321,8 @@ function AdminOrders() {
 
                         {/* 商品清單：使用小標籤排版 */}
                         <td>
-                          {Object.values(order.products || {}).map(item => (
-                            <div key={item.id} className="text-nowrap small mb-1">
+                          {Object.entries(order.products || {}).map(([key, item]) => (
+                            <div key={key} className="text-nowrap small mb-1">
                               <span className="badge bg-glass-gold me-2">{item.qty}</span>
                               <span className="text-gold-mid me-2">{item.product.title}</span>
                               <span className="text-gold-dark">{item.product.price}</span>
@@ -486,7 +474,7 @@ function AdminOrders() {
           setNewOrder={setNewOrder}
           updateOrderQty={updateOrderQty}
           deleteProduct={deleteProduct}
-          errors={error}
+          errors={errors}
         />
       </div>
     </>

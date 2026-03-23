@@ -92,6 +92,7 @@ const EditOrder = ({
                     <textarea
                       className={`form-control admin-input ${errors.message ? 'is-invalid' : ''}`}
                       id="message"
+                      name="message"
                       rows="2"
                       value={newOrder.message || ''}
                       onChange={handleNewOrderChange}
@@ -125,8 +126,8 @@ const EditOrder = ({
                 </div>
 
                 <div className="order-items-container">
-                  {Object.values(newOrder.products || {}).map((item, index) => (
-                    <div key={item.id} className="item-card mb-3 p-3 rounded-3 border border-gold-dark bg-glass-dark shadow-sm position-relative overflow-hidden">
+                  {Object.entries(newOrder.products || {}).map(([cartId, item], index) => (
+                    <div key={cartId} className="item-card mb-3 p-3 rounded-3 border border-gold-dark bg-glass-dark shadow-sm position-relative overflow-hidden">
                       <div className="row align-items-center g-3">
                         {/* 商品資訊 */}
                         <div className="col-md-6">
@@ -168,13 +169,13 @@ const EditOrder = ({
                                 style={{ width: '60px' }}
                                 value={item.qty}
                                 min="1"
-                                onChange={e => updateOrderQty(item.id, e.target.value)}
+                                onChange={e => updateOrderQty(cartId, e.target.value)}
                               />
                             </div>
                             <button
                               type="button"
                               className="btn btn-outline-danger btn-sm rounded-pill px-3"
-                              onClick={() => deleteProduct(item.id)}
+                              onClick={() => deleteProduct(cartId)}
                             >
                               <i className="bi bi-trash3 me-1"></i>
                               刪除
